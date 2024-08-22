@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | slt-lang</title>
+    <link rel="icon" href="slthree.ico" />
+    <link rel='stylesheet' type='text/css' media='screen' href='~/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='~/sltcode.css'>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="@(Url.Action("Index"))"><img src="~/headlogo.png" alt="logo" /></a>
+            <ul>
+                <li>
+                    @Html.ActionLink(
+                             "Главная",
+                             "Index")
+                </li>
+                <li>
+                    @Html.ActionLink(
+                             "FAQ",
+                             "Faq")
+                </li>
+                <li>
+                    @Html.ActionLink(
+                             "Синтаксис",
+                             "syntax")
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <span><a style="color: #400080" href="https://AIexandrKotov.github.io">aiexandrkotov.github.io</a></span>
+        </div>
+    </footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,1359 @@
+﻿@{
+    ViewData["Title"] = "Синтаксис";
+}
+<h1>Синтаксис языка</h1>
+<nav>
+    <span>Навигация:</span>
+    <h1><a href="#a-expressions">§ Выражения</a></h1>
+        <h2><a href="#ae-literals">§ Литералы</a></h2>
+            <h3><a href="#ae-numericliterals">§ Числовые</a></h3>
+            <h3><a href="#ae-charliterals">§ Символьные</a></h3>
+            <h3><a href="#ae-stringliterals">§ Строковые</a></h3>
+        <h2><a href="#ae-assign">§ Присваивание</a></h2>
+            <h3><a href="#ae-extassign">§ Расширенное присваивание</a></h3>
+            <h3><a href="#ae-lvalues">§ lvalue-выражения</a></h3>
+            <h3><a href="#ae-assigntyping">§ Определение типа переменной</a></h3>
+        <h2><a href="ae-methods">§ Методы</a></h2>
+            <h3><a href="#ae-call">§ Вызов метода</a></h3>
+            <h3><a href="#ae-contextarg">§ Передача контекста</a></h3>
+            <h3><a href="#ae-methoddefinition">§ Определение метода</a></h3>
+            <h3><a href="#ae-methodmodificators">§ Модификаторы</a></h3>
+            <h3><a href="#ae-pipeoperator">§ Операция |&gt;</a></h3>
+            <h3><a href="#ae-methodtyping">§ Типизация</a></h3>
+            <h3><a href="#ae-methodgenerics">§ Обобщения</a></h3>
+        <h2><a href="#ae-logical">§ Логические операции</a></h2>
+            <h3><a href="#ae-comparison">§ Операции сравнения</a></h3>
+            <h3><a href="#ae-andorxor">§ И, ИЛИ</a></h3>
+            <h3><a href="#ae-is">§ Соответствие типу</a></h3>
+            <h3><a href="#ae-ternary">§ Тернарная операция</a></h3>
+            <h3><a href="#ae-nullcoalescing">§ Проверка на null</a></h3>
+            <h3><a href="#ae-safeexpr">§ Безопасная операция</a></h3>
+        <h2><a href="#ae-arithmetic">§ Арифметические операции</a></h2>
+        <h2><a href="#ae-memberaccess">§ Доступ к члену</a></h2>
+            <h3><a href="#ae-nullconditional">§ Условие null</a></h3>
+        <h2><a href="#ae-indexator">§ Индексаторы</a></h2>
+        <h2><a href="#ae-typecast">§ Приведение к типу</a></h2>
+            <h3><a href="#ae-asis">§ Как есть</a></h3>
+        <h2><a href="#ae-specialnames">§ Специальные имена</a></h2>
+            <h3><a href="#ae-s-self">§ self</a></h3>
+            <h3><a href="#ae-s-this">§ this</a></h3>
+            <h3><a href="#ae-s-global">§ global</a></h3>
+            <h3><a href="#ae-s-super">§ super</a></h3>
+            <h3><a href="#ae-s-upper">§ upper</a></h3>
+            <h3><a href="#ae-s-private">§ private</a></h3>
+        <h2><a href="#ae-creators">§ Инициализаторы</a></h2>
+            <h3><a href="#ae-ctorcall">§ Вызов конструктора</a></h3>
+            <h3><a href="#ae-creator-array">§ Создание массива</a></h3>
+            <h3><a href="#ae-creator-tuple">§ Создание кортежа</a></h3>
+            <h3><a href="#ae-craetor-list">§ Создание списка</a></h3>
+            <h3><a href="#ae-creator-dict">§ Создание словаря</a></h3>
+            <h3><a href="#ae-creator-range">§ Создание диапазона</a></h3>
+            <h3><a href="#ae-creator-context">§ Создание контекста</a></h3>
+            <h3><a href="#ae-creator-using">§ Создание using</a></h3>
+        <h2><a href="#ae-interpolatedstrings">§ Интерполированные строки</a></h2>
+        <h2><a href="#ae-choosers">§ Операции случайного выбора</a></h2>
+        <h2><a href="#ae-reflection">§ Операции рефлексии</a></h2>
+            <h3><a href="#ae-typeof">§ Получение типа</a></h3>
+            <h3><a href="#ae-getoverload">§ Получение конкретной перегрузки</a></h3>
+        <h2><a href="#ae-matching">§ Выражение match</a></h2>
+    <h1><a href="#a-statements">§ Операторы</a></h1>
+        <h2><a href="#as-expr">§ Оператор-выражение</a></h2>
+        <h2><a href="#as-block">§ Блок</a></h2>
+        <h2><a href="#as-condition">§ Условный оператор</a></h2>
+        <h2><a href="#as-loops">§ Циклы</a></h2>
+            <h3><a href="#as-while">§ Цикл while</a></h3>
+            <h3><a href="#as-foreach">§ Цикл foreach</a></h3>
+            <h3><a href="#as-breakcontinue">§ Прерывание</a></h3>
+        <h2><a href="#as-return">§ Оператор return</a></h2>
+        <h2><a href="#as-using">§ Оператор using</a></h2>
+        <h2><a href="#as-context">§ Оператор context</a></h2>
+        <h2><a href="#as-try">§ Обработка исключений</a></h2>
+</nav>
+<h1 id="a-expressions">Выражения</h1>
+<h2 id="ae-priorities">Приоритеты</h2>
+<div class="h2">
+    <div class="priorities">
+        <table>
+            <tbody>
+                <tr>
+                    <th>Группа</th>
+                    <th>Выражения</th>
+                </tr>
+                <tr>
+                    <td>binary 9</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-assign">=</a>
+                            <a href="#ae-extassign">+=</a>
+                            <a href="#ae-extassign">-=</a>
+                            <a href="#ae-extassign">*=</a>
+                            <a href="#ae-extassign">/=</a>
+                            <a href="#ae-extassign">&=</a>
+                            <a href="#ae-extassign">|=</a>
+                            <a href="#ae-extassign">^=</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-methoddefinition">... => ...</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-pipeoperator">x |> y()</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ternary</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-ternary">x ? y : z</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>binary 8</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-nullcoalescing">x ?? y</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-safeexpr">x -? y</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>binary 7</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-andorxor">||</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>binary 6</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-andorxor">&&</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>binary 5</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-arithmetic">|</a>
+                            <a href="#ae-arithmetic">&</a>
+                            <a href="#ae-arithmetic">^</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>binary 4</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-comparison">==</a>
+                            <a href="#ae-comparison">!=</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-is">is</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>binary 3</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-comparison">&gt;=</a>
+                            <a href="#ae-comparison">&lt;=</a>
+                            <a href="#ae-comparison">&gt;</a>
+                            <a href="#ae-comparison">&lt;</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>binary 2</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-arithmetic">+</a>
+                            <a href="#ae-arithmetic">-</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>binary 1</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-arithmetic">*</a>
+                            <a href="#ae-arithmetic">/</a>
+                            <a href="#ae-arithmetic">%</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>binary 0</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-typecast">as</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-getoverload">::</a>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Группа</th>
+                    <th>Выражения</th>
+                </tr>
+                <tr>
+                    <td>unary</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-arithmetic">+</a>
+                            <a href="#ae-arithmetic">-</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-choosers">*</a>
+                            <a href="#ae-choosers">^</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-bitops">~</a>
+                            <a href="#ae-comparison">!</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-typeof">@@</a>
+                            <a href="#ae-typeof">@@@@</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>primary</td>
+                    <td class="ops">
+                        <span class="union">
+                            <a href="#ae-memberaccess">x.y</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-call">x(...)</a>
+                            <a href="#ae-call">x&lt;T&gt;(...)</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-indexator">x[...]</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-nullconditional">x?(...)</a>
+                            <a href="#ae-nullconditional">x?[...]</a>
+                            <a href="#ae-nullconditional">x?.y</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-creator-range">x..y</a>
+                            <a href="#ae-creator-range">&lt;T&gt;x..y</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-ctorcall">new T(...)</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-creator-context">new context</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-creator-using">new using T</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-creator-array">new T[...]</a>
+                            <a href="#ae-creator-array">-[...]</a>
+                            <a href="#ae-creator-array">&lt;T&gt;-[...]</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-creator-tuple">(x, ...)</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-craetor-list">[...]</a>
+                            <a href="#ae-craetor-list">&lt;T&gt;[...]</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-creator-dict">{...}</a>
+                            <a href="#ae-creator-dict">&lt;TK, TV&gt;{...}</a>
+                        </span>
+                        <br><span class="splitter"></span>
+                        <span class="union">
+                            <a href="#ae-arithmetic">(...)</a>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+                
+<h2 id="ae-literals">Литералы</h2>
+<div class="h2">
+    <h3 id="ae-numericliterals">Числовые</h3>
+    <div class="h3">
+        <ul>
+            <li>Все числа поддерживают _ в описании</li>
+            <li>Можно писать целые числа в двоичном, восьмеричном и шестнадцатеричном виде с помощью префиксов: 0b101, 0o123456, 0xFF</li>
+        </ul>
+        <table class="numliterals">
+            <tbody>
+                <tr>
+                    <th>Имя типа</th>
+                    <th>Суффикс</th>
+                    <th>Битность</th>
+                    <th>Суффикс<br>обязателен</th>
+                    <th>Пример</th>
+                </tr>
+                <tr>
+                    <td colspan="2">f64</td>
+                    <td rowspan="4">64</td>
+                    <td rowspan="2">Нет</td>
+                    <td>10.0, 2.0f64, 0f64</td>
+                </tr>
+                <tr>
+                    <td colspan="2">i64</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>f64</td>
+                    <td>%</td>
+                    <td rowspan="9">Да</td>
+                    <td>10%</td>
+                </tr>
+                <tr>
+                    <td colspan="2">u64</td>
+                    <td>10u64</td>
+                </tr>
+                <tr>
+                    <td colspan="2">f32</td>
+                    <td rowspan="3">32</td>
+                    <td>0.0f32</td>
+                </tr>
+                <tr>
+                    <td colspan="2">i32</td>
+                    <td>10i32</td>
+                </tr>
+                <tr>
+                    <td colspan="2">u32</td>
+                    <td>10u32</td>
+                </tr>
+                <tr>
+                    <td colspan="2">i16</td>
+                    <td rowspan="2">16</td>
+                    <td>10i16</td>
+                </tr>
+                <tr>
+                    <td colspan="2">u16</td>
+                    <td>10u16</td>
+                </tr>
+                <tr>
+                    <td colspan="2">i8</td>
+                    <td rowspan="2">8</td>
+                    <td>10i8</td>
+                </tr>
+                <tr>
+                    <td colspan="2">u8</td>
+                    <td>10u8</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h3 id="ae-charliterals">Символьные</h3>
+    <div class="h3">
+        <p>Символы состоят из одного знака и записываются в одинарных кавычках. Поддерживаются все escape-последовательности из строк, а в дополнение к ним <code class="slt-string">\'</code>.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-string">'a'</span> == <span class="slt-string">'а'</span>;</li>
+            </ol>
+            </div>
+        </div>
+    </div>
+    <h3 id="ae-stringliterals">Строковые</h3>
+    <div class="h3">
+        <p>Строки записываются в двойных кавычках. Список поддерживаемых escape-последовательностей: <code class="slt-string">\"</code>, <code class="slt-string">\\</code>, <code class="slt-string">\t</code>, <code class="slt-string">\r</code>, <code class="slt-string">\n</code></p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">str = <span class="slt-string">"\\\t\r\n"</span>;</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+</div>
+<h2 id="ae-assign">Присваивание</h2>
+<div class="h2">
+    <p>Присваивание осуществляется с помощью одинарного равенства <code>=</code>, присвоить что-либо можно только <a href="#ae-lvalues">lvalue-выражению</a>.</p>
+    <h3 id="ae-names">Имя</h3>
+    <div class="h3">
+        <p>Имена &mdash; любые последовательности буквенных символов, цифр и знаков <code>_</code>, не начинающиеся с цифры. Регистр написания имени имеет значение также, как и в любых других C-подобных языках. Примеры имён: <code>имя</code>, <code>x1_x2</code>.</p>
+    </div>
+    <h3 id="ae-extassign">Расширенное присваивание</h3>
+    <div class="h3">
+        <p>В языке существуют следующие операции расширенного присваивания: <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>%=</code>, <code>&=</code>, <code>|=</code>, <code>^=</code></p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">i = -<span class="slt-digit">1</span>;</li>
+            <li class="slt-line"><span class="slt-keyword2">while</span> ((i += <span class="slt-digit">1</span>) &LT; <span class="slt-digit">10</span>)</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-call">здесь_какой_то_код</span>();</li>
+            </ol>
+            </div>
+                            
+            <span class="description">Создание цикла со счётчиком с помощью цикла while и расширенного присваивания</span>
+        </div>
+    </div>
+    <h3 id="ae-lvalues">lvalue-выражения</h3>
+    <div class="h3">
+        <p>lvalue-выражением могут быть:</p>
+        <ul>
+            <li><a href="#ae-names">Имена</a></li>
+            <li><a href="#ae-creator-tuple">Кортежи</a></li>
+            <li><a href="#ae-indexator">Индексаторы</a></li>
+            <li><a href="#ae-memberaccess">Операция доступа</a></li>
+        </ul>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">simple_name = <span class="slt-digit">25</span>;</li>
+            <li class="slt-line">(x, y) = (<span class="slt-digit">5</span>, <span class="slt-digit">5</span>);</li>
+            <li class="slt-line">(lst = [<span class="slt-digit">1</span>, <span class="slt-digit">2</span>, <span class="slt-digit">3</span>])[<span class="slt-digit">1</span>] = x * y;</li>
+            <li class="slt-line"><span class="slt-keyword1">self</span>.result = simple_name == lst[<span class="slt-digit">1</span>];</li>
+            </ol>
+            </div>
+                            
+        </div>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">(<span class="slt-keyword1">self</span>.x, <span class="slt-keyword1">self</span>[<span class="slt-string">"yz"</span>]) = (<span class="slt-digit">1</span>, (y, z) = (<span class="slt-digit">2</span>, <span class="slt-digit">3</span>));</li>
+            </ol>
+            </div>
+                            
+            <span class="description">Вложенность присваиваний</span>
+        </div>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">a = b = c = d = <span class="slt-digit">10</span>;</li>
+            </ol>
+            </div>
+                            
+            <span class="description">Множественное присваивание</span>
+        </div>
+    </div>
+    <h3 id="ae-assigntyping">Определение типа переменной</h3>
+    <div class="h3">
+        <p>Начиная с обновления <strong>0.7.0 Typing Update</strong>, в SLThree появилась возможность аннотировать тип переменной. Указание типа никак не влияет на значение, которые вы записываете в переменную, однако позволяет вам не запутаться. Кроме того, для оптимизации кода с помощью <code>jit.<span class="slt-call">opt</span>()</code> вам необходимо указать типы всех переменных и параметров.</p>
+        <p>Все случаи возможного описания типа переменной, кроме <a href="#ae-methodtyping">типов аргументов методов</a>:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-type">i64</span> simple_name = <span class="slt-digit">25</span>;</li>
+            <li class="slt-line">(<span class="slt-type">i64</span> x, <span class="slt-type">i64</span> y) = (<span class="slt-digit">5</span>, <span class="slt-digit">5</span>);</li>
+            <li class="slt-line"><span class="slt-keyword2">foreach</span> (<span class="slt-type">i64</span> x<span class="slt-keyword2"> in </span>[<span class="slt-digit">1</span>, <span class="slt-digit">2</span>, <span class="slt-digit">3</span>])</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;x;</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+</div>
+<h2 id="ae-methods">Методы</h2>
+<div class="h2">
+    <h3 id="ae-call">Вызов метода</h3>
+    <div class="h3">
+        <p>Количество аргументов при вызове должно совпадать с количеством аргументов определения метода. Исключение составляют перегруженные методы платформы .NET. В их случае будет вызван первый попавшийся метод с нужным количеством аргументов.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-call">method_name</span>(arg1, arg2, arg3);</li>
+            </ol>
+            </div>
+                            
+        </div>
+        <p>Если вам нужно сделать какое-то действие ровно один раз, не засоряя контекст лишними именами, можно сразу же вызвать лямбду:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">i = <span class="slt-digit">1</span>;</li>
+            <li class="slt-line">((cnt) => cnt.i += <span class="slt-digit">1</span>)(<span class="slt-keyword1">self</span>);</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-contextarg">Передача контекста</h3>
+    <div class="h3">
+        <p>Некоторые методы (например, eval) требуют для своего выполнения контекст. В SLThree существует несколько необходимых для этого <a href="#ae-specialnames">ключевых слов</a>, а также вы можете создавать свои контексты. Правильный вызов eval в текущем контексте выглядит так:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">slt</span>;</li>
+            <li class="slt-line">slt.<span class="slt-call">eval</span>(<span class="slt-keyword1">self</span>, <span class="slt-string">"2 + 2"</span>);</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-methoddefinition">Определение метода</h3>
+    <div class="h3">
+        <p>Все методы в SLThree по умолчанию являются безымянными. Следовательно, простейшее описание метода выглядит так:</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">() => {</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">return</span>;</li>
+                <li class="slt-line">};</li>
+                </ol>
+                </div>
+        </div>
+        <p>Параметры описываются в скобках (если у метода параметр всего один и у него отсутствуют модификаторы, скобки можно опустить):</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">(arg1, arg2) => arg1 + arg2;</li>
+                </ol>
+                </div>
+        </div>
+        <p>Для привязки метода к имени, его нужно присвоить этому имени:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">method_name = (arg1, arg2, arg3) => arg1 + arg2 + arg3;</li>
+            </ol>
+            </div>
+        </div>
+    </div>
+    <h3 id="ae-methodmodificators">Модификаторы</h3>
+    <div class="h3">
+        <p>Список возможных модификаторов:</p>
+        <ul>
+            <li><strong>explicit</strong> &mdash; отключение автоматического приведения числовых типов к максимальному в операциях. Арифметические операции не поддерживают никакие типы, кроме i64, u64 и f64. Однако, если вы используете именно их, этот модификатор может ускорить выполнение операций в два раза.</li>
+            <li><strong>recursive</strong> &mdash; контекст аргументов будет генерироваться при каждом вызове метода. По умолчанию, контекст метода кэшируется.</li>
+        </ul>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">fib = <span class="slt-keyword1">recursive</span> (n) => (n &LT; <span class="slt-digit">2</span>) ? n : <span class="slt-keyword1">this</span>.<span class="slt-call">fib</span>(n - <span class="slt-digit">2</span>) + <span class="slt-keyword1">this</span>.<span class="slt-call">fib</span>(n - <span class="slt-digit">1</span>);</li>
+            </ol>
+            </div>
+            <span class="description">Рекурсивный алгоритм нахождения числа Фибоначчи</span>
+        </div>
+    </div>
+    <h3 id="ae-pipeoperator">Операция |&gt;</h3>
+    <div class="h3">
+        <p>Эта операция позволяет писать последовательности из вызовов функций в более коротком и красивом виде. Левый параметр этой операции становится первым параметром вызова метода справа.</p>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Было</th>
+                    <th>Стало</th>
+                </tr>
+                <tr>
+                    <td>x |> y()</td>
+                    <td>y(x)</td>
+                </tr>
+                <tr>
+                    <td>x(y) |> y(x)</td>
+                    <td>y(x(y), x)</td>
+                </tr>
+                <tr>
+                    <td>x |> y(z())</td>
+                    <td>y(x, z())</td>
+                </tr>
+                <tr>
+                    <td>x |> y() |> z()</td>
+                    <td>z(y(x))</td>
+                </tr>
+                <tr>
+                    <td>x |> (y() |> z())</td>
+                    <td>z(x, y())</td>
+                </tr>
+            </tbody>
+        </table>
+                        
+    </div>
+    <h3 id="ae-methodtyping">Типизация</h3>
+    <div class="h3">
+        <p>Тип параметра метода пишется перед его именем. Тип возвращаемого значения пишется после двоеточия после списка параметров</p>
+
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-type">SLThree.Method</span> sum = (<span class="slt-type">i64</span> x, <span class="slt-type">i64</span> y): <span class="slt-type">i64</span> => x + y;</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-methodgenerics">Обобщения</h3>
+    <div class="h3">
+        <p>Начиная с <strong>0.7.0 Typing Update</strong> в SLThree появились обобщённые методы. Их поддержка, главным образом, позволяет вызывать обобщённые методы из .NET.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">tlinq</span>;</li>
+            <li class="slt-line">*&lt;<span class="slt-type">i64</span>&gt;<span class="slt-digit">1</span>..<span class="slt-digit">100</span> |> tlinq.<span class="slt-call">take</span>&lt;<span class="slt-type">i64</span>&gt;(<span class="slt-digit">100</span>) |> tlinq.<span class="slt-call">select</span>&lt;<span class="slt-type">i64</span>, <span class="slt-type">f64</span>&gt;(x => x / <span class="slt-digit">100.0</span>) |> tlinq.<span class="slt-call">average</span>&lt;<span class="slt-type">f64</span>&gt;();</li>
+            </ol>
+            </div>
+        </div>
+        <p>Кроме того, появилась возможность создавать обобщённые методы SLThree. В этом случае обобщённые параметры пишутся между модификаторами и списком аргументов.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">my_generic_for = &lt;<span class="slt-type">T</span>&gt;(<span class="slt-type">T</span> a): <span class="slt-type">bool</span> => a<span class="slt-keyword1"> is </span><span class="slt-type">T</span>;</li>
+            <li class="slt-line"><span class="slt-call">my_generic_for</span>&lt;<span class="slt-type">i32</span>&gt;(<span class="slt-digit">2</span>);</li>
+            </ol>
+            </div>
+        </div>
+        <p>Подстановки типов влияют на все его использования в методе, за исключением тех, что относятся к вложенным методам.</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">x = &lt;<span class="slt-type">T</span>&gt;() =>  {</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;y = () => @@<span class="slt-type">T</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">return</span> <span class="slt-call">y</span>();</li>
+                <li class="slt-line">};</li>
+                <li class="slt-line"><span class="slt-call">x</span>(); <span class="slt-comment">// RuntimeError: Type "T" not found at 2:17</span></li>
+                </ol>
+                </div>
+                                
+        </div>
+        <p>С помощью класса <code>slt</code>, вы также можете получить конкретный случай обобщённого метода:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">slt</span>;</li>
+            <li class="slt-line">m = &lt;<span class="slt-type">T</span>&gt;() =&gt; @@<span class="slt-type">T</span>;</li>
+            <li class="slt-line">m_for_i64 = m |> slt.<span class="slt-call">make_generic</span>([@@<span class="slt-type">i64</span>]);</li>
+            </ol>
+            </div>
+                            
+                            
+        </div>
+    </div>
+</div>
+<h2 id="ae-logical">Логические операции</h2>
+<div class="h2">
+    <h3 id="ae-comparison">Операции сравнения</h3>
+    <div class="h3">
+        <p>При сравнениях на равенство <code>==</code> и неравенство <code>!=</code> для первого объекта неявно вызывается Equals.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-digit">2</span> == <span class="slt-digit">2</span>;</li>
+            <li class="slt-line"><span class="slt-digit">2</span>.<span class="slt-call">Equals</span>(<span class="slt-digit">2</span>);</li>
+            </ol>
+            </div>
+        </div>
+        <p>Другие сравнения (<code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>) будут работать только если объект реализует интерфейс IComparable</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">System.DateTime</span>;</li>
+            <li class="slt-line">DateTime.Now > DateTime.MinValue;</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-andorxor">И, ИЛИ</h3>
+    <div class="h3"><p>Всем известные логические операции операции. Про них нужно помнить, что исключающее ИЛИ <code>^</code> имеет приоритет бОльший, чем логическое И <code>&&</code>, так как она является побитовой операцией.</p>
+        <p>Операции <code>&&</code> и <code>||</code> являются ленивыми: правая часть операции будет выполнена только при необходимости:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">a = <span class="slt-digit">0</span>; (a += <span class="slt-digit">1</span>) == <span class="slt-digit">0</span> && (a += <span class="slt-digit">1</span>) != <span class="slt-digit">0</span>; a; <span class="slt-comment">// 1</span></li>
+            <li class="slt-line">a = <span class="slt-digit">0</span>; (a += <span class="slt-digit">1</span>) == <span class="slt-digit">0</span> &&nbsp; (a += <span class="slt-digit">1</span>) != <span class="slt-digit">0</span>; a; <span class="slt-comment">// 2</span></li>
+            <li class="slt-line">a = <span class="slt-digit">0</span>; (a += <span class="slt-digit">1</span>) != <span class="slt-digit">0</span> || (a += <span class="slt-digit">1</span>) == <span class="slt-digit">0</span>; a; <span class="slt-comment">// 1</span></li>
+            <li class="slt-line">a = <span class="slt-digit">0</span>; (a += <span class="slt-digit">1</span>) != <span class="slt-digit">0</span> |&nbsp; (a += <span class="slt-digit">1</span>) == <span class="slt-digit">0</span>; a; <span class="slt-comment">// 2</span></li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-is">Соответствие типу</h3>
+    <div class="h3">
+        <p>Операция <code class="slt-keyword1">is</code> используется для проверки типа выражения слева.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">(<span class="slt-digit">5</span> / <span class="slt-digit">2</span>)<span class="slt-keyword1"> is </span><span class="slt-type">i64</span>; <span class="slt-comment">// True</span></li>
+            </ol>
+            </div>
+        </div>
+        <p>Кроме того, вы можете сразу же создать новую переменную при удачном соответствии:</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">a = <span class="slt-digit">2</span>;</li>
+                <li class="slt-line"><span class="slt-keyword2">if</span> (a<span class="slt-keyword1"> is </span><span class="slt-type">i64</span> b) a == b;</li>
+                </ol>
+                </div>                                
+        </div>
+    </div>
+    <h3 id="ae-ternary">Тернарная операция</h3>
+    <div class="h3">
+        <p>Используется для ветвления на уровне выражений. Условие операции должно возвращать bool.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">true</span> ? <span class="slt-string">"true"</span> : <span class="slt-string">"false"</span>;</li>
+            </ol>
+            </div>
+        </div>
+    </div>
+    <h3 id="ae-nullcoalescing">Проверка на null</h3>
+    <div class="h3">
+        <p>Если вы предполагаете, что выражение может вернуть null, можете проверить это с помощью операции <code>??</code>:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">repeat = () =&gt;  {</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">if</span> (need_init ?? <span class="slt-keyword1">true</span>) {</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;need_init = <span class="slt-keyword1">false</span>;</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = b = ^<span class="slt-digit">1</span>..<span class="slt-digit">10</span>;</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;}</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">return</span> a + b;</li>
+            <li class="slt-line">};</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-safeexpr">Безопасная операция</h3>
+    <div class="h3">
+        <p>Похож на проверку на null, но делает левое выражение безопасным и если при его выполнении произошла ошибка, возвращает правую часть.</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line"><span class="slt-digit">1</span> / <span class="slt-digit">0</span> -? <span class="slt-string">"деление на ноль"</span>;</li>
+                </ol>
+                </div>
+        </div>
+    </div>
+</div>
+<h2 id="ae-arithmetic">Арифметические операции</h2>
+<div class="h2">
+    <p>
+        Все арифметические операции поддерживают только три типа данных. В <strong>explicit</strong> режиме нельзя использовать остальные типы без <a href="ae-typecast">преобразований</a>. В <strong>implicit</strong> режиме можно использовать типы меньшей битности того же знака, однако результат всё равно будет 64-битный.
+    </p>
+    <table>
+        <tbody>
+            <tr>
+                <th>Левая часть</th>
+                <th>Правая часть</th>
+                <th>Результат</th>
+            </tr>
+            <tr>
+                <td>i64</td>
+                <td>i64</td>
+                <td>i64</td>
+            </tr>
+            <tr>
+                <td>u64</td>
+                <td>u64</td>
+                <td>u64</td>
+            </tr>
+            <tr>
+                <td>f64</td>
+                <td>f64</td>
+                <td>f64</td>
+            </tr>
+            <tr>
+                <td>i64</td>
+                <td>f64</td>
+                <td>f64</td>
+            </tr>
+            <tr>
+                <td>u64</td>
+                <td>f64</td>
+                <td>f64</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Список арифметических операций:</p>
+    <ul>
+        <li>Унарные <code>+</code> и <code>-</code></li>
+        <li>Сложение <code>+</code> и вычитание <code>-</code></li>
+        <li>Умножение <code>*</code>, деление <code>/</code>, остаток <code>%</code></li>
+        <li>Побитовое И <code>&</code>, ИЛИ <code>|</code>, исключающее ИЛИ <code>^</code></li>
+        <li>Скобки <code>()</code></li>
+    </ul>
+</div>
+<h2 id="ae-memberaccess">Доступ к члену</h2>
+<div class="h2">
+    <p>Всеми любимая точка <code>.</code>. Используется для доступа к членам следующих сущностей:</p>
+    <ul>
+        <li>Объектов</li>
+        <li>Типов, если они <a href="#as-using">используются</a> в контексте</li>
+        <li>Контекстов</li>
+        <li>Словарей</li>
+    </ul>
+    <div class="textbox">
+        <div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-digit">2</span>.<span class="slt-call">Equals</span>(<span class="slt-digit">2</span>);</li>
+            <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">slt</span>;</li>
+            <li class="slt-line">slt.<span class="slt-call">eval</span>(<span class="slt-keyword1">self</span>, <span class="slt-string">"null"</span>);</li>
+            <li class="slt-line"><span class="slt-keyword1">self</span>.slt = <span class="slt-keyword1">null</span>;</li>
+            <li class="slt-line">dct = {};</li>
+            <li class="slt-line">(dct.x, dct.y) = (<span class="slt-digit">2</span>, <span class="slt-digit">3</span>);</li>
+            <li class="slt-line">dct.Count;</li>
+            </ol>
+            </div>
+                            
+    </div>
+    <h3 id="ae-nullconditional">Условие null</h3>
+    <div class="h3">
+        <p>Кроме того, можно проверить выражение на null перед выполнением. Это работает с именами, вызовами (в т.ч. обобщёнными) и индексаторами. Если левая часть null, выражение тоже вернёт null.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">x?.y;</li>
+            <li class="slt-line"><span class="slt-call">x</span>.?();</li>
+            <li class="slt-line"><span class="slt-call">x</span>.?&lt;<span class="slt-type">i64</span>&gt;();</li>
+            <li class="slt-line">x.?[<span class="slt-digit">10</span>];</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+</div>
+<h2 id="ae-indexator">Индексаторы</h2>
+<div class="h2">
+    <p>Для индексации используется индексное свойство типа с нужным количеством параметров. Для индексации массивов, списков и кортежей используются 32-битные целые числа. В <strong>implicit</strong> режиме для них значение индекса будет автоматически приведено к нужному типу.</p>
+    <div class="textbox"><div class="slt-code"><ol>
+        <li class="slt-line">a = [<span class="slt-digit">1</span>, <span class="slt-digit">2</span>, <span class="slt-digit">3</span>];</li>
+        <li class="slt-line">a[<span class="slt-digit">0</span>];</li>
+        <li class="slt-line">b = (<span class="slt-digit">1</span>, <span class="slt-digit">2</span>, <span class="slt-digit">3</span>);</li>
+        <li class="slt-line">b[<span class="slt-digit">0.33</span>];</li>
+        <li class="slt-line">c = -[<span class="slt-digit">1</span>, <span class="slt-digit">2</span>, <span class="slt-digit">3</span>];</li>
+        <li class="slt-line">c[<span class="slt-digit">0.66</span>];</li>
+        <li class="slt-line">d = <span class="slt-keyword1">new </span><span class="slt-type">dict</span>&lt;<span class="slt-type">i64</span>, <span class="slt-type">any</span>&gt;();</li>
+        <li class="slt-line">d[<span class="slt-digit">1</span>] = (a, b, c);</li>
+        </ol>
+        </div>
+    </div>
+    <p>Индексаторы кортежей недоступны для записи значений.</p>
+</div>
+<h2 id="ae-typecast">Приведение к типу</h2>
+<div class="h2">
+    <p>Операция <code><span class="slt-keyword1">as</span></code> выполняет явное ПРЕОБРАЗОВАНИЕ типа. Если оно невозможно &mdash; поведение не определено и зависит от конкретного типа.</p>
+    <div class="textbox"><div class="slt-code"><ol>
+        <li class="slt-line"><span class="slt-digit">1.1</span><span class="slt-keyword1"> as </span><span class="slt-type">i64</span>; <span class="slt-comment">// 1</span></li>
+        <li class="slt-line"><span class="slt-digit">0xFF</span><span class="slt-keyword1"> as </span><span class="slt-type">string</span>; <span class="slt-comment">// "255"</span></li>
+        </ol>
+        </div>
+                        
+    </div>
+    <p>Поддержка типов:</p>
+    <table>
+        <tbody>
+            <tr>
+                <th>Левая часть</th>
+                <th>Правая часть</th>
+                <th>Результат</th>
+            </tr>
+            <tr>
+                <td>IConvertible</td>
+                <td colspan="2">Примитивный тип</td>
+            </tr>
+            <tr>
+                <td>Примитивный тип</td>
+                <td colspan="2">Enum</td>
+            </tr>
+            <tr>
+                <td>string</td>
+                <td colspan="2">Enum</td>
+            </tr>
+            <tr>
+                <td>context</td>
+                <td>System.Type</td>
+                <td>Объект переданного типа, публичные значения полей которого будут совпадать со значениями имён контекста</td>
+            </tr>
+            <tr>
+                <td>System.Type</td>
+                <td>context</td>
+                <td>Контекст со статическими значений переданного типа</td>
+            </tr>
+            <tr>
+                <td>any</td>
+                <td>context</td>
+                <td>Контекст с экземплярными значениями полей переданного объекта</td>
+            </tr>
+            <tr>
+                <td>any</td>
+                <td colspan="2">string</td>
+            </tr>
+            <tr>
+                <td>array&lt;any&gt;</td>
+                <td colspan="2">array&lt;T&gt;</td>
+            </tr>
+            <tr>
+                <td>list&lt;any&gt;</td>
+                <td colspan="2">array&lt;T&gt;</td>
+            </tr>
+            <tr>
+                <td>list&lt;any&gt;</td>
+                <td colspan="2">list&lt;T&gt;</td>
+            </tr>
+            <tr>
+                <td>dict&lt;any, any&gt;</td>
+                <td colspan="2">dict&lt;TKey, TValue&gt;</td>
+            </tr>
+            <tr>
+                <td>tuple&lt;...&gt;</td>
+                <td colspan="2">tuple&lt;...&gt;</td>
+            </tr>
+        </tbody>
+    </table>
+    <h3 id="ae-asis">Как есть</h3>
+    <div class="h3">
+        <p>Кроме того, вы можете получать выражения SLThree "как есть" с помощью операции <code class="slt-keyword1">as is</code>:</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">a = (<span class="slt-digit">3</span> + <span class="slt-digit">4</span>)<span class="slt-keyword1"> as </span><span class="slt-keyword1"> is</span>;</li>
+                <li class="slt-line"><span class="slt-call">a</span>(); <span class="slt-comment">// 7</span></li>
+                </ol>
+                </div>
+        </div>
+        <p>Проверив типы с помощью команды интерпретатора <code>&gt;-l --typed</code> мы увидим, что тип переменной <code>a</code> это <code class="slt-type">SLThree.BinaryAdd</code>. Получить значение у такого выражения можно двумя способами:</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">a = (<span class="slt-digit">2</span> + <span class="slt-digit">2</span> * <span class="slt-digit">2</span>)<span class="slt-keyword1"> as </span><span class="slt-keyword1"> is</span>;</li>
+                <li class="slt-line"><span class="slt-call">a</span>(); <span class="slt-comment">// Просто вызвав его в языке</span></li>
+                <li class="slt-line">a.<span class="slt-call">GetValue</span>(<span class="slt-keyword1">self</span>.<span class="slt-call">unwrap</span>());  <span class="slt-comment">// Либо вызывать метод GetValue напрямую, но тогда придётся передавать контекст в <a href="@Url.Action("FAQ")#ac-unwrap">чистом виде</a>.</span></li>
+                </ol>
+                </div>                                
+        </div>
+    </div>
+</div>
+<h2 id="ae-specialnames">Специальные имена</h2>
+<div class="h2">
+    <h3 id="ae-s-self">self</h3>
+    <div class="h3">
+        <p><code class="slt-keyword1">self</code> даёт ссылку на нынешний контекст. Это ключевое слово необходимо только для передачи контекста куда-то ещё. Например, можно вернуть контекст переменных из метода.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">x = () =&gt;  {</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;(a, b) = (<span class="slt-digit">6</span>, <span class="slt-digit">66</span>);</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">return</span> <span class="slt-keyword1">self</span>;</li>
+            <li class="slt-line">};</li>
+            <li class="slt-line"><span class="slt-call">x</span>().a;</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-s-this">this</h3>
+    <div class="h3">
+        <p><code class="slt-keyword1">this</code> возвращает ссылку на контекст, в котором описан выполняемый в данный момент метод.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">x = () =&gt; <span class="slt-keyword1">this</span>;</li>
+            <li class="slt-line"><span class="slt-call">x</span>() == <span class="slt-keyword1">self</span>;</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-s-global">global</h3>
+    <div class="h3">
+        <p><code class="slt-keyword1">global</code> возвращает ссылку на глобальный контекст, доступный отовсюду. Старайтесь не пользоваться глобальным контекстом без крайней необходимости.</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line"><span class="slt-keyword1">global</span>.a = <span class="slt-digit">25</span>;</li>
+                <li class="slt-line">get_a = () =&gt; <span class="slt-keyword1">global</span>.a;</li>
+                <li class="slt-line"><span class="slt-call">get_a</span>();</li>
+                </ol>
+                </div>                                
+        </div>
+    </div>
+    <h3 id="ae-s-super">super</h3>
+    <div class="h3">
+        <p><code class="slt-keyword1">super</code> возвращает ссылку на контекст, в котором был создан текущий контекст.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">x = <span class="slt-keyword1">new context </span>{ </li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;get_super = () =&gt; <span class="slt-keyword1">super</span>;</li>
+            <li class="slt-line">};</li>
+            <li class="slt-line">x.<span class="slt-call">get_super</span>() == <span class="slt-keyword1">self</span>;</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-s-upper">upper</h3>
+    <div class="h3">
+        <p><code class="slt-keyword1">upper</code> возвращает ссылку на контекст, из которого был вызван выполняемый сейчас метод.</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">(x, y) = (<span class="slt-digit">1</span>, <span class="slt-digit">2</span>);</li>
+                <li class="slt-line">sum = () =&gt; <span class="slt-keyword1">upper</span>.x + <span class="slt-keyword1">upper</span>.y;</li>
+                <li class="slt-line"><span class="slt-call">sum</span>();</li>
+                </ol>
+                </div>                                
+        </div>
+    </div>
+    <h3 id="ae-s-private">private</h3>
+    <div class="h3">
+        <p><code class="slt-keyword1">private</code> возвращает ссылку на скрытый контекст того контекста, в котором описан текущий контекст (<code class="slt-keyword1">this</code>)</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">x = <span class="slt-keyword1">new context </span>{ </li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword1">private</span>.x = <span class="slt-digit">10</span>;</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;get_x = () =&gt; <span class="slt-keyword1">private</span>.x;</li>
+            <li class="slt-line">};</li>
+            <li class="slt-line">x.<span class="slt-call">get_x</span>();</li>
+            </ol>
+            </div>
+                                                      
+        </div>
+    </div>
+</div>
+<h2 id="ae-creators">Инициализаторы</h2>
+<div class="h2">
+    <h3 id="ae-ctorcall">Вызов конструктора</h3>
+    <div class="h3">
+        <p>Для создания объекта типа используется класс <code class="slt-type">Activator</code>, поэтому при вызове конструктора, в отличие от вызова метода, перегрузка будет подобрана наиболее точно.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">System.Random</span>;</li>
+            <li class="slt-line"><span class="slt-keyword1">new </span><span class="slt-type">Random</span>().<span class="slt-call">NextDouble</span>();</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-creator-array">Создание массива</h3>
+    <div class="h3">
+        <p>Без указания типа (тип <code class="slt-type">array</code> или <code><span class="slt-type">array</span>&lt;<span class="slt-type">any</span>&gt;</code>):</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">a = -[<span class="slt-digit">1</span>, <span class="slt-string">"str"</span>, <span class="slt-digit">2.0</span>, <span class="slt-keyword1">new context</span>];</li>
+            </ol>
+            </div>
+        </div>
+        <p>С указанием типа. В <strong>implicit</strong> режиме каждый элемент массива будет преобразован к нужному типу.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">a = &lt;<span class="slt-type">f64</span>&gt;-[<span class="slt-digit">1</span>, <span class="slt-digit">2</span>, <span class="slt-digit">3</span>, ];</li>
+            </ol>
+            </div>
+        </div>
+        <p>Обратите также внимание, что при создании массива, кортежа, списка или словаря можно писать запятую в конце.</p>
+    </div>
+    <h3 id="ae-creator-tuple">Создание кортежа</h3>
+    <div class="h3">
+        <p>Кортежи всегда имеют чёткий тип и возвращают объекта типа System.ValueTuple&lt;...&gt;. Количество элементов в кортеже не ограничено.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">(<span class="slt-digit">1</span>, <span class="slt-digit">2.0</span>, <span class="slt-string">"3.0"</span>, <span class="slt-keyword1">new </span><span class="slt-type">System.Exception</span>(), <span class="slt-keyword1">null</span>).<span class="slt-call">GetType</span>();</li>
+            </ol>
+            </div>                            
+        </div>
+        <p>Кортеж из одного элемента:</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">(<span class="slt-digit">1</span>, );</li>
+                </ol>
+                </div>                                
+        </div>
+    </div>
+    <h3 id="ae-craetor-list">Создание списка</h3>
+    <div class="h3">
+        <p>Создание списка похоже на создание массива, однако знак <code>-</code> отсутствует:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">anylist = [<span class="slt-digit">1</span>, <span class="slt-digit">2</span>, <span class="slt-digit">3</span>, <span class="slt-digit">4</span>, <span class="slt-digit">5</span>];</li>
+            <li class="slt-line">typed = &lt;<span class="slt-type">i64</span>&gt;[<span class="slt-digit">1</span>, <span class="slt-digit">2</span>, <span class="slt-digit">3</span>, <span class="slt-digit">4</span>, <span class="slt-digit">5</span>];</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-creator-dict">Создание словаря</h3>
+    <div class="h3">
+        <p>Без указания типа (тип <code class="slt-type">dict</code> или <code><span class="slt-type">dict</span>&lt;<span class="slt-type">any</span>, <span class="slt-type">any</span>&gt;</code>):</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">dict = {</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-digit">1</span>: <span class="slt-digit">10</span>,</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-digit">2</span>: <span class="slt-digit">20</span>,</li>
+                <li class="slt-line">};</li>
+                </ol>
+                </div>
+                                
+        </div>
+        <p>С указанием типа ключей и значений. В <strong>implicit</strong> режиме каждые ключ и значение будут преобразован к нужному типу.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">dict = &lt;<span class="slt-type">i64</span>, <span class="slt-type">string</span>&gt;{</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-digit">1</span>: <span class="slt-digit">10</span>,</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-digit">2</span>: <span class="slt-digit">20</span>,</li>
+            <li class="slt-line">};</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-creator-range">Создание диапазона</h3>
+    <div class="h3">
+        <p>Диапазоны &mdash; простые обёртки границ, реализующие перебор значений между ними как последовательности:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">sum = <span class="slt-digit">0</span>;</li>
+            <li class="slt-line"><span class="slt-keyword2">foreach</span> (x<span class="slt-keyword2"> in </span><span class="slt-digit">1</span>..<span class="slt-digit">10</span>) sum += x;</li>
+            </ol>
+            </div>
+                            
+        </div>
+        <p>По умолчанию диапазон возвращает последовательность 64-битных целых. Но можно типизировать диапазон для возвращения целых другой битности:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">tlinq</span>;</li>
+            <li class="slt-line">&lt;<span class="slt-type">i32</span>&gt;<span class="slt-digit">1</span>..<span class="slt-digit">100</span> |> tlinq.<span class="slt-call">sum</span>&lt;<span class="slt-type">i32</span>&gt;();</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="ae-creator-context">Создание контекста</h3>
+    <div class="h3">
+        <p>Контекст &mdash; комплексный тип данных языка SLThree. Инициализация контекста состоит из:</p>
+        <ul>
+            <li><code class="slt-keyword1">new context</code></li>
+            <li>[Опционально] Имени контекста</li>
+            <li>[Опционально] Типа приведения <code>: <span class="slt-type">T</span></code></li>
+            <li>[Опционально] Тела контекста <code>{ ... }</code></li>
+        </ul>
+        <p>Наличие типа приведения при описании аналогично применению для контекста <code class="slt-keyword1">as</code> к этому типу:</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line"><span class="slt-keyword1">new context </span>{ </li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;Capacity = <span class="slt-digit">2500</span>;</li>
+                <li class="slt-line">}<span class="slt-keyword1"> as </span><span class="slt-type">list</span>;</li>
+                <li class="slt-line"><span class="slt-keyword1">new context </span>: <span class="slt-type">list</span> { </li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;Capacity = <span class="slt-digit">2500</span>;</li>
+                <li class="slt-line">};</li>
+                </ol>
+                </div>
+        </div>
+        <p>Имя контекста позволяет отличить этот контекст от других при отладке. Имя контекста не зависит от переменной, в которую его записали:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">a = <span class="slt-keyword1">new context </span>ЫЫЫ;</li>
+            <li class="slt-line">a.<span class="slt-call">unwrap</span>().Name;</li>
+            </ol>
+            </div>
+        </div>
+        <p>Тело контекста должно содержать только выражения-присваивания. При выполнении этих присваиваний контекст правой части это контекст, в котором производится инициализация, а контекст левой части &mdash; создаваемый контекст.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">new context </span>A : <span class="slt-type">list</span> { </li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;Capacity = <span class="slt-digit">2500</span>;</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;Capacity2 = Capacity; <span class="slt-comment">// Неправильно</span></li>
+            <li class="slt-line">};</li>
+            </ol>
+            </div>
+        </div>
+        <p>Помимо выражений-присваиваний, тело контекста может содержать <a href="#as-context">оператор context</a>.</p>
+    </div>
+    <h3 id="ae-creator-using">Создание using</h3>
+    <div class="h3">
+        <p>Выполнение <code><span class="slt-keyword1">using</span> <span class="slt-type">slt</span>;</code> запишет в переменную <code>slt</code> класс-обёртку для доступа к её внутренностям. Но можно получить этот доступ и без записывания в переменную:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">(<span class="slt-keyword1">new </span><span class="slt-keyword1">using </span><span class="slt-type">slt</span>).<span class="slt-call">eval</span>(<span class="slt-keyword1">self</span>, <span class="slt-string">"2 + 2 * 2"</span>);</li>
+            </ol>
+            </div>
+                                                      
+        </div>
+    </div>
+</div>
+<h2 id="ae-interpolatedstrings">Интерполированные строки</h2>
+<div class="h2">
+    <p>Интерполированные (форматные) строки сделаны как в C#, за исключением того, что они не поддерживают непосредственно форматы.</p>
+    <div class="textbox"><div class="slt-code"><ol>
+        <li class="slt-line">(a, b) = (<span class="slt-digit">2</span>, <span class="slt-digit">2</span>);</li>
+        <li class="slt-line">str = <span class="slt-string">$"<span class="slt-operator">{a}</span> + <span class="slt-operator">{b}</span> == <span class="slt-operator">{a + b}</span>"</span>;</li>
+        </ol>
+        </div>
+                        
+    </div>
+</div>
+<h2 id="ae-choosers">Операции случайного выбора</h2>
+<div class="h2">
+    <p>Существует две операции: унарная <code>^</code> позволяет выполнить выбор, унарная <code>*</code> позволяет получить генератор (ленивую бесконечную последовательность).</p>
+    <div class="textbox"><div class="slt-code"><ol>
+        <li class="slt-line">random_num = ^<span class="slt-digit">1</span>..<span class="slt-digit">100</span>;</li>
+        <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">linq</span>;</li>
+        <li class="slt-line">random_nums = *<span class="slt-digit">1</span>..<span class="slt-digit">100</span> |> linq.<span class="slt-call">take</span>(<span class="slt-digit">10</span>) |> linq.<span class="slt-call">jts</span>();</li>
+        </ol>
+        </div>
+    </div>
+    <p>Обе операции выбора можно выполнять для:</p>
+    <ul>
+        <li>Словарей вида Dictionary&lt;T, double&gt;, где значение это вес ключа</li>
+        <li>Диапазонов</li>
+        <li>Любых последовательностей конечной длины</li>
+    </ul>
+    <div class="textbox">
+        <div class="slt-code"><ol>
+            <li class="slt-line">d = *{</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-string">"0"</span>: <span class="slt-digit">10%</span>,</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-string">"1"</span>: <span class="slt-digit">20%</span>,</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-string">"2"</span>: <span class="slt-digit">30%</span>,</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-string">"3"</span>: <span class="slt-digit">40%</span>,</li>
+            <li class="slt-line">};</li>
+            <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">linq</span>;</li>
+            <li class="slt-line">str = d |> linq.<span class="slt-call">take</span>(^<span class="slt-digit">10</span>..<span class="slt-digit">20</span>) |> linq.<span class="slt-call">jts</span>(<span class="slt-string">""</span>);</li>
+            </ol>
+            </div>
+            <span class="description">Пример со словарём</span>
+    </div>
+</div>
+<h2 id="ae-reflection">Операции рефлексии</h2>
+<div class="h2">
+    <h3 id="ae-typeof">Получение типа</h3>
+    <div class="h3">
+        <p>Для получения типа используется унарная операция <code>@@</code></p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">typeof = &lt;<span class="slt-type">T</span>&gt;() =&gt; @@<span class="slt-type">T</span>;</li>
+                <li class="slt-line">x = <span class="slt-call">typeof</span>&lt;<span class="slt-type">i64</span>&gt;();</li>
+                </ol>
+                </div>
+        </div>
+        <p>Существует также операция <code>@@@@</code>. Делает то же самое, за исключением того, что она высчитывается на этапе парсинга. Поэтому, работает только с полными именами типов и их синонимов.</p>
+    </div>
+    <h3 id="ae-getoverload">Получение конкретной перегрузки</h3>
+    <div class="h3">
+        <p>Поскольку SLThree &mdash; динамический ЯП, он не поддерживают перегрузку методов C# в полной мере. В случае, если вам нужна определённая перегрузка, вы можете воспользоваться следующим синтаксисом: </p>
+        <ul>
+            <li><code>@@<span class="slt-type">Type</span></code></li>
+            <li><code>::<span class="slt-call">MethodName</span></code></li>
+            <li><code>(<span class="slt-type">argType1</span>, <span class="slt-type">argType2</span>)</code></li>
+        </ul>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line">writeln = &lt;<span class="slt-type">T</span>&gt;(arg) =&gt; (@@<span class="slt-type">System.Console</span>::WriteLine(<span class="slt-type">T</span>))(arg);</li>
+            <li class="slt-line"><span class="slt-call">writeln</span>&lt;<span class="slt-type">bool</span>&gt;(<span class="slt-keyword1">true</span>);</li>
+            <li class="slt-line"><span class="slt-call">writeln</span>&lt;<span class="slt-type">string</span>&gt;(<span class="slt-string">"str"</span>);</li>
+            <li class="slt-line"><span class="slt-call">writeln</span>&lt;<span class="slt-type">tuple</span>&lt;<span class="slt-type">i64</span>, <span class="slt-type">i64</span>, <span class="slt-type">i64</span>&gt;&gt;((<span class="slt-digit">1</span>, <span class="slt-digit">2</span>, <span class="slt-digit">3</span>));</li>
+            </ol>
+            </div>
+                            
+        </div>
+        <p><strong>Под тип <code class="slt-type">any</code> (System.Object) можно подводить любые типы!</strong></p>
+    </div>
+</div>
+<h2 id="ae-matching">Выражение match</h2>
+<div class="h2">
+    <p>Выражение <code class="slt-keyword2">match</code> позволяет разветвлять программу на уровне выражений. <strong>Поскольку это выражение, когда вы пишете его в качестве утверждения, вы должны писать после <code>}</code> точку с запятой!</strong></p>
+    <div class="textbox"><div class="slt-code"><ol>
+        <li class="slt-line">(() =&gt;  {</li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword1">using </span><span class="slt-type">console</span>;</li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;console.<span class="slt-call">write</span>(<span class="slt-string">"Введите ваше имя: "</span>);</li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;name = console.<span class="slt-call">readln</span>();</li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;access = <span class="slt-keyword2">match</span> (name.<span class="slt-call">ToLower</span>()) {</li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-string">"борис"</span>, <span class="slt-string">"ярослав"</span> ==> <span class="slt-keyword1">true</span>;</li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-string">"джо"</span> ==>  {</li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword1">using </span><span class="slt-type">System.Environment</span>;</li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Environment.<span class="slt-call">Exit</span>(<span class="slt-digit">-1i32</span>);</li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};</li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;() ==> <span class="slt-keyword1">false</span>;</li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;};</li>
+        <li class="slt-line">})();</li>
+        </ol>
+        </div>
+                        
+    </div>
+</div>
+<h1 id="a-statements">Операторы</h1>
+<h2 id="as-expr">Оператор-выражение</h2>
+<div class="h2">
+    <p>Самым главным оператором является <a href="#a-expressions">выражение</a>. Отличие от чистого выражения лишь в присутствии <code>;</code></p>
+    <div class="textbox"><div class="slt-code"><ol>
+        <li class="slt-line"><span class="slt-digit">2</span> + <span class="slt-digit">2</span>;</li>
+        </ol>
+        </div>
+                        
+    </div>
+</div>
+<h2 id="as-block">Блок</h2>
+<div class="h2">
+    <p><strong>!Важно</strong>. Исходя из этой статьи, вы могли подумать, что блоки в SLThree точно такие же, как и в любых си-подобных языках. Но нет &mdash; важным отличием является то, что блок должен состоять как минимум из одного оператора!</p>
+    <div class="textbox">
+        <div class="slt-code"><ol>
+            <li class="slt-line">DICTIONARY = {};</li>
+            <li class="slt-line"><span class="slt-keyword2">if</span> (empty_block ?? <span class="slt-keyword1">true</span>) {</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;;</li>
+            <li class="slt-line">}</li>
+            </ol>
+            </div>
+                            
+    </div>
+</div>
+<h2 id="as-condition">Условный оператор</h2>
+<div class="h2">
+    <div class="textbox">
+        <div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword2">if</span> (<span class="slt-digit">2</span> + <span class="slt-digit">2</span> == <span class="slt-digit">4</span>)</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-string">"true-block"</span>;</li>
+            <li class="slt-line"><span class="slt-keyword2">else </span></li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-string">"false-block"</span>;</li>
+            </ol>
+            </div>
+                            
+    </div>
+</div>
+<h2 id="as-loops">Циклы</h2>
+<div class="h2">
+    <h3 id="as-while">Цикл while</h3>
+    <div class="h3">
+        <p>Этот цикл не нуждается в представлении.</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">i = <span class="slt-digit">1</span>;</li>
+                <li class="slt-line"><span class="slt-keyword2">while</span> ((i = i + <span class="slt-digit">1</span>) &LT; <span class="slt-digit">100</span>)</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;i -= ^[<span class="slt-digit">0</span>, <span class="slt-digit">1</span>];</li>
+                </ol>
+                </div>
+        </div>
+    </div>
+    <h3 id="as-foreach">Цикл foreach</h3>
+    <div class="h3">
+        <p>Цикл для перебора последовательностей вида IEnumerable.</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">console</span>;</li>
+            <li class="slt-line"><span class="slt-keyword2">foreach</span> (x<span class="slt-keyword2"> in </span>[<span class="slt-digit">1</span>, <span class="slt-digit">2</span>, <span class="slt-digit">3</span>])</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;console.<span class="slt-call">writeln</span>(x);</li>
+            </ol>
+            </div>
+                            
+        </div>
+    </div>
+    <h3 id="as-breakcontinue">Прерывание</h3>
+    <div class="h3">
+        <p>Операторы прерывания также не нуждаются в представлении.</p>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line"><span class="slt-keyword2">foreach</span> (x<span class="slt-keyword2"> in </span>[<span class="slt-digit">1</span>, <span class="slt-digit">2</span>, <span class="slt-digit">3</span>]) {</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">if</span> (x == <span class="slt-digit">1</span>)</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">continue</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">if</span> (x &LT; <span class="slt-digit">3</span>)</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">break</span>;</li>
+                <li class="slt-line">}</li>
+                </ol>
+                </div>                                
+        </div>
+    </div>
+</div>
+<h2 id="as-return">Оператор return</h2>
+<div class="h2">
+    <p>Используется для возврата значений из методов. Впрочем, любой контекст может иметь возвращаемое значение, а потому вы можете написать <code class="slt-keyword2">return</code> в любом скрипте SLThree и достать его как свойство ReturnedValue. Строгости в возврате для методов, которые не отправлены в JIT нет. Если метод ничего не вернул, или был написан <code class="slt-keyword2">return</code> без выражения, то возвращаемое значение равно <code class="slt-keyword1">null</code>.</p>
+</div>
+<h2 id="as-using">Оператор using</h2>
+<div class="h2">
+    <p>Аналог <a href="#ae-creator-using">создания using</a>, но в виде оператора. Эти две строки кода идентичны:</p>
+    <div class="textbox"><div class="slt-code"><ol>
+        <li class="slt-line">x = <span class="slt-keyword1">new </span><span class="slt-keyword1">using </span><span class="slt-type">slt</span>;</li>
+        <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">slt</span><span class="slt-keyword1"> as </span>x;</li>
+        </ol>
+        </div>
+                        
+    </div>
+</div>
+<h2 id="as-context">Оператор context</h2>
+<div class="h2">
+    <p>Аналог <a href="#ae-creator-context">создания context'а</a>, но в виде оператора.</p>
+    <div class="textbox"><div class="slt-code"><ol>
+        <li class="slt-line">a = <span class="slt-keyword1">new context </span>a : <span class="slt-type">i64</span> { </li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;x = <span class="slt-digit">2</span>;</li>
+        <li class="slt-line">};</li>
+        <li class="slt-line"><span class="slt-keyword1">context </span>a : <span class="slt-type">i64</span> { </li>
+        <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;x = <span class="slt-digit">2</span>;</li>
+        <li class="slt-line">}</li>
+        </ol>
+        </div>
+    </div>
+    <p>Этот код только демонстрация. Разумеется, у типа i64 (System.Int64) нет никакого поля x.</p>
+</div>
+<h2 id="as-try">Обработка исключений</h2>
+<div class="h2">
+    <ul>
+        <li>В блоке <code class="slt-keyword2">try</code> находится код, который необходимо обработать</li>
+        <li>В блоке <code class="slt-keyword2">catch</code> находится перехват ошибки. В переменную из скобок будет записано перехваченное исключение.</li>
+        <li>В блоке <code class="slt-keyword2">finally</code> находится код, который выполнится в любом случае.</li>
+        <li>Выбрасывать же исключения можно с помощью <code class="slt-keyword2">throw</code>.</li>
+    </ul>
+    <div class="textbox">
+        <div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">console</span>;</li>
+            <li class="slt-line"><span class="slt-keyword2">try</span> {</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">if</span> (^<span class="slt-digit">50%</span>)</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">throw</span> <span class="slt-keyword1">new </span><span class="slt-type">System.Exception</span>();</li>
+            <li class="slt-line">}<span class="slt-keyword2"> catch</span> (e) {</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;console.<span class="slt-call">writeln</span>(<span class="slt-string">$"caught <span class="slt-operator">{e}</span>"</span>);</li>
+            <li class="slt-line">}<span class="slt-keyword2"> finally</span> {</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;console.<span class="slt-call">writeln</span>(<span class="slt-string">"finally"</span>);</li>
+            <li class="slt-line">}</li>
+            </ol>
+            </div>
+                            
+    </div>
+</div>

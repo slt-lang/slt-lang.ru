@@ -1,0 +1,298 @@
+*{
+    font-family: sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --main-color-kotov: #ff00cc;
+    --ext-color-1: #ff7ae4;
+    --ext-color-2: #ffebfb;
+    --ext-color-3: #fff2fa;
+}
+
+/*header*/
+header > nav > ul{
+    list-style-type: none;
+}
+header > nav *{
+    font-size: 0;
+}
+header > nav{
+    margin: 0 auto;
+    text-align: center;
+}
+header > nav > ul{
+    border-top: 2px var(--main-color-kotov) solid;
+    border-bottom: 2px var(--main-color-kotov) solid;
+}
+header > nav > ul > li{
+    display: inline-block;
+    width: 225px;
+}
+header > nav > a{
+    pointer-events: fill;
+}
+header > nav > ul > li > a{
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--main-color-kotov);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    letter-spacing: 0px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    width: 100%;
+    display: block;
+    padding: 4px 0;
+    animation: none;
+}
+header > nav > a > img{
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    width: 800px;
+}
+
+/*footer*/
+footer {
+    clear: both;
+    width: auto;
+    margin: 0 auto;
+    text-align: center;
+    border-top: 2px solid var(--main-color-kotov);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: var(--main-color-kotov);
+}
+footer > div > span > a{
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/*main*/
+main .container{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+} 
+.floatimage-center{
+    display: block;
+    margin: 7px auto;
+}
+.floatimage-right.floatimage-right.floatimage-right{
+    margin-left: 10px;
+    float: right;
+}
+.floatimage-left{
+    float: left;
+}
+.floatimage-after{
+    clear: both;
+}
+
+/*general*/
+a{
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--main-color-kotov);
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+a span{
+    padding: 3px;
+    display: block;
+    color: black;
+    font-weight: normal;
+}
+a:hover{
+    background-color: var(--main-color-kotov);
+    color: white;
+    animation: a_hovercolors 1.1s infinite;
+}
+@keyframes a_hovercolors{
+    0%{ color: var(--main-color-kotov); background-color: transparent; }
+    50%{ color: white; background-color: var(--main-color-kotov); }
+    100%{ color: var(--main-color-kotov); background-color: transparent }
+}
+
+
+main *{
+    line-height: 1.5em;
+}
+main p{
+    text-indent: 1em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+main h1, main h2, main h3, main span.h1, main span.h2, main span.h3{
+    border-bottom: 1px solid var(--ext-color-1);
+    margin-top: 5px;
+    margin-bottom: 10px;
+    text-indent: 10px;
+    overflow: hidden;
+}
+main h3{
+    margin-left: 15px;
+}
+
+main nav {
+    margin: 15px;
+    width: fit-content;
+    padding: 5px 10px;
+    border: 1px solid var(--ext-color-1);
+    background-color: var(--ext-color-2);
+    list-style-type: none;
+}
+main nav > span {
+    border: 0;
+    padding: 3px 0px;
+    padding-left: 0px;
+    font-weight: bold;
+}
+main nav > h1, main nav > h2, main nav > h3, main nav > h4, main nav > h5, main nav > h6{
+    margin: 0;
+    font-size: 100%;
+    border: 0;
+}
+main nav > h1 {
+    padding: 3px 0px;
+    padding-left: 0px;
+}
+main nav > h2 {
+    padding: 2px 0px;
+    padding-left: 20px;
+}
+main nav > h3 {
+    padding: 1px 0px;
+    padding-left: 50px;
+}
+main nav > h4 {
+    padding: 0px 0px;
+    padding-left: 80px;
+}
+
+main table td {
+    border: 1px solid var(--ext-color-1);
+    border-collapse: collapse;
+    padding: 3px 5px;
+}
+main table th {
+    background-color: var(--ext-color-2);
+    /*color: var(--main-color-kotov);*/
+    border: 1px solid var(--ext-color-1);
+    border-collapse: collapse;
+    padding: 3px 10px;
+}
+main table, main div.textbox {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--ext-color-1);
+}
+
+main table {
+    border-collapse: collapse;
+    padding: 3px 5px;
+}
+main div.textbox {
+    padding: 5px;
+    background-color: var(--ext-color-2);
+    list-style-type: none;
+    overflow: hidden;
+}
+
+main div.textbox div, main div.textbox code {
+    display: block;
+    font-size: 90%;
+    background-color: white;
+    border: 1px solid var(--ext-color-1);
+    padding: 5px;
+    margin: 0px;
+    margin-bottom: 3px;
+    overflow-y: scroll;
+    max-height: 30em;
+}
+main div.textbox span.description{ /*--- TEXT UNDER ---*/
+    display: block;
+    font-size: 90%;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+}
+
+main ul, main ol{
+    padding-left: 20px;
+}
+.container div.h2 {
+    padding-left: 5px;
+    margin-right: 5px;
+}
+.container div.h3 {
+    padding-left: 15px;
+    margin-right: 15px;
+}
+.container div.h4 {
+    padding-left: 25px;
+    margin-right: 25px;
+}
+code {
+    background-color: var(--ext-color-3);
+    border-radius: 3px;
+    font-family: monospace;
+    padding: 0px 3px;
+    font-size: 14px;
+}
+code * {
+    font-family: monospace;
+}
+
+@media screen and (min-width: 1200px) {
+    .container{
+        width: 1200px;
+        margin: 0 auto;
+    }
+}
+@media screen and (min-width: 980px) and (max-width: 1200px) {
+    .container{
+        width: 100%;
+    }
+    main div.textbox{
+        float: none;
+        width: 100%;
+        margin: 10px auto;
+    }
+}
+@media screen and (max-width: 980px) {
+    .container{
+        width: 100%;
+    }
+    main div.textbox{
+        float: none;
+        width: 100%;
+        margin: 10px auto;
+    }
+    header > nav > a > img{
+        width: 100%;
+    }
+    header > nav > ul > li{
+        display: block;
+        width: 100%;
+    }
+    main table {
+        width: 100%;
+    }
+}
+
+/*debug*/
+/*{
+    border: 1px red solid;
+}
+header, main, footer{
+    border: 1px black solid;
+}
+li{
+    border: 1px blue solid;
+}/**/

@@ -1,0 +1,193 @@
+﻿@{
+    ViewData["Title"] = "SLThree";
+}
+
+<h1>SLThree</h1>
+    <p><strong>SLThree</strong> (англ. <em>Script Language 3</em> &mdash; Скриптовый язык 3, "третий скриптовый") &mdash; мультипарадигмальный интерпретируемый C-подобный язык программирования со строгой динамической типизацией, разработанный для платформы .NET. Смешивает императивный и функциональный подходы, а ООП реализуется единственным составным типом непосредственно языка &mdash; контекстом.</p>
+    <nav>
+        <span>Навигация:</span>
+        <h2><a href="#a-features">§ Особенности</a></h2>
+        <h2><a href="#a-whynot-dlr">§ Почему не DLR</a></h2>
+        <h2><a href="#a-perfomance-otherlangs">§ Сравнение производительности</a></h2>
+            <h3><a href="#a-perfomance-slt">§ В пределах языка</a></h3>
+        <h2><a href="#arefs">Ссылки</a></h2>
+    </nav>
+    <h2 id="a-features">Основные особенности</h2>
+    <div class="h2">
+        <ul>
+            <li><strong>Мощный интерпретатор</strong></li>
+            <li><strong>Возможность использовать все типы и их содержимое из платформы .NET</strong></li>
+            <li><em>[Экспериментально]</em> компиляция в IL (который впоследствии подхватывает JIT платформы .NET)</li>
+            <li>Интерполированные строки</li>
+            <li>Обобщённые методы</li>
+            <li>Контексты</li>
+            <li>Кортежи</li>
+        </ul>
+    </div>
+
+    <h2 id="a-whynot-dlr">Почему не DLR</h2>
+    <div class="h2">
+        <p>Будучи динамическим языком на .NET платформе, SLThree использует не DLR, а собственное архитектурное решение. Исходя из <a href="https://habr.com/ru/articles/466657/">данной статьи</a>, DLR при работе с COM-типами (для межязыкового взаимодействие того же IronPython и C# используется COM API) может вызывать утечки памяти при передачи dynamic'ов. Кроме того, организовать, например, опциональную типизацию с DLR было бы невозможно.</p>
+    </div>
+
+    <h2 id="a-perfomance-otherlangs">Сравнение производительности</h2>
+    <div class="h2">
+        <p>Измерения производительности проводились с помощью алгоритма <a href="https://en.wikipedia.org/wiki/Collatz_conjecture">гипотезы Коллатца</a> в интервале от 0 до 1000000.</p>
+                
+        <table class="table floatimage-right">
+            <tbody>
+                <tr>
+                    <th colspan="2">Тестовая машина</th>
+                </tr>
+                <tr>
+                    <th>CPU</th>
+                    <td>Ryzen 7 4700U 8-Core CPU 4.2 GHz</td>
+                </tr>
+                <tr>
+                    <th>RAM</th>
+                    <td>DDR4 Dual-Channel 16 GB 3200 CL22</td>
+                </tr>
+                <tr>
+                    <th>OS</th>
+                    <td>Windows 10 21H2</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th colspan="2">Результаты</th>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><strong>Динамическая типизация</strong></td>
+                </tr>
+                <tr>
+                    <td>JavaScript</td>
+                    <td>10984 ms</td>
+                </tr>
+                <tr>
+                    <td>TypeScript</td>
+                    <td>10960 ms</td>
+                </tr>
+                <tr>
+                    <td>Python 3.12</td>
+                    <td>8724 ms</td>
+                </tr>
+                <tr>
+                    <td><strong>SLThree</strong></td>
+                    <td>7824 ms</td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><strong>Статическая типизация</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>SLThree + JIT</strong></td>
+                    <td>240 ms</td>
+                </tr>
+                <tr>
+                    <td>PascalABC.NET 3.9</td>
+                    <td>226 ms</td>
+                </tr>
+                <tr>
+                    <td>C#</td>
+                    <td>212 ms</td>
+                </tr>
+                <tr>
+                    <td>С++</td>
+                    <td>208 ms</td>
+                </tr>
+                <tr>
+                    <td>Rust</td>
+                    <td>185 ms</td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <div class="textbox floatimage-after">
+            <div class="slt-code"><ol>
+                <li class="slt-line">calc = <span class="slt-keyword1">explicit</span> (index) =>  {</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;step = <span class="slt-digit">0</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">while</span> (index > <span class="slt-digit">1</span>)</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">if</span> (index % <span class="slt-digit">2</span> == <span class="slt-digit">0</span>) {</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index = index / <span class="slt-digit">2</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;step = step + <span class="slt-digit">1</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">else </span> {</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index = (<span class="slt-digit">3</span> * index + <span class="slt-digit">1</span>) / <span class="slt-digit">2</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;step = step + <span class="slt-digit">2</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">return</span> step;</li>
+                <li class="slt-line">};</li>
+                <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">linq</span>;</li>
+                <li class="slt-line"><span class="slt-digit">0</span>..<span class="slt-digit">1_000_000</span> |> linq.<span class="slt-call">max</span>(calc);</li>
+                </ol>
+                </div>
+            <span class="description">Код на SLThree 0.6.0</span>
+        </div>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">calc = (<span class="slt-type">i64</span> index): <span class="slt-type">i64</span> =>  {</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-type">i64</span> step = <span class="slt-digit">0</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">while</span> (index > <span class="slt-digit">1</span>)</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">if</span> (index % <span class="slt-digit">2</span> == <span class="slt-digit">0</span>) {</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index = index / <span class="slt-digit">2</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;step = step + <span class="slt-digit">1</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">else </span> {</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index = (<span class="slt-digit">3</span> * index + <span class="slt-digit">1</span>) / <span class="slt-digit">2</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;step = step + <span class="slt-digit">2</span>;</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</li>
+                <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword2">return</span> step;</li>
+                <li class="slt-line">};</li>
+                <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">jit</span>;</li>
+                <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">dlinq</span>;</li>
+                <li class="slt-line">calc_opt = jit.<span class="slt-call">opt</span>(calc, <span class="slt-keyword1">self</span>);</li>
+                <li class="slt-line">&lt;<span class="slt-type">i64</span>&gt;<span class="slt-digit">0</span>..<span class="slt-digit">1_000_000</span> |> dlinq.<span class="slt-call">max</span>&lt;<span class="slt-type">i64</span>, <span class="slt-type">i64</span>&gt;(calc_opt.<span class="slt-call">CreateDelegate</span>(@@<span class="slt-type">System.Func</span>&lt;<span class="slt-type">i64</span>, <span class="slt-type">i64</span>&gt;));</li>
+                </ol>
+                </div>
+                            
+            <span class="description">Код на SLThree 0.7.0</span>
+        </div>
+    </div>
+
+    <h3 id="a-perfomance-slt">В пределах версий SLThree</h3>
+    <div class="h3">
+        <p class="h3">Так как в большинстве обновлений языка внедрялись оптимизации, производительность менялась от версии к версии.</p>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th colspan="2">Результаты</th>
+                </tr>
+                <tr>
+                    <td><strong>SLThree 0.1.0</strong> Lovely 64 bits</td>
+                    <td>48000 ms</td>
+                </tr>
+                <tr>
+                    <td><strong>SLThree 0.2.0</strong> Unwrap the wrap</td>
+                    <td>14000 ms</td>
+                </tr>
+                <tr>
+                    <td><strong>SLThree 0.3.0</strong> Third time is lucky</td>
+                    <td>7900 ms</td>
+                </tr>
+                <tr>
+                    <td><strong>SLThree 0.6.0</strong> Functionalization Update</td>
+                    <td>7824 ms</td>
+                </tr>
+                <tr>
+                    <td><strong>SLThree 0.7.0</strong> Typing Update</td>
+                    <td>240 ms</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+                
+<h2 id="arefs">Ссылки</h2>
+<div class="h2">
+    <ul>
+        <li><a href="https://www.nuget.org/packages/slthree">NuGet пакет</a></li>
+        <li><a href="https://github.com/AIexandrKotov/SLThree">Исходный код</a></li>
+    </ul>
+</div>
+                
+        

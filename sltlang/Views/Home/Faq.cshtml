@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "FAQ";
+}
+
+<h1>FAQ</h1>
+<p>Этот раздел будет понемногу наполняться ответами на главные вопросы касающихся SLThree.</p>
+<nav>
+    <span>Навигация:</span>
+    <h2><a href="#a-methods">§ Методы</a></h2>
+    <h2><a href="#a-contextes">§ Контексты</a></h2>
+        <h3><a href="#ac-typecast">§ Превращение в любые типы</a></h3>
+        <h3><a href="#ac-unwrap">§ Разворачивание контекста</a></h3>
+    <h2><a href="#a-other">§ Прочее</a></h2>
+</nav>
+<h2 id="a-methods">Методы</h2>
+<div class="h2">
+    <p>Почему эти сущности называются методами, а не функциями? Это потому, что все методы хранят контекст, в котором их описали:</p>
+    <div class="textbox">
+        <div class="slt-code"><ol>
+            <li class="slt-line">my_context = <span class="slt-keyword1">new context </span>{ </li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="slt-keyword1">private</span>.x = <span class="slt-digit">25</span>;</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;get_x = () =&gt; <span class="slt-keyword1">private</span>.x;</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;set_x = (arg) =&gt; <span class="slt-keyword1">private</span>.x = arg;</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;get_x2 = () =&gt; <span class="slt-keyword1">this</span>.<span class="slt-call">get_x</span>() * <span class="slt-digit">2</span>;</li>
+            <li class="slt-line">};</li>
+            <li class="slt-line">my_context.<span class="slt-call">get_x2</span>(); <span class="slt-comment">// 50</span></li>
+            </ol>
+            </div>
+    </div>
+</div>
+<h2 id="a-contextes">Контексты</h2>
+<div class="h2">
+    <p>Контекст &mdash; единственный, помимо методов, составной тип данных непосредственно языка SLThree. Особые возможности контекста:</p>
+    <h3 id="ac-typecast">Превращение в любые типы</h3>
+    <div class="h3">
+        Вы можете использовать контексты как инициализаторы полей классов. Для этого у класса должен существовать конструктор без аргументов.
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">context </span>a : <span class="slt-type">SLThree.BinaryAdd</span> { </li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;Left = <span class="slt-digit">3</span><span class="slt-keyword1"> as </span><span class="slt-keyword1"> is</span>;</li>
+            <li class="slt-line">&nbsp;&nbsp;&nbsp;&nbsp;Right = <span class="slt-digit">4</span><span class="slt-keyword1"> as </span><span class="slt-keyword1"> is</span>;</li>
+            <li class="slt-line">}</li>
+            <li class="slt-line"><span class="slt-call">a</span>();</li>
+            </ol>
+            </div>
+                        
+        </div>
+    </div>
+    <h3 id="ac-unwrap">Разворачивание контекста</h3>
+    <div class="h3">
+        <p>Контексты в SLThree являются ссылками типа ContextWrap. Истинный же контекст имеет тип ExecutionContext. Чтобы получить объект этого типа из любого контекста, нужно вызвать для него unwrap. Разворачивание контекста относится к возможностям рефлексии SLThree. С помощью развёрнутого контекста можно:</p>
+        <ul>
+            <li>Поменять имя контекста</li>
+            <li>Получить его приватный контекст</li>
+            <li>Получить переменные в виде словаря</li>
+            <li>Получить возвращённое значение</li>
+        </ul>
+        <div class="textbox">
+            <div class="slt-code"><ol>
+                <li class="slt-line">cnt = <span class="slt-keyword1">this</span>.<span class="slt-call">unwrap</span>();</li>
+                <li class="slt-line">ref = cnt.wrap;</li>
+                <li class="slt-line">ref == <span class="slt-keyword1">this</span>;</li>
+                <li class="slt-line">private_of_this = cnt.private;</li>
+                <li class="slt-line">private_of_this == <span class="slt-keyword1">private</span>;</li>
+                <li class="slt-line"><span class="slt-keyword2">return</span> <span class="slt-digit">25</span> * <span class="slt-digit">25</span>;</li>
+                <li class="slt-line">ret = cnt.ReturnedValue;</li>
+                <li class="slt-line">name = cnt.Name = <span class="slt-string">"EFDEsssFSDGDFfd"</span>;</li>
+                <li class="slt-line"><span class="slt-keyword1">this</span>;</li>
+                <li class="slt-line">cnt.LocalVariables.<span class="slt-call">GetAsDictionary</span>();</li>
+                </ol>
+                </div>
+        </div>
+    </div>
+</div>
+<h2 id="a-other">Прочее</h2>
+<div class="h2">
+    <h3>Откуда берутся типы?</h3>
+    <div class="h3">
+        <p>Типы берутся из сборок, находящихся в списке slt.registred:</p>
+        <div class="textbox"><div class="slt-code"><ol>
+            <li class="slt-line"><span class="slt-keyword1">using </span><span class="slt-type">slt</span>;</li>
+            <li class="slt-line">slt.registred.<span class="slt-call">Contains</span>((@@<span class="slt-type">any</span>).Assembly);</li>
+            </ol>
+            </div>
+                        
+        </div>
+    </div>
+</div>
