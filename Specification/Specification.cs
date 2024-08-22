@@ -6,23 +6,27 @@ using System.Threading.Tasks;
 
 namespace Specification
 {
-    public partial class Specification
+    public partial class Article : IArticle
     {
-        public static Dictionary<Type, Specification> ExecutablesSpecification = InitExecutablesSpecification();
+        public static Dictionary<string, IArticle> ExecutablesSpecification = InitExecutablesSpecification();
+        public static Dictionary<string, IArticle> OtherArticles = InitOtherArticles();
 
-        public static Dictionary<Type, Specification> InitExecutablesSpecification()
+        public static Dictionary<string, IArticle> InitOtherArticles()
         {
-            var dt = new Dictionary<Type, Specification>
+            var dt = new Dictionary<string, IArticle>();
+            return dt;
+        }
+
+        public static Dictionary<string, IArticle> InitExecutablesSpecification()
+        {
+            var dt = new List<IArticle>
             {
-                {
-                    typeof(SLThree.BaseExpression),
-                    new Specification([
+                    new Article("BaseExpression", [
                         new Tag.Paragraph("Str")
-                    ])
-                }
+                    ]),
             };
 
-            return dt;
+            return dt.ToDictionary(x => x.Key.ToLower(), x => x);
         }
     }
 }

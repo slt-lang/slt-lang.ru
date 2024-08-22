@@ -1,3 +1,5 @@
+using Specification;
+
 namespace sltlang
 {
     public class Program
@@ -6,7 +8,7 @@ namespace sltlang
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddSingleton<ILocaleService, LocaleService>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -26,9 +28,19 @@ namespace sltlang
 
             app.UseAuthorization();
 
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
+            app.MapControllerRoute(
+                name: "specification",
+                pattern: "{culture=ru}/specification/{article}", new { controller = "Specification", action = "Index" });
+
+            app.MapControllerRoute(
+                name: "articles",
+                pattern: "{culture=ru}/other/{article}", new { controller = "Article", action = "Index" });
+
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{action=Index}/{id?}", new { controller = "Home" });
+                pattern: "{culture=ru}/{action=Index}/", new { controller = "Home" });
 
             app.Run();
         }

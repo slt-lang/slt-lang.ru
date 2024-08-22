@@ -1,0 +1,7 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Article not found";
+    Locale locale = (Locale)ViewData["culture"];
+}
+
+<h2>@string.Format(locale["ArticleNotFound"], Model)</h2>

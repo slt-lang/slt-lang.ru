@@ -1,9 +1,10 @@
 ﻿@{
     ViewData["Title"] = "SLThree";
+    Locale locale = (Locale)ViewData["culture"];
 }
 
 <h1>SLThree</h1>
-    <p><strong>SLThree</strong> (англ. <em>Script Language 3</em> &mdash; Скриптовый язык 3, "третий скриптовый") &mdash; мультипарадигмальный интерпретируемый C-подобный язык программирования со строгой динамической типизацией, разработанный для платформы .NET. Смешивает императивный и функциональный подходы, а ООП реализуется единственным составным типом непосредственно языка &mdash; контекстом.</p>
+<p>@Html.Raw(locale["IndexH1Paragraph"])</p>
     <nav>
         <span>Навигация:</span>
         <h2><a href="#a-features">§ Особенности</a></h2>

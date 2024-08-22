@@ -1,0 +1,8 @@
+﻿@model IArticle
+@{
+    ViewData["Title"] = "Article";
+    Locale locale = (Locale)ViewData["culture"];
+}
+
+<h1>@Model.Key</h1>
+@Html.Raw(Model.Generate(new HyperContext(locale)))

@@ -1,0 +1,13 @@
+﻿@model string
+@{
+    Layout = "_RuLayout";
+    ViewData["Title"] = "Culture not found";
+}
+
+<h1>Language "@Model" not found. </h1>
+<p>The site is currently available in the following languages: 
+    @foreach (var x in Locale.Locales.Keys)
+    {
+        <a href="/@x">@x</a><span> </span>
+    }
+</p>

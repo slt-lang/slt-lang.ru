@@ -11,6 +11,7 @@ namespace Specification
 
     public interface IHyperContext
     {
+        Locale Localization { get; }
         IHyperOptions Options { get; }
     }
 
@@ -19,8 +20,9 @@ namespace Specification
         string View(IHyperContext context);
     }
 
-    public interface ISpecification
+    public interface IArticle
     {
+        public string Key { get; }
         public IList<ISpecificationNode> Nodes { get; }
         public string Generate(IHyperContext context)
         {
@@ -30,9 +32,22 @@ namespace Specification
             return sb.ToString();
         }
     }
+    
+    public class HyperContext : IHyperContext
+    {
+        public Locale Localization { get; set; }
+        public IHyperOptions Options { get; set; }
 
-    public partial class Specification(IList<ISpecificationNode> nodes) : ISpecification
+        public HyperContext(Locale localization, IHyperOptions options = null)
+        {
+            Localization = localization;
+            Options = options;
+        }
+    }
+
+    public partial class Article(string key, IList<ISpecificationNode> nodes) : IArticle
     {
         public IList<ISpecificationNode> Nodes { get; set; } = nodes;
+        public string Key { get; set; } = key;
     }
 }
