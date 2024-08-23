@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sltlang", "sltlang\sltlang.csproj", "{DCE81548-3B63-4F30-BC45-DE5F51BFE90E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specification", "Specification\Specification.csproj", "{1B785D02-BA44-46DC-ADD0-8B416AE25A6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Specification", "Specification\Specification.csproj", "{1B785D02-BA44-46DC-ADD0-8B416AE25A6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sltreserve", "sltreserve\sltreserve.csproj", "{77977089-ACC6-4760-ACD9-9C9412A68CB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1B785D02-BA44-46DC-ADD0-8B416AE25A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B785D02-BA44-46DC-ADD0-8B416AE25A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B785D02-BA44-46DC-ADD0-8B416AE25A6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77977089-ACC6-4760-ACD9-9C9412A68CB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77977089-ACC6-4760-ACD9-9C9412A68CB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77977089-ACC6-4760-ACD9-9C9412A68CB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77977089-ACC6-4760-ACD9-9C9412A68CB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

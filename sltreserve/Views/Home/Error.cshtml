@@ -1,0 +1,46 @@
+﻿@model int
+@{
+    Layout = null;
+    var culture = (string)ViewData["culture"];
+}
+
+<!DOCTYPE html>
+<html lang="@culture">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["title"]</title>
+    <link rel="icon" href="~/favicon.ico" />
+    <link rel='stylesheet' type='text/css' media='screen' href='~/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='~/sltcode.css'>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="~/"><img src="~/headlogo.png" alt="logo" /></a>
+            <ul>
+                <li>
+                    <a href="~/">Главная</a>
+                </li>
+                <li>
+                    <a href="~/@culture/FAQ">FAQ</a>
+                </li>
+                <li>
+                    <a href="~/@culture/syntax">Синтаксис</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <h1>@ViewData["title"]</h1>
+            <p>@ViewData["reloading"]</p>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <span>slt-lang</span>
+        </div>
+    </footer>
+</body>
+</html>

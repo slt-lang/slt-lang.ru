@@ -1,0 +1,54 @@
+.slt-code * {
+    font-family: monospace;
+    font-size: 14px;
+}
+.slt-operator {
+    color: black;
+}
+
+.slt-comment {
+    color: #808080;
+}
+
+.slt-digit {
+    color: #008000;
+}
+
+.slt-keyword1 {
+    color: #0000FF;
+}
+
+.slt-keyword2 {
+    color: #8f08c4;
+}
+
+.slt-type {
+    color: #2d91af;
+}
+
+.slt-call {
+    color: #74531f;
+}
+
+.slt-string {
+    color: #a31515;
+}
+
+.slt-code ol {
+    list-style-type: decimal;
+    padding-left: 50px;
+    display: block;
+    background-color: var(--ext-color-3);
+}
+
+.slt-code li {
+    display: list-item;
+    background-color: white;
+    padding-left: 10px;
+}
+@media screen and (max-width: 980px) {
+    .slt-code ol {
+        list-style-type: none;
+        padding-left: 0px;
+    }
+}

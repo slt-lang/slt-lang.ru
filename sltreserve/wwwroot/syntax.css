@@ -1,0 +1,37 @@
+.numliterals tr td {
+    text-align: center;
+}
+.priorities tr td.ops a {
+    font-family: monospace;
+    background-color: var(--ext-color-2);
+}
+.priorities tr td.ops span.splitter {
+    display: block;
+    border-top: var(--ext-color-1) dashed 1px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.priorities tr td.ops span.union {
+    font-family: monospace;
+    font-size: 133%;
+}
+div.priorities {
+    display: flex;
+}
+div.priorities table {
+    width: 100%;
+    margin: 3px;
+}
+
+@media screen and (max-width: 980px) {
+    div.priorities{
+        margin: 0 auto;
+        display: block;
+    }
+    .numliterals th {
+        font-size: 60%;
+    }
+    .numliterals {
+        margin: 0 auto;
+    }
+}
