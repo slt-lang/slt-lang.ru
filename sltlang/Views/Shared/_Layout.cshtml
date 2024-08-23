@@ -2,12 +2,12 @@
     Locale locale = (Locale)ViewData["culture"];
 }
 <!DOCTYPE html>
-<html lang="@ViewData["culture"]">
+<html lang="@locale.Identifier">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link rel="icon" href="~/slthree.ico" />
+    <link rel="icon" href="~/favicon.ico" />
     <link rel='stylesheet' type='text/css' media='screen' href='~/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='~/sltcode.css'>
 </head>
