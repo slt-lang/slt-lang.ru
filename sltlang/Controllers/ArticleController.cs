@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Specification;
 
 namespace sltlang.Controllers
@@ -14,6 +15,7 @@ namespace sltlang.Controllers
             _locale = locale;
         }
 
+        [OutputCache(VaryByRouteValueNames = ["culture"])]
         public IActionResult Index(string article)
         {
             var Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
@@ -27,6 +29,7 @@ namespace sltlang.Controllers
             return CultureNotFound(Language);
         }
 
+        [OutputCache(VaryByRouteValueNames = ["culture"])]
         public IActionResult ArticleNotFound(string article)
         {
             return View("ArticleNotFound", model: article);

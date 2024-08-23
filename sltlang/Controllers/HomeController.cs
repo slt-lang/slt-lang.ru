@@ -4,6 +4,7 @@ using sltlang.Models;
 using System.Diagnostics;
 using SLThree.sys;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace sltlang.Controllers
 {
@@ -18,6 +19,7 @@ namespace sltlang.Controllers
             _locale = locale;
         }
 
+        [OutputCache(VaryByRouteValueNames = ["culture"])]
         public IActionResult Index()
         {
             var Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
@@ -29,6 +31,7 @@ namespace sltlang.Controllers
             return CultureNotFound(Language);
         }
 
+        [OutputCache(VaryByRouteValueNames = ["culture"])]
         public IActionResult Faq()
         {
             var Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
@@ -39,6 +42,8 @@ namespace sltlang.Controllers
             }
             return CultureNotFound(Language);
         }
+
+        [OutputCache(VaryByRouteValueNames = ["culture"])]
         public IActionResult Syntax()
         {
             var Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
@@ -50,6 +55,7 @@ namespace sltlang.Controllers
             return CultureNotFound(Language);
         }
 
+        [OutputCache(VaryByRouteValueNames = ["culture", "statusCode"])]
         [Route("Error/{statusCode}")]
         public IActionResult Error(int statusCode)
         {
@@ -57,7 +63,7 @@ namespace sltlang.Controllers
             return View(new ErrorViewModel { StatusCode = statusCode, OriginalPath = feature?.OriginalPath });
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [OutputCache(VaryByRouteValueNames = ["lng"])]
         public IActionResult CultureNotFound(string lng)
         {
             return View("CultureNotFound", lng);

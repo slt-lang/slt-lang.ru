@@ -8,6 +8,7 @@ namespace sltlang
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddOutputCache();
             builder.Services.AddSingleton<ILocaleService, LocaleService>();
             builder.Services.AddControllersWithViews();
 
@@ -24,6 +25,7 @@ namespace sltlang
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseOutputCache();
             app.UseRouting();
 
             app.UseAuthorization();
