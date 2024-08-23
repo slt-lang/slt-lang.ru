@@ -1,9 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Locale locale = (Locale)ViewData["culture"];
+}
+<!DOCTYPE html>
 <html lang="@ViewData["culture"]">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] | slt-lang</title>
+    <title>@ViewData["Title"]</title>
     <link rel="icon" href="~/slthree.ico" />
     <link rel='stylesheet' type='text/css' media='screen' href='~/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='~/sltcode.css'>
@@ -11,16 +14,16 @@
 <body>
     <header>
         <nav>
-            <a href="~/@(((Locale)ViewData["culture"]).Identifier)/"><img src="~/headlogo.png" alt="logo" /></a>
+            <a href="~/@(locale.Identifier)/"><img src="~/headlogo.png" alt="logo" /></a>
             <ul>
                 <li>
-                    <a href="~/@(((Locale)ViewData["culture"]).Identifier)/">Главная</a>
+                    <a href="~/@(locale.Identifier)/">Главная</a>
                 </li>
                 <li>
-                    <a href="~/@(((Locale)ViewData["culture"]).Identifier)/FAQ">FAQ</a>
+                    <a href="~/@(locale.Identifier)/FAQ">FAQ</a>
                 </li>
                 <li>
-                    <a href="~/@(((Locale)ViewData["culture"]).Identifier)/syntax">Синтаксис</a>
+                    <a href="~/@(locale.Identifier)/syntax">Синтаксис</a>
                 </li>
             </ul>
         </nav>
