@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sltlang", "sltlang\sltlang.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Specification", "Specification\Specification.csproj", "{1B785D02-BA44-46DC-ADD0-8B416AE25A6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sltreserve", "sltreserve\sltreserve.csproj", "{77977089-ACC6-4760-ACD9-9C9412A68CB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sltreserve", "sltreserve\sltreserve.csproj", "{77977089-ACC6-4760-ACD9-9C9412A68CB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

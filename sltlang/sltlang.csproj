@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Specification\Specification.csproj" />
+    <PackageReference Include="SLThree" Version="0.9.0-alpha.580" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Specification\" />
+    <ProjectReference Include="..\Specification\Specification.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,56 @@
+﻿@using SLThree.Extensions
+@model Type
+@{
+    ViewData["Title"] = Model.Name;
+    Locale locale = (Locale)ViewData["culture"];
+    Layout = "_Layout";
+
+    string MakeLink(Type type)
+    {
+        if (sltlang.Controllers.SpecificationController.Types.Values.Contains(type))
+            return $"<a href=\"/{locale.Identifier}/specification/{sltlang.Controllers.SpecificationController.Types.First(x => x.Value == type).Key}\">{type.GetTypeString()}</a>";
+        if (sltlang.Controllers.SpecificationController.DefaultTypes.Contains(type))
+            return $"<a href=\"/{locale.Identifier}/specification/{type.Name.ToLower()}\">{type.GetTypeString()}</a>";
+        return $"<span class=\"slt-type\">{type.GetTypeString()}</span>";
+    }
+    var fields = Model.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+    var properties = Model.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+    var inheritors = Model.Assembly.GetTypes().Where(x => x != Model && x.IsType(Model)).ToArray();
+}
+
+<h1>@Model.FullName</h1>
+@if (fields.Length > 0)
+{
+    <h2>Fields</h2>
+    <ul>
+        @foreach (var x in fields)
+        {
+            <li>
+                <strong>
+                    @Html.Raw(MakeLink(x.FieldType))
+                </strong> @x.Name
+            </li>
+        }
+    </ul>
+}
+@if (properties.Length > 0)
+{
+    <h2>Properties</h2>
+    <ul>
+        @foreach (var x in properties)
+        {
+            <li><strong>@Html.Raw(MakeLink(x.PropertyType))</strong> @x.Name</li>
+        }
+    </ul>
+}
+@RenderBody()
+@if (inheritors.Length > 0)
+{
+    <h2>Inheritors</h2>
+    <ul>
+        @foreach (var x in inheritors)
+        {
+            <li><strong>@Html.Raw(MakeLink(x))</strong></li>
+        }
+    </ul>
+}

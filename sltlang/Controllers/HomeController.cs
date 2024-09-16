@@ -55,6 +55,18 @@ namespace sltlang.Controllers
             return CultureNotFound(Language);
         }
 
+        [OutputCache(VaryByRouteValueNames = ["culture"])]
+        public IActionResult Health()
+        {
+            var Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
+            if (_locale.Locales.ContainsKey(Language))
+            {
+                ViewData["culture"] = _locale.Locales[Language];
+                return View();
+            }
+            return CultureNotFound(Language);
+        }
+
         [OutputCache(VaryByRouteValueNames = ["culture", "statusCode"])]
         [Route("Error/{statusCode}")]
         public IActionResult Error(int statusCode)

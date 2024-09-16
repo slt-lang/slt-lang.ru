@@ -1,2 +1,9 @@
-﻿IndexH1Paragraph=<strong>SLThree</strong> (<em>Script Language 3</em>) &mdash; a multi-paradigm interpreted C-like programming language with strict dynamic typing, developed for the .NET platform. Mixes imperative and functional approaches, and OOP is implemented by a single composite type of the language itself &mdash; context.
+﻿Title_Home=Main
+Title_FAQ=FAQ
+Title_Syntax=Syntax
+Title_Health=Server Info
+Health_DeployDT=Deployed
+Health_StartDT=Started
+Health_Version=Version
+IndexH1Paragraph=<strong>SLThree</strong> (<em>Script Language 3</em>) &mdash; a multi-paradigm interpreted C-like programming language with strict dynamic typing, developed for the .NET platform. Mixes imperative and functional approaches, and OOP is implemented by a single composite type of the language itself &mdash; context.
 ArticleNotFound=Article "{0}" was not found

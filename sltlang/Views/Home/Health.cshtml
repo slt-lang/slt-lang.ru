@@ -1,0 +1,9 @@
+﻿@using System.Diagnostics
+@{
+    Locale locale = (Locale)ViewData["culture"];
+    ViewData["Title"] = locale["Title_Health"];
+}
+<h1>slt-lang</h1>
+<span>@($"{locale["Health_DeployDT"]}: {File.GetLastWriteTime(typeof(Program).Assembly.Location)}")</span><br/>
+<span>@($"{locale["Health_StartDT"]}: {Process.GetCurrentProcess().StartTime}")</span><br/>
+<span>@($"{locale["Health_Version"]}: {typeof(Program).Assembly.GetName().Version}")</span><br/>
