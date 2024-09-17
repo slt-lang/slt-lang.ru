@@ -2,51 +2,87 @@
 @model Type
 @{
     ViewData["Title"] = Model.Name;
-    Locale locale = (Locale)ViewData["culture"];
+    Locale locale = (Locale)ViewData["culture"]!;
     Layout = "_Layout";
 
+    IEnumerable<Type> GetAncestors(Type type)
+    {
+        do
+        {
+            yield return type;
+            type = type.BaseType;
+        }
+        while (type != null);
+    }
+    string ReplaceCompares(string str)
+    {
+        str = str.Replace("<", "&lt;");
+        str = str.Replace(">", "&gt;");
+        str = str.Replace("+", ".");
+        return str;
+    }
+    string MakeGenericLink(Type type)
+    {
+        if (type.IsArray)
+        {
+            if (type.GetArrayRank() != 1)
+            {
+                return $"array{type.GetArrayRank()}&lt;{MakeLink(type.GetElementType())}&gt;";
+            }
+
+            return "array&lt;" + MakeLink(type.GetElementType()) + "&gt;";
+        }
+
+        if (type.IsGenericTypeDefinition)
+        {
+            int num = type.GetGenericArguments().Length;
+            return type.FullName.Substring(0, type.FullName.IndexOf('`')).Split('.').Last() + "&lt;" + ((num > 1) ? new string(',', num) : "") + "&gt;";
+        }
+
+        Type genericTypeDefinition = type.GetGenericTypeDefinition();
+        string empty = string.Empty;
+        empty = ((genericTypeDefinition == typeof(List<>)) ? "list" : ((genericTypeDefinition == typeof(Dictionary<,>)) ? "dict" : ((genericTypeDefinition == typeof(Stack<>)) ? "stack" : ((genericTypeDefinition == typeof(Queue<>)) ? "queue" : (type.Name.StartsWith("ValueTuple") ? "tuple" : ((type.FullName == null) ? type.Name.Substring(0, type.Name.IndexOf('`')).Split('.').Last() : type.FullName.Substring(0, type.FullName.IndexOf('`')).Split('.').Last()))))));
+        return empty + "&lt;" + type.GetGenericArguments().ConvertAll((Type x) => MakeLink(x)).JoinIntoString(", ") + "&gt;";
+    }
     string MakeLink(Type type)
     {
-        if (sltlang.Controllers.SpecificationController.Types.Values.Contains(type))
-            return $"<a href=\"/{locale.Identifier}/specification/{sltlang.Controllers.SpecificationController.Types.First(x => x.Value == type).Key}\">{type.GetTypeString()}</a>";
-        if (sltlang.Controllers.SpecificationController.DefaultTypes.Contains(type))
-            return $"<a href=\"/{locale.Identifier}/specification/{type.Name.ToLower()}\">{type.GetTypeString()}</a>";
-        return $"<span class=\"slt-type\">{type.GetTypeString()}</span>";
+        if (type.IsGenericType || type.IsArray || type.IsGenericTypeDefinition)
+            return $"<span class=\"slt-type\">{MakeGenericLink(type)}</span>";
+        if (sltlang.Controllers.SpecificationController.TypesWithArticle.Values.Contains(type))
+            return $"<a href=\"/{locale.Identifier}/specification/{sltlang.Controllers.SpecificationController.TypesWithArticle.First(x => x.Value == type).Key}\">{ReplaceCompares(type.GetTypeString())}</a>";
+        if (sltlang.Controllers.SpecificationController.SupportedTypes.Contains(type))
+            return $"<a href=\"/{locale.Identifier}/specification/{type.Name.ToLower()}\">{ReplaceCompares(type.GetTypeString())}</a>";
+        return $"<span class=\"slt-type\">{ReplaceCompares(type.GetTypeString())}</span>";
     }
     var fields = Model.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
     var properties = Model.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-    var inheritors = Model.Assembly.GetTypes().Where(x => x != Model && x.IsType(Model)).ToArray();
+    var inheritors = Model.Assembly.GetTypes().Where(x => x.BaseType == Model).ToArray();
 }
 
 <h1>@Model.FullName</h1>
-@if (fields.Length > 0)
+<p>@locale["Specification_Hierarchy"]: @Html.Raw(GetAncestors(Model).Reverse().Select(x => MakeLink(x)).JoinIntoString(" → "))</p>
+<p>@locale["Specification_Interfaces"]: @Html.Raw(Model.GetInterfaces().Select(x => MakeLink(x)).JoinIntoString(", "))</p>
+@if (fields.Length > 0 || properties.Length > 0)
 {
-    <h2>Fields</h2>
+    <h2>@locale["Specification_Members"]</h2>
     <ul>
         @foreach (var x in fields)
         {
-            <li>
-                <strong>
-                    @Html.Raw(MakeLink(x.FieldType))
-                </strong> @x.Name
-            </li>
+            <li><strong>@x.Name</strong> @Html.Raw(MakeLink(x.FieldType))</li>
         }
-    </ul>
-}
-@if (properties.Length > 0)
-{
-    <h2>Properties</h2>
-    <ul>
         @foreach (var x in properties)
         {
-            <li><strong>@Html.Raw(MakeLink(x.PropertyType))</strong> @x.Name</li>
+            <li><strong>@x.Name</strong>@if (!x.CanWrite)
+                {
+                    <span class="slt-keyword1">readonly</span>
+                } @Html.Raw(MakeLink(x.PropertyType))</li>
         }
     </ul>
 }
 @RenderBody()
 @if (inheritors.Length > 0)
 {
-    <h2>Inheritors</h2>
+    <h2>@locale["Specification_Inheritors"]</h2>
     <ul>
         @foreach (var x in inheritors)
         {
