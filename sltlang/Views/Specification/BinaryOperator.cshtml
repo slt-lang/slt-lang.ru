@@ -3,3 +3,7 @@
     Locale locale = (Locale)ViewData["culture"];
     Layout = "SpecLayout";
 }
+<h2>@locale["Specification_CodeExample"]</h2>
+@Html.Raw(SpecHelper.SLThreeCode(@"
+    x = (2 + 2) * 2;
+", new()))

@@ -1,8 +1,10 @@
-﻿@{
-    Locale locale = (Locale)ViewData["culture"];
+﻿@using Microsoft.AspNetCore.Http.Extensions;
+@{
+    var locale = (Locale)ViewData["culture"] ?? Locale.Locales["ru"];
+    var displayUri = Context.Request.GetEncodedPathAndQuery();
 }
 <!DOCTYPE html>
-<html lang="@locale.Identifier">
+<html lang="@(locale?.Identifier??"ru")">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -30,17 +32,26 @@
     </header>
     <main>
         <div class="container">
+            <div class="floatimage-right">
+                @foreach (var x in Locale.Locales.Keys)
+                {
+                    @if (locale != null && displayUri.Contains($"/{locale.Identifier}/"))
+                    {
+                        <a href="@displayUri.Replace($"/{locale.Identifier}/", $"/{x}/")">@x</a>
+                    }
+                    else
+                    {
+                        <a href="/@x">@x</a>
+                    }
+                    <span> </span>
+                }
+            </div>
             @RenderBody()
         </div>
     </main>
     <footer>
         <div class="container">
-            <span>slt-lang</span>
-            @foreach (var x in Locale.Locales.Keys)
-            {
-                <a href="/@x">@x</a>
-                <span> </span>
-            }
+            <span><a href="~/@(locale.Identifier)/info">slt-lang @typeof(Program).Assembly.GetName().Version!.ToString(2)</a></span>
         </div>
     </footer>
     @await RenderSectionAsync("Scripts", required: false)

@@ -199,12 +199,16 @@ main table {
 }
 main div.textbox {
     padding: 5px;
-    background-color: var(--ext-color-2);
+    list-style-type: none;
+    overflow: hidden;
+}
+main div.textbox {
+    padding: 5px;
     list-style-type: none;
     overflow: hidden;
 }
 
-main div.textbox div, main div.textbox code {
+main div.textbox div, main div.textbox.code, main div.textbox div, main div.textbox code {
     display: block;
     font-size: 90%;
     background-color: white;

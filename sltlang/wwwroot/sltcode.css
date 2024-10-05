@@ -1,8 +1,14 @@
+.slt-code {
+    font-family: monospace;
+    font-size: 14px;
+    padding: 0px;
+    padding-left: 15px;
+}
 .slt-code * {
     font-family: monospace;
     font-size: 14px;
 }
-.slt-operator {
+.slt-operator, .slt-plain {
     color: black;
 }
 

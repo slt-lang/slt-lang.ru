@@ -1,0 +1,5 @@
+﻿Element[BinaryOperator.Left]=Левый операнд
+Element[BinaryOperator.Right]=Правый операнд
+Element[BinaryOperator.Operator]=Строковое представление операции
+Element[BaseExpression.PrioriryRaised]=Косметический флаг сохраняющий информацию о подъёме приоритета
+Element[BaseExpression.SourceContext]=Источник экземпляра этого выражения в коде

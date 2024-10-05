@@ -19,53 +19,28 @@ namespace sltlang.Controllers
             _locale = locale;
         }
 
-        [OutputCache(VaryByRouteValueNames = ["culture"])]
-        public IActionResult Index()
+        private bool NotCulture(out string Language)
         {
-            var Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
+            Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
             if (_locale.Locales.ContainsKey(Language))
             {
                 ViewData["culture"] = _locale.Locales[Language];
-                return View();
+                return false;
             }
-            return CultureNotFound(Language);
+            return true;
         }
 
         [OutputCache(VaryByRouteValueNames = ["culture"])]
-        public IActionResult Faq()
-        {
-            var Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
-            if (_locale.Locales.ContainsKey(Language))
-            {
-                ViewData["culture"] = _locale.Locales[Language];
-                return View();
-            }
-            return CultureNotFound(Language);
-        }
+        public IActionResult Index() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
 
         [OutputCache(VaryByRouteValueNames = ["culture"])]
-        public IActionResult Syntax()
-        {
-            var Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
-            if (_locale.Locales.ContainsKey(Language))
-            {
-                ViewData["culture"] = _locale.Locales[Language];
-                return View();
-            }
-            return CultureNotFound(Language);
-        }
+        public IActionResult Faq() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
 
         [OutputCache(VaryByRouteValueNames = ["culture"])]
-        public IActionResult Health()
-        {
-            var Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
-            if (_locale.Locales.ContainsKey(Language))
-            {
-                ViewData["culture"] = _locale.Locales[Language];
-                return View();
-            }
-            return CultureNotFound(Language);
-        }
+        public IActionResult Syntax() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
+
+        [OutputCache(VaryByRouteValueNames = ["culture"])]
+        public IActionResult Info() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
 
         [OutputCache(VaryByRouteValueNames = ["culture", "statusCode"])]
         [Route("Error/{statusCode}")]

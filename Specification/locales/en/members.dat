@@ -1,0 +1,5 @@
+﻿Element[BinaryOperator.Left]=Left operand
+Element[BinaryOperator.Right]=Right operand
+Element[BinaryOperator.Operator]=String representation of operator
+Element[BaseExpression.PrioriryRaised]=A cosmetic flag that stores information about the priority rise
+Element[BaseExpression.SourceContext]=The source context of this expression
