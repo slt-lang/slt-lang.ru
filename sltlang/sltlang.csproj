@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Version>1.1.70</Version>
+    <Version>1.1.81</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="changelog.html" />
@@ -13,7 +13,7 @@
     <EmbeddedResource Include="changelog.html" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SLThree" Version="0.9.0-alpha.700" />
+    <PackageReference Include="SLThree" Version="0.9.0-alpha.714" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Specification\Specification.csproj" />

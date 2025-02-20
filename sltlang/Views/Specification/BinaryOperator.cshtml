@@ -6,4 +6,4 @@
 <h2>@locale["Specification_CodeExample"]</h2>
 @Html.Raw(SpecHelper.SLThreeCode(@"
     x = (2 + 2) * 2;
-", new()))
+", new(), new() { { 1, locale["Specification_CodeExample"] } }))

@@ -37,13 +37,12 @@
                 {
                     @if (locale != null && displayUri.Contains($"/{locale.Identifier}/"))
                     {
-                        <a href="@displayUri.Replace($"/{locale.Identifier}/", $"/{x}/")">@x</a>
+                        <a href="@displayUri.Replace($"/{locale.Identifier}/", $"/{x}/")" style="display: block; text-align: right">@x</a>
                     }
                     else
                     {
-                        <a href="/@x">@x</a>
+                        <a href="/@x" style="display: block; text-align: right">@x</a>
                     }
-                    <span> </span>
                 }
             </div>
             @RenderBody()

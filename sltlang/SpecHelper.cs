@@ -59,12 +59,12 @@ namespace sltlang
 
         private static readonly SLThreeHtml Restorator = new();
         private static readonly Parser Parser = new();
-        public static string SLThreeCode(string code, Dictionary<string, object> options)
+        public static string SLThreeCode(string code, Dictionary<string, object> options, Dictionary<int, string> LineComments = null!)
         {
             var lines = Restorator.Restore(Parser.ParseScript(code.Trim()), new SLThree.ExecutionContext(false, false, SLThree.LocalVariablesContainer.GetFromDictionary(options))).Split("\n").ToList();
-            if (string.IsNullOrWhiteSpace(lines[lines.Count - 1])) lines.RemoveAt(lines.Count - 1);
-            var hlines = lines.Select(x =>
+            var hlines = lines.Select((x, i) =>
             {
+                if (LineComments?.TryGetValue(i + 1, out var comm) ?? false) x += $"<span class=\"slt-comment\"> //{comm}</span>";
                 return $"<li>{x}</li>";
             });
             return "<div class=\"textbox slt-code code\"><ol>" + hlines.JoinIntoString("") + "</ol></div>";
