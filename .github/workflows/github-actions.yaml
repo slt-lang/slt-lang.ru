@@ -1,0 +1,65 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Publish
+        run: dotnet publish --configuration Release --output ./publish
+
+      - name: Configure SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy via SSH
+        run: |
+          # Настройки SSH
+          HOST=${{ secrets.SSH_HOST }}
+          USER=${{ secrets.SSH_USER }}
+          DEPLOY_PATH=${{ secrets.DEPLOY_PATH }}
+          APP_NAME=${{ secrets.APP_NAME }} # Имя вашего приложения (например, MyWebApp)
+          SERVICE_NAME=${{ secrets.SERVICE_NAME }} # Имя сервиса systemd (например, mywebapp.service)
+
+          # Останавливаем сервис
+          echo "Stopping service..."
+          ssh -o StrictHostKeyChecking=no $USER@$HOST "sudo systemctl stop $SERVICE_NAME"
+
+          # Удаляем старые файлы (если нужно)
+          echo "Removing old files..."
+          ssh -o StrictHostKeyChecking=no $USER@$HOST "rm -rf $DEPLOY_PATH/*"
+
+          # Копируем файлы
+          echo "Copying files..."
+          rsync -avz ./publish/ $USER@$HOST:$DEPLOY_PATH
+
+          # Меняем владельца папки (если нужно)
+          echo "Setting ownership..."
+          ssh -o StrictHostKeyChecking=no $USER@$HOST "sudo chown -R $USER:$USER $DEPLOY_PATH"
+
+          # Перезапускаем сервис
+          echo "Starting service..."
+          ssh -o StrictHostKeyChecking=no $USER@$HOST "sudo systemctl start $SERVICE_NAME"
+
+          echo "Deployment complete!"

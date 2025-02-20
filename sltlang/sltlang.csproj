@@ -18,7 +18,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Specification\Specification.csproj" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="&quot;..\verser\verser.exe&quot; --append &quot;..\sltlang\sltlang.csproj&quot;" />
-  </Target>
 </Project>
