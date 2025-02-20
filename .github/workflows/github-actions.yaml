@@ -36,8 +36,8 @@ jobs:
       - name: Deploy via SSH
         run: |
           # Настройки SSH
-          HOST=${{ secrets.SSH_HOST }}
-          USER=${{ secrets.SSH_USER }}
+          HOST=79.174.91.25:3771
+          USER=root
           DEPLOY_PATH=${{ secrets.DEPLOY_PATH }}
           APP_NAME=${{ secrets.APP_NAME }} # Имя вашего приложения (например, MyWebApp)
           SERVICE_NAME=${{ secrets.SERVICE_NAME }} # Имя сервиса systemd (например, mywebapp.service)
