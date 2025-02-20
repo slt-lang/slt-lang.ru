@@ -36,30 +36,31 @@ jobs:
       - name: Deploy via SSH
         run: |
           # Настройки SSH
-          HOST=79.174.91.25:3771
-          USER=root
+          HOST=${{ secrets.SSH_HOST }}
+          PORT=${{ secrets.SSH_PORT }}
+          USER=${{ secrets.SSH_USER }}
           DEPLOY_PATH=${{ secrets.DEPLOY_PATH }}
           APP_NAME=${{ secrets.APP_NAME }} # Имя вашего приложения (например, MyWebApp)
           SERVICE_NAME=${{ secrets.SERVICE_NAME }} # Имя сервиса systemd (например, mywebapp.service)
 
           # Останавливаем сервис
           echo "Stopping service..."
-          ssh -o StrictHostKeyChecking=no $USER@$HOST "sudo systemctl stop $SERVICE_NAME"
+          ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT "sudo systemctl stop $SERVICE_NAME"
 
           # Удаляем старые файлы (если нужно)
           echo "Removing old files..."
-          ssh -o StrictHostKeyChecking=no $USER@$HOST "rm -rf $DEPLOY_PATH/*"
+          ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT "rm -rf $DEPLOY_PATH/*"
 
           # Копируем файлы
           echo "Copying files..."
-          rsync -avz ./publish/ $USER@$HOST:$DEPLOY_PATH
+          rsync -avz ./publish/ $USER@$HOST:$DEPLOY_PATH -e "ssh -p $PORT"
 
           # Меняем владельца папки (если нужно)
           echo "Setting ownership..."
-          ssh -o StrictHostKeyChecking=no $USER@$HOST "sudo chown -R $USER:$USER $DEPLOY_PATH"
+          ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT "sudo chown -R $USER:$USER $DEPLOY_PATH"
 
           # Перезапускаем сервис
           echo "Starting service..."
-          ssh -o StrictHostKeyChecking=no $USER@$HOST "sudo systemctl start $SERVICE_NAME"
+          ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT "sudo systemctl start $SERVICE_NAME"
 
           echo "Deployment complete!"
