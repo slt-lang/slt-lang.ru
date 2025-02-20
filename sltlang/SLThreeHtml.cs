@@ -52,17 +52,17 @@ namespace sltlang
 
             public override void WriteStringText(string s)
             {
-                Sb.AppendLine(Html(s, "span", "slt-string"));
+                Sb.Append(Html(s, "span", "slt-string"));
             }
 
             public override void WriteErrorText(string s)
             {
-                Sb.AppendLine(Html(s, "span", "slt-error"));
+                Sb.Append(Html(s, "span", "slt-error"));
             }
 
             public void WriteDigitText(string s)
             {
-                Sb.AppendLine(Html(s, "span", "slt-digit"));
+                Sb.Append(Html(s, "span", "slt-digit"));
             }
         }
     }
