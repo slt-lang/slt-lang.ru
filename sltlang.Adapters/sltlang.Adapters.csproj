@@ -7,10 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="locales\en\members.dat" />
-    <EmbeddedResource Include="locales\en\default.dat" />
-    <EmbeddedResource Include="locales\ru\members.dat" />
-    <EmbeddedResource Include="locales\ru\default.dat" />
+    <None Remove="samples\expr.slt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="samples\*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\sltlang.Domain\sltlang.Domain.csproj" />
+    <ProjectReference Include="..\Specification\Specification.csproj" />
   </ItemGroup>
 
 </Project>

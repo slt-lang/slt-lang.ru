@@ -1,20 +1,12 @@
 ﻿using SLThree.Extensions;
 using SLThree.Language;
-using Specification;
+using sltlang.Adapters.Adapters;
+using sltlang.Domain.Models;
 
 namespace sltlang
 {
     public static class SpecHelper
     {
-        public static IEnumerable<Type> GetAncestors(Type type)
-        {
-            do
-            {
-                yield return type;
-                type = type.BaseType;
-            }
-            while (type != null);
-        }
         public static string ReplaceCompares(string str)
         {
             str = str.Replace("<", "&lt;");
@@ -50,21 +42,30 @@ namespace sltlang
         {
             if (type.IsGenericType || type.IsArray || type.IsGenericTypeDefinition)
                 return $"<span class=\"slt-type\">{MakeGenericLink(type, locale)}</span>";
-            if (sltlang.Controllers.SpecificationController.TypesWithArticle.Values.Contains(type))
-                return $"<a href=\"/{locale.Identifier}/specification/{sltlang.Controllers.SpecificationController.TypesWithArticle.First(x => x.Value == type).Key}\">{ReplaceCompares(type.GetTypeString())}</a>";
-            if (sltlang.Controllers.SpecificationController.SupportedTypes.Contains(type))
-                return $"<a href=\"/{locale.Identifier}/specification/{type.Name.ToLower()}\">{ReplaceCompares(type.GetTypeString())}</a>";
+            if (SampleMaker.ListedTypes.Contains(type))
+                return $"<a href=\"/{locale.Identifier}/syntax/{type.Name.ToLower()}\">{ReplaceCompares(type.GetTypeString())}</a>";
             return $"<span class=\"slt-type\">{ReplaceCompares(type.GetTypeString())}</span>";
         }
 
-        private static readonly SLThreeHtml Restorator = new();
+        private static readonly SLThreeHtmlRestorator Restorator = new();
         private static readonly Parser Parser = new();
         public static string SLThreeCode(string code, Dictionary<string, object> options, Dictionary<int, string> LineComments = null!)
         {
+            options["Writer"] = new SLThreeHtmlRestorator.HtmlWriter();
             var lines = Restorator.Restore(Parser.ParseScript(code.Trim()), new SLThree.ExecutionContext(false, false, SLThree.LocalVariablesContainer.GetFromDictionary(options))).Split("\n").ToList();
             var hlines = lines.Select((x, i) =>
             {
                 if (LineComments?.TryGetValue(i + 1, out var comm) ?? false) x += $"<span class=\"slt-comment\"> //{comm}</span>";
+                return $"<li>{x}</li>";
+            });
+            return "<div class=\"textbox slt-code code\"><ol>" + hlines.JoinIntoString("") + "</ol></div>";
+        }
+        public static string SLThreeCode(CodeSample code)
+        {
+            var lines = code.ReadyHtml.Split("\n").ToList();
+            var hlines = lines.Select((x, i) =>
+            {
+                if (code.LineComments?.TryGetValue(i + 1, out var comm) ?? false) x += $"<span class=\"slt-comment\"> //{comm}</span>";
                 return $"<li>{x}</li>";
             });
             return "<div class=\"textbox slt-code code\"><ol>" + hlines.JoinIntoString("") + "</ol></div>";

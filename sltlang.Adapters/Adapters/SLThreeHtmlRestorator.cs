@@ -1,13 +1,10 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using SLThree;
-using SLThree.Language;
-using SLThree.Metadata;
+﻿using SLThree.Language;
 
-namespace sltlang
+namespace sltlang.Adapters.Adapters
 {
-    public class SLThreeHtml : Restorator
+    public class SLThreeHtmlRestorator : Restorator
     {
-        public SLThreeHtml() : base()
+        public SLThreeHtmlRestorator() : base()
         {
             Writer = new HtmlWriter();
         }
@@ -60,7 +57,7 @@ namespace sltlang
                 Sb.Append(Html(s, "span", "slt-error"));
             }
 
-            public void WriteDigitText(string s)
+            public override void WriteDigitText(string s)
             {
                 Sb.Append(Html(s, "span", "slt-digit"));
             }

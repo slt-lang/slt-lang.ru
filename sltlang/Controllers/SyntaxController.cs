@@ -1,30 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using SLThree;
+using SLThree.Extensions;
 using sltlang.Domain.Ports;
 using Specification;
+using System.Collections.Concurrent;
 
 namespace sltlang.Controllers
 {
-    public class ArticleController : Controller
+    public class SyntaxController(ILocaleService locale, ILogger<HomeController> logger, ISyntaxPageStorage syntaxPageStorage) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ILocaleService _locale;
-
-        public ArticleController(ILogger<HomeController> logger, ILocaleService locale)
-        {
-            _logger = logger;
-            _locale = locale;
-        }
-
         [OutputCache(VaryByRouteValueNames = ["culture"])]
         public IActionResult Index(string article)
         {
+            article = article.ToLower();
             var Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
-            if (_locale.Locales.ContainsKey(Language))
+            if (locale.Locales.ContainsKey(Language))
             {
-                ViewData["culture"] = _locale.Locales[Language];
-                if (Specification.Article.OtherArticles.ContainsKey(article))
-                    return View(Specification.Article.OtherArticles[article]);
+                ViewData["culture"] = locale.Locales[Language];
+                var pages = syntaxPageStorage.GetPages().Where(x => x.CultureKey == Language);
+                var page = pages.FirstOrDefault(x => x.Name == article);
+                if (page != null)
+                    return View(page);
+                //if (Article.ExecutablesSpecification.ContainsKey(article))
+                //    return View(Article.ExecutablesSpecification[article]);
                 return ArticleNotFound(article);
             }
             return CultureNotFound(Language);

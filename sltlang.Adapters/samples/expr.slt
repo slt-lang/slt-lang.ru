@@ -1,0 +1,6 @@
+context メタデータ {
+    CultureKey = "ru";
+    Title = "Сложение и умножение чисел";
+    Description = "";
+};
+2 + 2 * 2;

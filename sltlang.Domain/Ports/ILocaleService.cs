@@ -1,6 +1,7 @@
-﻿using System.Collections.Concurrent;
+﻿using sltlang.Domain.Models;
+using System.Collections.Concurrent;
 
-namespace Specification
+namespace sltlang.Domain.Ports
 {
     public interface ILocaleService
     {

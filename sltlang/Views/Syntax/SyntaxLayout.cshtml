@@ -1,0 +1,54 @@
+﻿@using SLThree.Extensions
+@using static sltlang.SpecHelper
+@model SyntaxPage
+@{
+    ViewData["Title"] = Model.Name;
+    Locale locale = (Locale)ViewData["culture"]!;
+    Layout = "_Layout";
+}
+
+<h1>@Html.Raw(ReplaceCompares(Model.Name))</h1>
+<p>@locale["Specification_Hierarchy"]: @Html.Raw(Model.Hierarchy.Select(x => MakeLink(x.Type, locale)).JoinIntoString(" → "))</p>
+<p>@locale["Specification_Interfaces"]: @Html.Raw(Model.Interfaces.Select(x => MakeLink(x.Type, locale)).JoinIntoString(", "))</p>
+@if (Model.Members.Length > 0)
+{
+    <h2>@locale["Specification_Members"]</h2>
+    <ul>
+        @foreach (var x in Model.Members)
+        {
+            <li><strong>@x.Name</strong>@if (x.IsReadonly)
+                {
+                    <span class="slt-keyword1">readonly </span>
+                } @if (x.IsStatic)
+                {
+                    <span class="slt-keyword1">static </span>
+                } @Html.Raw(MakeLink(x.Type.Type, locale))
+                @{
+                    var elementHelp = locale[$"Element[{x.Type.Type.Name}.{x.Name}]"];
+                    if (elementHelp != $"Element[{x.Type.Type.Name}.{x.Name}]")
+                    {
+                        <br><span>@elementHelp</span>
+                    }
+                }</li>
+        }
+    </ul>
+}
+@if (Model.CodeSamples.Any())
+{
+    <h2>@locale["Specification_CodeExample"]</h2>
+    @foreach (var sample in Model.CodeSamples)
+    {
+        @Html.Raw(SLThreeCode(sample));
+    }
+}
+@RenderBody()
+@if (Model.Inheritors.Any())
+{
+    <h2>@locale["Specification_Inheritors"]</h2>
+    <ul>
+        @foreach (var x in Model.Inheritors)
+        {
+            <li><strong>@Html.Raw(MakeLink(x.Type, locale))</strong></li>
+        }
+    </ul>
+}
