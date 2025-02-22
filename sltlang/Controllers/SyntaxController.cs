@@ -19,7 +19,7 @@ namespace sltlang.Controllers
             {
                 ViewData["culture"] = locale.Locales[Language];
                 var pages = syntaxPageStorage.GetPages().Where(x => x.CultureKey == Language);
-                var page = pages.FirstOrDefault(x => x.Name == article);
+                var page = pages.FirstOrDefault(x => string.Compare(x.Name, article, true) == 0);
                 if (page != null)
                     return View(page);
                 //if (Article.ExecutablesSpecification.ContainsKey(article))

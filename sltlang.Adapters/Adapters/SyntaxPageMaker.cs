@@ -25,7 +25,7 @@ namespace sltlang.Adapters.Adapters
                 Interfaces = type.GetInterfaces()
             };
 
-            var name = type.Name.ToLower();
+            var name = type.Name;
 
             var ret = new SyntaxPage()
             {
