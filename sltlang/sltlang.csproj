@@ -18,6 +18,6 @@
     <ProjectReference Include="..\Specification\Specification.csproj" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet &quot;..\verser\verser.dll&quot; --append &quot;..\sltlang\sltlang.csproj&quot;" />
+    <Exec Command="dotnet &quot;..\verser\verser.dll&quot; --append &quot;..\sltlang\sltlang.csproj&quot;" IgnoreExitCode="true" />
   </Target>
 </Project>
