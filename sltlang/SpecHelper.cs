@@ -65,7 +65,7 @@ namespace sltlang
             var lines = code.ReadyHtml.Split("\n").ToList();
             var hlines = lines.Select((x, i) =>
             {
-                if (code.LineComments?.TryGetValue(i + 1, out var comm) ?? false) x += $"<span class=\"slt-comment\"> //{comm}</span>";
+                if (code.LineComments?.TryGetValue(i + 1L, out var comm) ?? false) x += $"<span class=\"slt-comment\"> //{comm}</span>";
                 return $"<li>{x}</li>";
             });
             return "<div class=\"textbox slt-code code\"><ol>" + hlines.JoinIntoString("") + "</ol></div>";

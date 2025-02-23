@@ -1,0 +1,7 @@
+context メタデータ {
+    CultureKey = "ru";
+    Title = "Вызов только что созданного анонимного метода";
+    Description = "";
+};
+i = 1;
+((cnt) => cnt.i += 1)(self);

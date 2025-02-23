@@ -34,6 +34,7 @@ namespace sltlang.Adapters.Adapters
             ret.Title = metadata?["Title"]?.ToString()!;
             ret.Description = metadata?["Description"]?.ToString()!;
             ret.CultureKey = metadata?["CultureKey"]?.ToString() ?? MultiCultureKey.Value;
+            ret.LineComments = metadata?["LineComments"] as Dictionary<object, object>;
             //line comments here from metadata
 
             var typeCounter = new TypeCounter();

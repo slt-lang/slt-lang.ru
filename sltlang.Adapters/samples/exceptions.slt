@@ -1,0 +1,14 @@
+context メタデータ {
+    CultureKey = "ru";
+    Title = "Обработка исключений";
+    Description = "50% шанс на вызов исключения";
+};
+using console;
+try {
+    if (^50%) 
+        throw new System.Exception();
+} catch (e) {
+    console.writeln($"caught {e}");
+} finally {
+    console.writeln("finally");
+}
