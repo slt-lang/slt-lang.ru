@@ -1,0 +1,6 @@
+context メタデータ {
+    CultureKey = "ru";
+    Title = "Тернарная операция";
+    Description = "Условие должно возвращать bool";
+};
+true ? "true" : "false";

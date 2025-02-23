@@ -1,0 +1,9 @@
+context メタデータ {
+    CultureKey = "ru";
+    Title = "Множественное присваивание";
+    Description = "";
+    LineComments = new {
+        1: "Все переменные получат одно и то же значение",
+    };
+};
+a = b = c = d = 10;

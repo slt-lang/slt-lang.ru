@@ -1,0 +1,7 @@
+context メタデータ {
+    CultureKey = "ru";
+    Title = "Испрользование обобщённых методов tlinq";
+    Description = "Возвращается среднее значения 100 случайных чисел от 1 до 100";
+};
+using tlinq;
+^:<i64>1..100 |> tlinq.take<i64>(100) |> tlinq.select<i64, f64>(x => x / 100.0) |> tlinq.average<f64>();

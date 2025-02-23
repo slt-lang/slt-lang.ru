@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Version>1.1.81</Version>
+    <Version>1.2.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="changelog.html" />
@@ -13,6 +13,11 @@
     <EmbeddedResource Include="changelog.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\sltlang.Adapters\sltlang.Adapters.csproj" />
+    <ProjectReference Include="..\sltlang.Domain\sltlang.Domain.csproj" />
     <ProjectReference Include="..\Specification\Specification.csproj" />
   </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="dotnet &quot;..\verser\verser.dll&quot; --append &quot;..\sltlang\sltlang.csproj&quot;" />
+  </Target>
 </Project>

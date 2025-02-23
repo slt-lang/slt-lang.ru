@@ -1,3 +1,8 @@
+using SLThree;
+using SLThree.Metadata;
+using sltlang.Adapters.Adapters;
+using sltlang.Domain.Logic;
+using sltlang.Domain.Ports;
 using Specification;
 
 namespace sltlang
@@ -9,7 +14,14 @@ namespace sltlang
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddOutputCache();
+            builder.Services.AddTransient<ILanguageProvider, Metadata>();
+            builder.Services.AddSingleton<ISampleMaker, SampleMaker>();
+            builder.Services.AddSingleton<ISampleStorage, SampleStorage>();
+            builder.Services.AddTransient<ISampleLogic, SampleLogic>();
             builder.Services.AddSingleton<ILocaleService, LocaleService>();
+            builder.Services.AddSingleton<ISyntaxPageMaker, SyntaxPageMaker>();
+            builder.Services.AddSingleton<ISyntaxPageStorage, SyntaxPageStorage>();
+            builder.Services.AddTransient<SLThreeHtmlRestorator>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -33,8 +45,8 @@ namespace sltlang
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
             app.MapControllerRoute(
-                name: "specification",
-                pattern: "{culture=ru}/specification/{article}", new { controller = "Specification", action = "Index" });
+                name: "syntax",
+                pattern: "{culture=ru}/syntax/{article}", new { controller = "Syntax", action = "Index" });
 
             app.MapControllerRoute(
                 name: "articles",

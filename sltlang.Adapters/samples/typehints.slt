@@ -1,0 +1,9 @@
+context メタデータ {
+    CultureKey = "ru";
+    Title = "Подсказки типов";
+    Description = "";
+};
+i64 simple_name = 25;
+(i64 x, i64 y) = (5, 5);
+foreach (i64 x in new { 1, 2, 3 })
+    x;
