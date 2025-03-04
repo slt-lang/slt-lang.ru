@@ -1,4 +1,5 @@
 ﻿@using System.Diagnostics
+@using System.Globalization
 @{
     Locale locale = (Locale)ViewData["culture"];
     ViewData["Title"] = locale["Title_Health"];
@@ -6,9 +7,11 @@
     using var reader = new StreamReader(stream!);
     var changelog = default(string);
     changelog = reader.ReadToEnd();
+
+    var culture = CultureInfo.GetCultureInfo(locale.Identifier == "en" ? "en-us" : "ru-ru");
 }
 <h1>slt-lang</h1>
-<span>@($"{locale["Health_DeployDT"]}: {File.GetLastWriteTime(typeof(Program).Assembly.Location)}")</span><br/>
-<span>@($"{locale["Health_StartDT"]}: {Process.GetCurrentProcess().StartTime}")</span><br/>
+<span>@($"{locale["Health_DeployDT"]}: {File.GetLastWriteTime(typeof(Program).Assembly.Location).ToString("U", culture)}")</span><br/>
+<span>@($"{locale["Health_StartDT"]}: {Process.GetCurrentProcess().StartTime.ToString("U", culture)}")</span><br/>
 <span>@($"{locale["Health_Version"]}: {typeof(Program).Assembly.GetName().Version!.ToString(3)}")</span><br/>
 @Html.Raw(changelog)
