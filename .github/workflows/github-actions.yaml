@@ -38,27 +38,24 @@ jobs:
           PORT=${{ secrets.SSH_PORT }}
           USER=${{ secrets.SSH_USER }}
           DEPLOY_PATH=${{ secrets.DEPLOY_PATH }}
-          APP_NAME=${{ secrets.APP_NAME }} # Имя вашего приложения (например, MyWebApp)
-          SERVICE_NAME=${{ secrets.SERVICE_NAME }} # Имя сервиса systemd (например, mywebapp.service)
+          DEPLOY_PATH2=${{ secrets.DEPLOY_PATH2 }}
+          APP_NAME=${{ secrets.APP_NAME }}
+          SERVICE_NAME=${{ secrets.SERVICE_NAME }}
+          SERVICE_NAME2=${{ secrets.SERVICE_NAME2 }}
 
-          # Останавливаем сервис
           echo "Stopping service..."
           ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT "sudo systemctl stop $SERVICE_NAME"
 
-          # Удаляем старые файлы (если нужно)
           echo "Removing old files..."
           ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT "rm -rf $DEPLOY_PATH/*"
 
-          # Копируем файлы
           echo "Copying files..."
           rsync -avz ./publish/ $USER@$HOST:$DEPLOY_PATH -e "ssh -p $PORT"
 
-          # Меняем владельца папки (если нужно)
-          echo "Setting ownership..."
-          ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT "sudo chown -R $USER:$USER $DEPLOY_PATH"
-
-          # Перезапускаем сервис
           echo "Starting service..."
           ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT "sudo systemctl start $SERVICE_NAME"
+          
+          echo "Starting service-2..."
+          ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT "sudo /usr/bin/bash /home/multiplier.sh $DEPLOY_PATH $DEPLOY_PATH2 $SERVICE_NAME2"
 
           echo "Deployment complete!"
