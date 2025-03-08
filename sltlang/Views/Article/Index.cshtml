@@ -1,8 +1,11 @@
-﻿@model IArticle
+﻿@using Markdig
+@using sltlang.Common.ArticleService.Models
+@model ArticleDto
 @{
-    ViewData["Title"] = "Article";
+    ViewData["Title"] = Model.Title;
     Locale locale = (Locale)ViewData["culture"];
+    var markdownHtml = Markdown.ToHtml(Model.Content);
 }
 
-<h1>@Model.Key</h1>
-@Html.Raw(Model.Generate(new HyperContext(locale)))
+<h1>@Model.Title</h1>
+@Html.Raw(markdownHtml)

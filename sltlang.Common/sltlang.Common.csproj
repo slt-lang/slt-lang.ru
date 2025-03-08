@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Alexandr Kotov</Authors>
+    <Copyright>Alexandr Kotov 2025</Copyright>
+    <Description>slt-lang.ru (SLThree website) common package</Description>
+    <RepositoryUrl>https://github.com/slt-lang/slt-lang.ru</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
+
+</Project>
