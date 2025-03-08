@@ -5,26 +5,19 @@ using Specification;
 
 namespace sltlang.Controllers
 {
-    public class ArticleController : Controller
+    public class ArticleController(ILogger<HomeController> logger, ILocaleService locale, IArticleLogic articleLogic) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ILocaleService _locale;
-
-        public ArticleController(ILogger<HomeController> logger, ILocaleService locale)
-        {
-            _logger = logger;
-            _locale = locale;
-        }
-
         [OutputCache(VaryByRouteValueNames = ["culture"])]
-        public IActionResult Index(string article)
+        public async Task<IActionResult> Index(string article)
         {
             var Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
-            if (_locale.Locales.ContainsKey(Language))
+            if (locale.Locales.ContainsKey(Language))
             {
-                ViewData["culture"] = _locale.Locales[Language];
-                if (Specification.Article.OtherArticles.ContainsKey(article))
-                    return View(Specification.Article.OtherArticles[article]);
+                ViewData["culture"] = locale.Locales[Language];
+
+                var articleData = await articleLogic.GetArticle($"{Language}/{article}");
+                if (articleData != null)
+                    return View(articleData);
                 return ArticleNotFound(article);
             }
             return CultureNotFound(Language);
