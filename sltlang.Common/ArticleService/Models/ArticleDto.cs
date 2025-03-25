@@ -11,5 +11,7 @@ namespace sltlang.Common.ArticleService.Models
         public DateTime CreateDate { get; set; } = default!;
         public DateTime UpdateDate { get; set; } = default!;
         public string Content { get; set; } = default!;
+        public long Visits { get; set; } = default!;
+        public long VisitsWeekly { get; set; } = default!;
     }
 }

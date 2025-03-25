@@ -1,5 +1,5 @@
 ﻿Title_Home=Main
-Title_FAQ=FAQ
+Title_FAQ=Articles
 Title_Syntax=Syntax
 Title_Health=Server Info
 
@@ -10,6 +10,7 @@ Specification_Interfaces=Interfaces
 Specification_Members=Members
 Specification_Inheritors=Inheritors
 Specification_CodeExample=Code examples
+Syntax_70OLD=This section is currently being developed. Up-to-date information at the time of SLThree 0.7 version you <a href="https://github.com/slt-lang/slt-lang.github._io">can be found here</a>. The section should be easy to navigate in the future. List of articles related to this section:
 
 Health_DeployDT=Deployed
 Health_StartDT=Started

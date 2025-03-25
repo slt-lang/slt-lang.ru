@@ -9,5 +9,6 @@ namespace sltlang.Domain.Ports
         Task UpsertArticle(ArticleDto article);
         Task RebaseArticle(int historyId);
         Task DeleteArticle(string name);
+        Task<ArticleDto[]> GetRating();
     }
 }

@@ -30,7 +30,7 @@ namespace sltlang
             if (type.IsGenericTypeDefinition)
             {
                 int num = type.GetGenericArguments().Length;
-                return type.FullName.Substring(0, type.FullName.IndexOf('`')).Split('.').Last() + "&lt;" + ((num > 1) ? new string(',', num) : "") + "&gt;";
+                return ReplaceCompares(type.FullName.Substring(0, type.FullName.IndexOf('`')).Split('.').Last()) + "&lt;" + ((num > 1) ? new string(',', num) : "") + "&gt;";
             }
 
             Type genericTypeDefinition = type.GetGenericTypeDefinition();
@@ -40,10 +40,10 @@ namespace sltlang
         }
         public static string MakeLink(Type type, Locale locale)
         {
-            if (type.IsGenericType || type.IsArray || type.IsGenericTypeDefinition)
-                return $"<span class=\"slt-type\">{MakeGenericLink(type, locale)}</span>";
             if (SampleMaker.ListedTypes.Contains(type))
                 return $"<a href=\"/{locale.Identifier}/syntax/{type.Name.ToLower()}\">{ReplaceCompares(type.GetTypeString())}</a>";
+            if (type.IsGenericType || type.IsArray || type.IsGenericTypeDefinition)
+                return $"<span class=\"slt-type\">{MakeGenericLink(type, locale)}</span>";
             return $"<span class=\"slt-type\">{ReplaceCompares(type.GetTypeString())}</span>";
         }
 
