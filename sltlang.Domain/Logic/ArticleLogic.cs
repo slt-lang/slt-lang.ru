@@ -34,5 +34,11 @@ namespace sltlang.Domain.Logic
         {
             await httpService.JsonRequest<object, object>(ArticleService, $"DeleteArticle?name={name}", HttpMethod.Delete, null);
         }
+
+        public async Task<ArticleDto[]> GetRating()
+        {
+            var response = await httpService.JsonRequest<object, ArticleDto[]>(ArticleService, $"GetRating", HttpMethod.Get, null);
+            return response.success ? response.response! : null!;
+        }
     }
 }

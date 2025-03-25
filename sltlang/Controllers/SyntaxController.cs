@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.OutputCaching;
 using SLThree;
 using SLThree.Extensions;
+using sltlang.Adapters.Adapters;
 using sltlang.Domain.Ports;
 using Specification;
 using System.Collections.Concurrent;
@@ -10,7 +11,7 @@ namespace sltlang.Controllers
 {
     public class SyntaxController(ILocaleService locale, ILogger<HomeController> logger, ISyntaxPageStorage syntaxPageStorage) : Controller
     {
-        [OutputCache(VaryByRouteValueNames = ["culture"])]
+        [OutputCache(VaryByRouteValueNames = ["culture"], Duration = 300)]
         public IActionResult Index(string article)
         {
             article = article.ToLower();

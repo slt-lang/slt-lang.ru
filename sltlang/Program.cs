@@ -64,7 +64,7 @@ namespace sltlang
 
             app.MapControllerRoute(
                 name: "articles",
-                pattern: "{culture=ru}/other/{article}", new { controller = "Article", action = "Index" });
+                pattern: "{culture=ru}/articles/{article}", new { controller = "Article", action = "Index" });
 
             app.MapControllerRoute(
                 name: "default",

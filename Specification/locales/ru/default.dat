@@ -1,5 +1,5 @@
 ﻿Title_Home=Главная
-Title_FAQ=FAQ
+Title_FAQ=Статьи
 Title_Syntax=Синтаксис
 Title_Health=Сервер
 
@@ -10,6 +10,7 @@ Specification_Interfaces=Интерфейсы
 Specification_Members=Элементы
 Specification_Inheritors=Наследники
 Specification_CodeExample=Примеры кода
+Syntax_70OLD=Этот раздел в данный момент разрабатывается. Актуальную информацию на момент версии SLThree 0.7 вы <a href="https://github.com/slt-lang/slt-lang.github._io">можете найти здесь</a>. Раздел должен в будущем представлять из себя удобную навигацию. Список статей, относящихся к этому разделу:
 
 Health_DeployDT=Выпущен
 Health_StartDT=Запущен

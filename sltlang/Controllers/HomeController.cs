@@ -6,6 +6,8 @@ using SLThree.sys;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.OutputCaching;
 using sltlang.Domain.Ports;
+using sltlang.Adapters.Adapters;
+using SLThree;
 
 namespace sltlang.Controllers
 {
@@ -31,16 +33,27 @@ namespace sltlang.Controllers
             return true;
         }
 
-        [OutputCache(VaryByRouteValueNames = ["culture"])]
+        [OutputCache(VaryByRouteValueNames = ["culture"], Duration = 60)]
         public IActionResult Index() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
 
-        [OutputCache(VaryByRouteValueNames = ["culture"])]
+        [OutputCache(VaryByRouteValueNames = ["culture"], Duration = 60)]
         public IActionResult Faq() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
 
-        [OutputCache(VaryByRouteValueNames = ["culture"])]
-        public IActionResult Syntax() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
+        [OutputCache(VaryByRouteValueNames = ["culture"], Duration = 60)]
+        public IActionResult Syntax()
+        {
+            if (NotCulture(out var lang))
+            {
+                return CultureNotFound(lang);
+            }
+            else
+            {
+                ViewData["ListedTypes"] = SampleMaker.ListedTypes.Where(x => typeof(SLThree.ExecutionContext.IExecutable).IsAssignableFrom(x)).OrderBy(x => x.Name).Select(x => ($"{lang}/syntax/{x.Name}", x.Name)).ToArray();
+                return View();
+            }
+        }
 
-        [OutputCache(VaryByRouteValueNames = ["culture"])]
+        [OutputCache(VaryByRouteValueNames = ["culture"], Duration = 60)]
         public IActionResult Info() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
 
         [OutputCache(VaryByRouteValueNames = ["culture", "statusCode"])]

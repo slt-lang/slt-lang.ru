@@ -7,10 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="locales\en\members.dat" />
-    <EmbeddedResource Include="locales\en\default.dat" />
-    <EmbeddedResource Include="locales\ru\members.dat" />
-    <EmbeddedResource Include="locales\ru\default.dat" />
+    <EmbeddedResource Include="locales\en\*.dat" />
+    <EmbeddedResource Include="locales\ru\*.dat" />
   </ItemGroup>
 
   <ItemGroup>
