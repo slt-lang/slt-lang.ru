@@ -11,11 +11,13 @@ namespace sltlang.Adapters.Adapters
 {
     public class HttpService(IHttpClientFactory httpClientFactory) : IHttpService
     {
-        public async Task<(bool success, TResponse? response)> JsonRequest<TRequest, TResponse>(string name, string query, HttpMethod method, TRequest? body)
+        public async Task<(bool success, TResponse? response)> JsonRequest<TRequest, TResponse>(string name, string path, KeyValuePair<string, object>[] query, HttpMethod method, TRequest? body, TimeSpan? timeout = null)
         {
             var client = httpClientFactory.CreateClient(name);
 
-            var request = new HttpRequestMessage(method, query);
+            client.Timeout = timeout ?? TimeSpan.FromMilliseconds(1000);
+
+            var request = new HttpRequestMessage(method, path + (query.Length > 0 ? "?" + string.Join("&", query.Select(q => $"{q.Key}={q.Value}")) : ""));
             if (body != null)
                 request.Content = JsonContent.Create(body);
 

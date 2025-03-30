@@ -3,7 +3,11 @@ Title_FAQ=Статьи
 Title_Syntax=Синтаксис
 Title_Health=Сервер
 
+ArticleMostPopularListHeader=Самые популярные статьи
+ArticleMostPopularList=Список самых популярных статей
+ArticleNotFoundBut=Возможно, эта статья есть на другом языке!
 ArticleNotFound=Статья "{0}" не найдена
+ServiceUnavailable=Ошибка: сервис временно недоступен
 
 Specification_Hierarchy=Иерархия
 Specification_Interfaces=Интерфейсы
@@ -15,5 +19,3 @@ Syntax_70OLD=Этот раздел в данный момент разрабат
 Health_DeployDT=Выпущен
 Health_StartDT=Запущен
 Health_Version=Версия
-
-IndexH1Paragraph=<strong>SLThree</strong> (англ. <em>Script Language 3</em> &mdash; Скриптовый язык 3, "третий скриптовый") &mdash; мультипарадигмальный интерпретируемый C-подобный язык программирования со строгой динамической типизацией, разработанный для платформы .NET. Смешивает императивный и функциональный подходы, а ООП реализуется единственным составным типом непосредственно языка &mdash; контекстом.

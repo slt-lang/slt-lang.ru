@@ -8,36 +8,36 @@ namespace sltlang.Domain.Logic
     {
         const string ArticleService = "ArticleService";
 
-        public async Task<ArticleDto> GetArticle(string name)
+        public async Task<ArticleDto> GetArticle(string culture_key, string name)
         {
-            var response = await httpService.JsonRequest<object, ArticleDto>(ArticleService, $"GetArticle?name={name}", HttpMethod.Get, null);
+            var response = await httpService.JsonRequest<object, ArticleDto>(ArticleService, "GetArticle", [new("culture_key", culture_key), new("name", name)], HttpMethod.Get, null);
             return response.success ? response.response! : null!;
         }
 
-        public async Task<ArticleDto[]> GetArticleHistory(string name)
+        public async Task<ArticleDto[]> GetArticleHistory(string culture_key, string name)
         {
-            var response = await httpService.JsonRequest<object, ArticleDto[]>(ArticleService, $"GetArticleHistory?name={name}", HttpMethod.Get, null);
+            var response = await httpService.JsonRequest<object, ArticleDto[]>(ArticleService, "GetArticleHistory", [new("culture_key", culture_key), new("name", name)], HttpMethod.Get, null);
             return response.success ? response.response! : null!;
         }
 
         public async Task UpsertArticle(ArticleDto article)
         {
-            await httpService.JsonRequest<object, object>(ArticleService, "UpsertArticle", HttpMethod.Post, article);
+            await httpService.JsonRequest<object, object>(ArticleService, "UpsertArticle", [], HttpMethod.Post, article);
         }
 
         public async Task RebaseArticle(int historyId)
         {
-            await httpService.JsonRequest<object, object>(ArticleService, $"RebaseArticle?historyId={historyId}", HttpMethod.Post, null);
+            await httpService.JsonRequest<object, object>(ArticleService, "RebaseArticle", [new("historyId", historyId)], HttpMethod.Post, null);
         }
 
-        public async Task DeleteArticle(string name)
+        public async Task DeleteArticle(string culture_key, string name)
         {
-            await httpService.JsonRequest<object, object>(ArticleService, $"DeleteArticle?name={name}", HttpMethod.Delete, null);
+            await httpService.JsonRequest<object, object>(ArticleService, "DeleteArticle", [new("culture_key", culture_key), new("name", name)], HttpMethod.Delete, null);
         }
 
-        public async Task<ArticleDto[]> GetRating()
+        public async Task<ArticleDto[]> GetRating(string culture_key)
         {
-            var response = await httpService.JsonRequest<object, ArticleDto[]>(ArticleService, $"GetRating", HttpMethod.Get, null);
+            var response = await httpService.JsonRequest<object, ArticleDto[]>(ArticleService, "GetRating", [new("culture_key", culture_key)], HttpMethod.Get, null);
             return response.success ? response.response! : null!;
         }
     }
