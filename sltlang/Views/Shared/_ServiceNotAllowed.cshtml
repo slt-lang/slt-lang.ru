@@ -1,0 +1,7 @@
+﻿@model string
+@{
+    Locale locale = (Locale)ViewData["culture"];
+    ViewData["Title"] = locale["ServiceUnavailable"];
+}
+
+<h2>@locale["ServiceUnavailable"]</h2>

@@ -37,7 +37,7 @@ namespace sltlang.Controllers
         public IActionResult Index() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
 
         [OutputCache(VaryByRouteValueNames = ["culture"], Duration = 60)]
-        public IActionResult Faq() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
+        public IActionResult Articles() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
 
         [OutputCache(VaryByRouteValueNames = ["culture"], Duration = 60)]
         public IActionResult Syntax()

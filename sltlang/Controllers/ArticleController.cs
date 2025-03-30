@@ -15,12 +15,25 @@ namespace sltlang.Controllers
             {
                 ViewData["culture"] = locale.Locales[Language];
 
-                var articleData = await articleLogic.GetArticle($"{Language}/{article}");
-                if (articleData != null)
-                    return View(articleData);
+                try
+                {
+                    var articleData = await articleLogic.GetArticle(Language, article);
+                    if (articleData != null)
+                        return View(articleData);
+                }
+                catch (Exception e)
+                {
+                    return ServiceNotAllowed();
+                }
                 return ArticleNotFound(article);
             }
             return CultureNotFound(Language);
+        }
+
+        [OutputCache(VaryByRouteValueNames = ["culture"])]
+        public IActionResult ServiceNotAllowed()
+        {
+            return View("_ServiceNotAllowed");
         }
 
         [OutputCache(VaryByRouteValueNames = ["culture"])]

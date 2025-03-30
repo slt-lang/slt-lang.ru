@@ -1,0 +1,32 @@
+﻿@using sltlang.Common.ArticleService.Models
+@inject IArticleLogic articleLogic
+@{
+    Locale locale = (Locale)ViewData["culture"];
+    ViewData["Title"] = locale["Title_FAQ"];
+
+    var articles = default(ArticleDto[]);
+    try
+    {
+        articles = await articleLogic.GetRating(locale.Identifier);
+    }
+    catch (TaskCanceledException)
+    {
+
+    }
+}
+
+<h1>@locale["ArticleMostPopularListHeader"]</h1>
+<p>@locale["ArticleMostPopularList"]</p>
+@if (articles != null)
+{
+<ul>
+    @foreach (var article in articles)
+    {
+        <li><a href="~/@locale.Identifier/articles/@article.Name">@article.Title</a></li>
+    }
+</ul>
+}
+else
+{
+    <p><b>@locale["ServiceUnavailable"]</b></p>
+}
