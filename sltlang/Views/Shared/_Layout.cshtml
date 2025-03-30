@@ -3,13 +3,17 @@
 @{
     var locale = (Locale)ViewData["culture"] ?? Locale.Locales["ru"];
     var displayUri = Context.Request.GetEncodedPathAndQuery();
+    var noindex = (bool?)ViewData["NoIndex"] ?? false;
 }
 <!DOCTYPE html>
 <html lang="@(locale?.Identifier??"ru")">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="index, nofollow" />
+    @if (noindex)
+    {
+        <meta name="robots" content="noindex, nofollow">
+    }
     <title>@ViewData["Title"] | slt-lang</title>
     <link rel="icon" href="~/favicon.ico" />
     <link rel='stylesheet' type='text/css' media='screen' href='~/main.css'>

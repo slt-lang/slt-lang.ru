@@ -3,6 +3,7 @@
 @{
     Locale locale = (Locale)ViewData["culture"];
     ViewData["Title"] = locale["Title_Health"];
+    ViewData["NoIndex"] = true;
     using var stream = typeof(Program).Assembly.GetManifestResourceStream("sltlang.changelog.html");
     using var reader = new StreamReader(stream!);
     var changelog = default(string);
