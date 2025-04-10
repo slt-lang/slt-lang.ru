@@ -10,7 +10,7 @@ namespace sltlang.Common.AuthService.Enums
         [Description("Отображаемое имя")]
         [ComponentType(typeof(string))]
         [SecurityLevel(SecurityLevel.Low)]
-        [DefaultValue(null)]
+        [DefaultValue("Новый участник")]
         [AlwaysTranfsfer]
         DisplayName,
         [Description("TTL ссылки-приглашения (минуты)")]

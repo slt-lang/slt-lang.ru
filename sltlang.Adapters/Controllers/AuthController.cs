@@ -32,11 +32,11 @@ namespace sltlang.Adapters.Controllers
                 HttpContext.Response.Cookies.Append("JwtToken", resp.AccessToken, cookieOptions);
             }
 
-            return Redirect(loginRequest.RedirectUrl);
+            return Redirect(loginRequest.RedirectUrl + (resp?.AccessToken == null ? "?result=wrong" : ""));
         }
 
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout([FromForm] string redirectUrl)
+        public IActionResult Logout([FromForm] string redirectUrl)
         {
             HttpContext.Response.Cookies.Delete("JwtToken");
             return Redirect(redirectUrl);

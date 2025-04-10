@@ -67,7 +67,6 @@ namespace sltlang.Controllers
             return View("CultureNotFound", lng);
         }
 
-        public IActionResult Login() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
-        public IActionResult LoginFailed() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
+        public IActionResult Login(string result = null!) => NotCulture(out var lang) ? CultureNotFound(lang) : View(result as object);
     }
 }

@@ -1,7 +1,8 @@
-﻿@{
-    ViewData["Title"] = "User Profile";
-    Locale locale = (Locale)ViewData["culture"];
+﻿@using sltlang.Adapters.Extensions
+@using sltlang.Common.AuthService.Enums
+@{
+    var locale = (Locale)ViewData["culture"]!;
+    ViewData["Title"] = locale["Title_Profile"];
 }
 
-<h1>User Profile</h1>
-<p>@Context.User.Identity</p>
+<h1>@locale["Title_Profile"] @(Context.User.GetVariable<string>(Variable.DisplayName))</h1>

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http.Extensions
+@model string
 @{
     Locale locale = (Locale)ViewData["culture"];
     ViewData["Title"] = locale["Title_Login"];
@@ -9,7 +10,7 @@
 {
     <p>@locale["LoginPage_Authenticated"]</p>
     <form action="~/api/Auth/logout" method="post">
-        <input name="redirectUrl" id="redirectUrl" value="@Context.Request.GetEncodedPathAndQuery()" hidden />
+        <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/login" hidden />
         <div>
             <a class="button" href="~/@locale.Identifier/profile">@locale["LoginPage_GoToProfile"]</a>
         </div>
@@ -22,15 +23,21 @@ else
 {
     <form action="~/api/Auth/login" method="post">
         <div>
-            <input class="input" placeholder="@locale["LoginPage_Username"]" name="username" id="username" value="" />
+            <input class="input" placeholder="@locale["LoginPage_Username"]" name="username" id="username" value="" required maxlength="32" minlength="3" pattern="^[a-zA-Z0-9_]+$" title="@locale["LoginPage_UsernameFilter"]" />
         </div>
         <div>
-            <input class="input" placeholder="@locale["LoginPage_Password"]" name="password" id="password" value="" />
+            <input class="input" placeholder="@locale["LoginPage_Password"]" name="password" id="password" value="" required maxlength="64" minlength="1" />
         </div>
-        <input name="redirectUrl" id="redirectUrl" value="@Context.Request.GetEncodedPathAndQuery()" hidden />
+        <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/login" hidden required/>
         <div>
             <button class="button" type="submit">@locale["LoginPage_Auth"]</button>
         </div>
     </form>
+    @if (Model == "wrong")
+    {
+        <div style="color: darkred; text-align: center;">
+            @locale["LoginPage_WrongAuth"]
+        </div>
+    }
     <p style="display: block; text-align: center">@locale["LoginPage_Cookie"]</p>
 }
