@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using sltlang.Common.AuthService.Contracts;
+using sltlang.Domain;
 using sltlang.Domain.Logic;
 using sltlang.Domain.Ports;
 using System.Text;
@@ -11,7 +12,7 @@ namespace sltlang.Adapters.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController(IAuthLogic authLogic) : ControllerBase
+    public class AuthController(IAuthLogic authLogic, Config config) : ControllerBase
     {
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromForm] LoginRequest loginRequest)
@@ -23,13 +24,12 @@ namespace sltlang.Adapters.Controllers
                 var cookieOptions = new CookieOptions
                 {
                     HttpOnly = true,
-                    Secure = true, // Only set to true if using HTTPS
+                    Secure = config.UseSecureCookie,
                     SameSite = SameSiteMode.Strict,
-                    Expires = DateTimeOffset.Now.AddMinutes(30) // Adjust expiration
+                    Expires = DateTimeOffset.Now.AddMinutes(30)
                 };
 
                 HttpContext.Response.Cookies.Append("JwtToken", resp.AccessToken, cookieOptions);
-                return Redirect(loginRequest.RedirectUrl);
             }
 
             return Redirect(loginRequest.RedirectUrl);

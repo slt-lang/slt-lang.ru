@@ -6,5 +6,6 @@ namespace sltlang.Domain
     {
         public IDictionary<string, string> PeerServices { get; set; } = default!;
         public JwtSettings JwtSettings { get; set; } = default!;
+        public bool UseSecureCookie { get; set; }
     }
 }
