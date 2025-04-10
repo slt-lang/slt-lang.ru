@@ -1,0 +1,6 @@
+﻿@{
+    Locale locale = (Locale)ViewData["culture"];
+    ViewData["Title"] = locale["Title_Login"];
+}
+<h1>@ViewData["Title"]</h1>
+<p>@locale["LoginPage_AuthFailed"]</p>

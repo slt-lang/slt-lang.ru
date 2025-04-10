@@ -2,6 +2,7 @@
 Title_FAQ=Articles
 Title_Syntax=Syntax
 Title_Health=Server Info
+Title_Login=Login page
 
 ArticleMostPopularListHeader=Most popular articles
 ArticleMostPopularList=List of most popular articles
@@ -19,3 +20,11 @@ Syntax_70OLD=This section is currently being developed. Up-to-date information a
 Health_DeployDT=Deployed
 Health_StartDT=Started
 Health_Version=Version
+
+LoginPage_Username=Username
+LoginPage_Password=Password
+LoginPage_Auth=Log in
+LoginPage_Cookie=The website uses Cookies to store authorization data. By clicking the "Log in" button, you confirm that you agree to this.
+LoginPage_Authenticated=You are logged in.
+LoginPage_GoToProfile=Profile page
+LoginPage_Logout=Log out

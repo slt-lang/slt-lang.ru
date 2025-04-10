@@ -2,6 +2,7 @@
 Title_FAQ=Статьи
 Title_Syntax=Синтаксис
 Title_Health=Сервер
+Title_Login=Страница входа
 
 ArticleMostPopularListHeader=Самые популярные статьи
 ArticleMostPopularList=Список самых популярных статей
@@ -19,3 +20,11 @@ Syntax_70OLD=Этот раздел в данный момент разрабат
 Health_DeployDT=Выпущен
 Health_StartDT=Запущен
 Health_Version=Версия
+
+LoginPage_Username=Имя пользователя
+LoginPage_Password=Пароль
+LoginPage_Auth=Авторизоваться
+LoginPage_Cookie=Для хранения данных авторизации сайт использует Cookie. Нажимая кнопку "Авторизоваться", вы подтверждаете, что согласны с этим.
+LoginPage_Authenticated=Вы авторизованы.
+LoginPage_GoToProfile=Страница профиля
+LoginPage_Logout=Выйти

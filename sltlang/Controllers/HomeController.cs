@@ -8,26 +8,20 @@ using Microsoft.AspNetCore.OutputCaching;
 using sltlang.Domain.Ports;
 using sltlang.Adapters.Adapters;
 using SLThree;
+using Microsoft.AspNetCore.Mvc.Routing;
+using sltlang.Common.AuthService.Contracts;
+using System.Text.Json;
 
 namespace sltlang.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(ILogger<HomeController> logger, IAuthLogic authLogic, ILocaleService locale) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ILocaleService _locale;
-
-        public HomeController(ILogger<HomeController> logger, ILocaleService locale)
-        {
-            _logger = logger;
-            _locale = locale;
-        }
-
         private bool NotCulture(out string Language)
         {
-            Language = (string)(HttpContext.GetRouteValue("culture") ?? "");
-            if (_locale.Locales.ContainsKey(Language))
+            Language = (string)(HttpContext.GetRouteValue("culture") ?? "ru");
+            if (locale.Locales.ContainsKey(Language))
             {
-                ViewData["culture"] = _locale.Locales[Language];
+                ViewData["culture"] = locale.Locales[Language];
                 return false;
             }
             return true;
@@ -58,8 +52,11 @@ namespace sltlang.Controllers
 
         [OutputCache(VaryByRouteValueNames = ["culture", "statusCode"])]
         [Route("Error/{statusCode}")]
+        [HttpGet]
         public IActionResult Error(int statusCode)
         {
+            if (statusCode == 401)
+                return Redirect("~/login");
             var feature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
             return View(new ErrorViewModel { StatusCode = statusCode, OriginalPath = feature?.OriginalPath });
         }
@@ -69,5 +66,8 @@ namespace sltlang.Controllers
         {
             return View("CultureNotFound", lng);
         }
+
+        public IActionResult Login() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
+        public IActionResult LoginFailed() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
     }
 }

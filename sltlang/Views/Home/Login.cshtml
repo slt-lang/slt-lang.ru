@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Http.Extensions
+@{
+    Locale locale = (Locale)ViewData["culture"];
+    ViewData["Title"] = locale["Title_Login"];
+    var authed = Context.User.Identity.IsAuthenticated;
+}
+<h1>@ViewData["Title"]</h1>
+@if (authed)
+{
+    <p>@locale["LoginPage_Authenticated"]</p>
+    <form action="~/api/Auth/logout" method="post">
+        <input name="redirectUrl" id="redirectUrl" value="@Context.Request.GetEncodedPathAndQuery()" hidden />
+        <div>
+            <a class="button" href="~/@locale.Identifier/profile">@locale["LoginPage_GoToProfile"]</a>
+        </div>
+        <div>
+            <button class="button" type="submit">@locale["LoginPage_Logout"]</button>
+        </div>
+    </form>
+}
+else
+{
+    <form action="~/api/Auth/login" method="post">
+        <div>
+            <input class="input" placeholder="@locale["LoginPage_Username"]" name="username" id="username" value="" />
+        </div>
+        <div>
+            <input class="input" placeholder="@locale["LoginPage_Password"]" name="password" id="password" value="" />
+        </div>
+        <input name="redirectUrl" id="redirectUrl" value="@Context.Request.GetEncodedPathAndQuery()" hidden />
+        <div>
+            <button class="button" type="submit">@locale["LoginPage_Auth"]</button>
+        </div>
+    </form>
+    <p style="display: block; text-align: center">@locale["LoginPage_Cookie"]</p>
+}

@@ -11,6 +11,18 @@ namespace sltlang.Adapters.Adapters
 {
     public class HttpService(IHttpClientFactory httpClientFactory) : IHttpService
     {
+        public async Task<TResponse?> GetJsonContent<TResponse>(HttpResponseMessage httpResponseMessage)
+        {
+            if (httpResponseMessage.Content.Headers.ContentLength > 0)
+            {
+                var response = await httpResponseMessage.Content.ReadFromJsonAsync<TResponse>();
+
+                return response;
+            }
+
+            return default;
+        }
+
         public async Task<(bool success, TResponse? response)> JsonRequest<TRequest, TResponse>(string name, string path, KeyValuePair<string, object>[] query, HttpMethod method, TRequest? body, TimeSpan? timeout = null)
         {
             var client = httpClientFactory.CreateClient(name);
@@ -23,14 +35,22 @@ namespace sltlang.Adapters.Adapters
 
             var responseMessage = await client.SendAsync(request);
 
-            if (responseMessage.Content.Headers.ContentLength > 0)
-            {
-                var response = await responseMessage.Content.ReadFromJsonAsync<TResponse>();
+            return (responseMessage.IsSuccessStatusCode, await GetJsonContent<TResponse>(responseMessage));
+        }
 
-                return (responseMessage.IsSuccessStatusCode, response);
-            }
+        public async Task<TResponse?> JsonRequest<TRequest, TResponse>(string name, string path, KeyValuePair<string, object>[] query, HttpMethod method, TRequest? body, Func<HttpResponseMessage, Task<TResponse?>> responseHandler, TimeSpan? timeout = null)
+        {
+            var client = httpClientFactory.CreateClient(name);
 
-            return (responseMessage.IsSuccessStatusCode, default);
+            client.Timeout = timeout ?? TimeSpan.FromMilliseconds(1000);
+
+            var request = new HttpRequestMessage(method, path + (query.Length > 0 ? "?" + string.Join("&", query.Select(q => $"{q.Key}={q.Value}")) : ""));
+            if (body != null)
+                request.Content = JsonContent.Create(body);
+
+            var responseMessage = await client.SendAsync(request);
+
+            return await responseHandler(responseMessage);
         }
     }
 }
