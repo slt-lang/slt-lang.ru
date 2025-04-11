@@ -39,5 +39,11 @@ else
             @locale["LoginPage_WrongAuth"]
         </div>
     }
+    @if (Model == "authserviceerror")
+    {
+        <div style="color: darkred; text-align: center;">
+            @locale["LoginPage_AuthServiceError"]
+        </div>
+    }
     <p style="display: block; text-align: center">@locale["LoginPage_Cookie"]</p>
 }

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using sltlang.Adapters.Extensions;
 using sltlang.Common.AuthService.Contracts;
 using sltlang.Domain;
 using sltlang.Domain.Logic;
@@ -17,7 +19,15 @@ namespace sltlang.Adapters.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromForm] LoginRequest loginRequest)
         {
-            var resp = await authLogic.Login(loginRequest);
+            var resp = default(LoginResponse);
+            try
+            {
+                resp = await authLogic.Login(loginRequest);
+            }
+            catch (Exception ex)
+            {
+                return Redirect(loginRequest.RedirectUrl + "?result=authserviceerror");
+            }
 
             if (resp?.AccessToken != null)
             {
@@ -40,6 +50,20 @@ namespace sltlang.Adapters.Controllers
         {
             HttpContext.Response.Cookies.Delete("JwtToken");
             return Redirect(redirectUrl);
+        }
+
+        [HttpGet("token")]
+        [Authorize]
+        public IActionResult Token()
+        {
+            return Ok(HttpContext.Request.Cookies["JwtToken"]);
+        }
+
+        [HttpGet("permissions")]
+        [Authorize]
+        public IActionResult GetPermissions()
+        {
+            return Ok(string.Join(", ", HttpContext.User.GetPermissions()));
         }
     }
 }

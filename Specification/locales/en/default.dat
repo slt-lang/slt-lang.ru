@@ -32,3 +32,4 @@ LoginPage_Authenticated=You are logged in.
 LoginPage_GoToProfile=Profile page
 LoginPage_Logout=Log out
 LoginPage_WrongAuth=Invalid username or password
+LoginPage_AuthServiceError=The authorization service is unavailable

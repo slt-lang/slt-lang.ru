@@ -9,7 +9,7 @@
     <Description>slt-lang.ru (SLThree website) common package</Description>
     <RepositoryUrl>https://github.com/slt-lang/slt-lang.ru</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.1.6</Version>
+    <Version>1.1.7</Version>
   </PropertyGroup>
 
 </Project>

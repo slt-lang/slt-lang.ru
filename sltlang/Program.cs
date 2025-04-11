@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using SLThree;
+using SLThree.Extensions;
 using SLThree.Metadata;
 using sltlang.Adapters.Adapters;
 using sltlang.Domain;
@@ -50,7 +52,23 @@ namespace sltlang
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "slt-lang.ru API", Version = typeof(Program).Assembly.GetName().Version!.ToString(3), 
+                    Description = "По умолчанию, будет использована авторизация, благодаря которой получен доступ к Swagger. Но вы также можете использовать Bearer-заголовки (они приоритетнее)."});
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Token for Bearer auth",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT"
+                });
+
+                options.OperationFilter<AuthorizeCheckOperationFilter>();
+            });
 
             var configuration = builder.Configuration.GetSection("Config").Get<Config>();
             builder.Services.AddSingleton(configuration!);
@@ -70,11 +88,15 @@ namespace sltlang
                 options.Cookie.IsEssential = true;
             });
 
-            #region �����������
+            #region Авторизация
             EncodingProvider provider = CodePagesEncodingProvider.Instance;
             Encoding.RegisterProvider(provider);
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -91,15 +113,22 @@ namespace sltlang
                     {
                         OnMessageReceived = context =>
                         {
-                            var token = context.Request.Cookies["JwtToken"];
-                            if (string.IsNullOrEmpty(token))
+                            var authorization = context.Request.Headers.Authorization.FirstOrDefault();
+
+                            if (!string.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
                             {
-                                context.Fail("No token in session.");
+                                context.Token = authorization.Substring("Bearer ".Length).Trim();
                                 return Task.CompletedTask;
                             }
 
-                            context.Token = token;
+                            var token = context.Request.Cookies["JwtToken"];
+                            if (!string.IsNullOrEmpty(token))
+                            {
+                                context.Token = token;
+                                return Task.CompletedTask;
+                            }
 
+                            context.Fail("No token found in headers or cookies.");
                             return Task.CompletedTask;
                         },
                         OnChallenge = context =>
@@ -130,7 +159,6 @@ namespace sltlang
             var app = builder.Build();
 
             app.UseSwagger();
-            app.UseSwaggerUI();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -151,6 +179,12 @@ namespace sltlang
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<SwaggerAuthorizationMiddleware>("/swagger");
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "swagger";
+            });
 
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
 

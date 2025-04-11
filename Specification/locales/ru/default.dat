@@ -32,3 +32,4 @@ LoginPage_Authenticated=Вы авторизованы.
 LoginPage_GoToProfile=Страница профиля
 LoginPage_Logout=Выйти
 LoginPage_WrongAuth=Неверное имя пользователя или пароль
+LoginPage_AuthServiceError=Сервис авторизации недоступен

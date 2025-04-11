@@ -13,7 +13,7 @@ namespace sltlang.Adapters.Extensions
 {
     public static class AuthExtensions
     {
-        public static T? GetVariable<T>(this ClaimsPrincipal user, Variable variable)
+        public static T? GetVariable<T>(this ClaimsPrincipal user, Variable variable, bool even_if_unauthorized = false)
         {
             if (user?.Identity?.IsAuthenticated ?? false)
             {
@@ -23,6 +23,9 @@ namespace sltlang.Adapters.Extensions
                     return (T)value.Value.DeserializeByEnum(variable)!;
                 }
             }
+
+            if (!even_if_unauthorized)
+                return default!;
 
             var defaultvalue = EnumExtensions.EnumHelper<Variable>.AttributeHelper<DefaultValueAttribute>.With(variable, attr => attr?.Value);
             if (defaultvalue != null)

@@ -9,6 +9,9 @@ namespace sltlang.Common.AuthService.Enums
         [Description("Root")]
         RootPermission = 1024,
 
+        [Description("Просмотр Swagger")]
+        Swagger = 2000,
+
         [Description("Смена имени пользователя")]
         AuthUsernameChanging = 53000,
 
