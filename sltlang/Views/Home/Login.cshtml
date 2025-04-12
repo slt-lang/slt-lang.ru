@@ -45,5 +45,5 @@ else
             @locale["LoginPage_AuthServiceError"]
         </div>
     }
-    <p style="display: block; text-align: center">@locale["LoginPage_Cookie"]</p>
+    <p style="display: block; text-align: center">@(string.Format(locale["LoginPage_Cookie"], locale["LoginPage_Auth"]))</p>
 }

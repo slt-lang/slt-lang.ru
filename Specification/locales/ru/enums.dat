@@ -1,0 +1,19 @@
+﻿Permission+RootPermission=Root-права
+Permission+Swagger=Просмотр Swagger
+Permission+ArticleCreating=Создание статей
+Permission+ArticleEditing=Изменение статей
+Permission+ArticlePinning=Закрепление статей
+Permission+ArticleRemoving=Удаление статей
+Permission+AuthUsernameChanging=Смена имени пользователя
+Permission+AuthPasswordChanging=Смена пароля
+Permission+AuthInviteLinks=Создание пригласительных ссылок
+Permission+AuthReusableInviteLinks=0
+Permission+AuthInheritanceInviteLinks=Передача своих прав по инвайт-ссылкам
+Permission+AuthChangingNoneSecureVariables=Изменение переменных
+Permission+AuthChangingLowSecureVariables=Изменение защищённых переменных (Low)
+Permission+AuthChangingMediumSecureVariables=Изменение защищённых переменных (Medium)
+Permission+AuthChangingHighSecureVariables=Изменение защищённых переменных (High)
+Permission+AuthChangingCriticalSecureVariables=Изменение защищённых переменных (Critical)
+
+Variable+DisplayName=Отображаемое имя
+Variable+MaxLinkTTL=Максимальное время жизни ссылки-приглашения

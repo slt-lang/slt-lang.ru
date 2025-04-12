@@ -27,5 +27,10 @@ namespace sltlang.Domain.Logic
                 return response.IsSuccessStatusCode ? result : null;
             }, TimeSpan.FromSeconds(5));
         }
+
+        public async Task<RegistrationResponse?> Registration(RegistrationRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,5 +18,10 @@ namespace sltlang.Common.AuthService.Enums
         [SecurityLevel(SecurityLevel.High)]
         [DefaultValue(24 * 60)]
         MaxLinkTTL,
+        [Description("Количество одновременных ссылок-приглашений")]
+        [ComponentType(typeof(int))]
+        [SecurityLevel(SecurityLevel.High)]
+        [DefaultValue(1)]
+        MaximunInviteLinks,
     }
 }

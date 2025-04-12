@@ -18,16 +18,16 @@ namespace sltlang.Adapters.Controllers
     public class AuthController(IAuthLogic authLogic, Config config, TelegramService telegramService) : ControllerBase
     {
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromForm] LoginRequest loginRequest)
+        public async Task<IActionResult> Login([FromForm] LoginRequest request)
         {
             var resp = default(LoginResponse);
             try
             {
-                resp = await authLogic.Login(loginRequest);
+                resp = await authLogic.Login(request);
             }
             catch (Exception ex)
             {
-                return Redirect(loginRequest.RedirectUrl + "?result=authserviceerror");
+                return Redirect(request.RedirectUrl + "?result=authserviceerror");
             }
 
             if (resp?.AccessToken != null)
@@ -36,14 +36,14 @@ namespace sltlang.Adapters.Controllers
                 {
                     HttpOnly = true,
                     Secure = config.UseSecureCookie,
-                    SameSite = SameSiteMode.Strict,
+                    SameSite = SameSiteMode.Lax,
                     Expires = DateTimeOffset.Now.AddMinutes(30)
                 };
 
                 HttpContext.Response.Cookies.Append("JwtToken", resp.AccessToken, cookieOptions);
             }
 
-            return Redirect(loginRequest.RedirectUrl + (resp?.AccessToken == null ? "?result=wrong" : ""));
+            return Redirect(request.RedirectUrl + (resp?.AccessToken == null ? "?result=wrong" : ""));
         }
 
         [HttpPost("logout")]
@@ -53,11 +53,40 @@ namespace sltlang.Adapters.Controllers
             return Redirect(redirectUrl);
         }
 
-        [HttpGet("token")]
-        [Authorize]
-        public IActionResult Token()
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromForm] RegistrationRequest request)
         {
-            return Ok(HttpContext.Request.Cookies["JwtToken"]);
+            var resp = default(RegistrationResponse);
+            try
+            {
+                resp = await authLogic.Registration(request);
+            }
+            catch (Exception ex)
+            {
+                return Redirect(request.FailedRedirectUrl + "?result=authserviceerror");
+            }
+
+            if (resp?.AccessToken != null)
+            {
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = config.UseSecureCookie,
+                    SameSite = SameSiteMode.Lax,
+                    Expires = DateTimeOffset.Now.AddMinutes(30)
+                };
+
+                telegramService.FireForgetLog(new Common.TelegramService.Models.TelegramMessage()
+                {
+                    Message = $"Зарегистрирован новый пользователь {resp.User.Id} по приглашению пользователя {resp.User.InvitedBy.Id} по шаблону {resp.TemplateUser.Username}",
+                    Tags = ["registration"]
+                });
+
+                HttpContext.Response.Cookies.Append("JwtToken", resp.AccessToken, cookieOptions);
+                return Redirect(request.SuccessRedirectUrl);
+            }
+
+            return Redirect(request.FailedRedirectUrl + "?result=wrong");
         }
 
         [HttpGet("permissions")]

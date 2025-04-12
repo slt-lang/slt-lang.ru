@@ -68,5 +68,13 @@ namespace sltlang.Controllers
         }
 
         public IActionResult Login(string result = null!) => NotCulture(out var lang) ? CultureNotFound(lang) : View(result as object);
+
+        [HttpGet("{culture=ru}/registration")]
+        [HttpGet("{culture=ru}/registration/{invite}")]
+        public IActionResult Registration(string? invite, [FromQuery] string? result = null!) => NotCulture(out var lang) ? CultureNotFound(lang) : View(new RegistrationModel()
+        {
+            Link = invite!,
+            Result = result!
+        });
     }
 }

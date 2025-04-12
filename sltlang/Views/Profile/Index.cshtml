@@ -1,20 +1,98 @@
-﻿@using sltlang.Adapters.Extensions
+﻿@using System.Security.Claims
+@using sltlang.Adapters.Extensions
 @using sltlang.Common.AuthService.Enums
+@model ProfilePage
 @{
     var locale = (Locale)ViewData["culture"]!;
     ViewData["Title"] = locale["Title_Profile"];
     var authed = Context.User?.Identity?.IsAuthenticated ?? false;
+    var permissions = Context.User?.GetPermissions() ?? [];
+    var isRoot = permissions.Contains(Permission.RootPermission);
 }
-
 <h1>@locale["Title_Profile"] @(Context.User.GetVariable<string>(Variable.DisplayName))</h1>
 @if (authed)
 {
-    <form action="~/api/Auth/logout" method="post">
-        <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/profile" hidden />
+    <h2>@locale["Profile_LastEditedArticles"]</h2>
+    <div class="h2">
+        @if (Model.LastEditedArticles == null || Model.LastEditedArticles.Length == 0)
+        {
+            <p>@locale["Profile_NoLastEditedArticles"]</p>
+        }
+        else
+        {
+            <ul>
+                @foreach (var article in Model.LastEditedArticles)
+                {
+                    <li><a href="~/articles/@article"></a>@article</li>
+                }
+            </ul>
+        }
+    </div>
+    <details>
+        <summary>@locale["Profile_InviteLinks"]</summary>
+        @if (!Model.FullUser.InviteLinks.Any())
+        {
+            <p>@locale["Profile_NoInviteLinks"]</p>
+        }
+        <ul>
+            @foreach (var inviteLink in Model.FullUser.InviteLinks)
+            {
+                <li>
+                    <span>@inviteLink.Link</span><br/>
+                    <span>@(string.Format(locale["Profile_LinkTtl"], inviteLink.Ttl.ToString("F")))</span><br/>
+                    <a href="~/registration/invite=@inviteLink.Link">@locale["Profile_Link"]</a>
+                </li>
+            }
+        </ul>
+        @if (Model.Own && (isRoot || permissions.Contains(Permission.AuthInviteLinks)))
+        {
+            <details>
+                <summary>@locale["Profile_CreateInviteLink"]</summary>
+            </details>
+        }
+    </details>
+    <details>
+        <summary>@locale["Profile_Permissions"]</summary>
+        @if (!permissions.Any())
+        {
+            <p>@locale["Profile_NoPermissions"]</p>
+        }
+        <ul>
+            @foreach (var permission in permissions)
+            {
+                <li>@locale["Permission+"+permission.ToString()]</li>
+            }
+        </ul>
+        <p>
+
+        </p>
+    </details>
+    @if (Model.Own && (isRoot || permissions.Contains(Permission.AuthPasswordChanging)))
+    {
+        <details>
+            <summary>@locale["Profile_ChangePassword"]</summary>
+            <form action="~/api/Auth/changepassword" method="post">
+                <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/profile" hidden />
+                <input class="input" placeholder="@locale["Profile_NewPassword"]" name="newPassword" id="newPassword" value="" required maxlength="64" minlength="1" />
+                <button class="button" type="submit">@locale["Profile_Confirm"]</button>
+            </form>
+        </details>
+    }
+    @if (Model.Own && (isRoot || permissions.Contains(Permission.Swagger)))
+    {
         <div>
-            <button class="button" type="submit">@locale["LoginPage_Logout"]</button>
+            <a class="button" href="~/swagger">Swagger</a>
         </div>
-    </form>
+    }
+    @if (Model.Own)
+    {
+        <form action="~/api/Auth/logout" method="post">
+            <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/profile" hidden />
+            <div>
+                <button class="button" type="submit">@locale["LoginPage_Logout"]</button>
+            </div>
+        </form>
+    }
 }
 else
 {
@@ -23,6 +101,6 @@ else
         <a class="button" href="~/@locale.Identifier/login">@locale["Profile_GoToLogin"]</a>
     </div>
     <div>
-        <a class="button" href="~/@locale.Identifier/registation">@locale["Profile_GoToRegistration"]</a>
+        <a class="button" href="~/@locale.Identifier/registration">@locale["Profile_GoToRegistration"]</a>
     </div>
 }

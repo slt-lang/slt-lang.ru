@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using sltlang.Domain.Ports;
+using sltlang.Models;
+using System.Security.Claims;
 
 namespace sltlang.Controllers
 {
-    //[Authorize]
-    public class ProfileController(ILocaleService locale) : Controller
+    public class ProfileController(IAuthLogic authLogic, IUserLogic userLogic, ILocaleService locale) : Controller
     {
         private bool NotCulture(out string Language)
         {
@@ -18,7 +19,43 @@ namespace sltlang.Controllers
             }
             return true;
         }
-        public IActionResult Index() => NotCulture(out var lang) ? CultureNotFound(lang) : View();
+
+        [HttpGet("{culture=ru}/profile")]
+        public async Task<IActionResult> Index([FromQuery] int? userId, string? result = null)
+        {
+            if (NotCulture(out var lang))
+            {
+                return CultureNotFound(lang);
+            }
+
+            var model = new ProfilePage()
+            {
+                LastNotification = result!,
+            };
+
+            if (userId == null)
+            {
+                if (HttpContext.User?.Identity?.IsAuthenticated ?? false)
+                {
+                    userId = int.Parse(HttpContext.User?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value!);
+                    model.Own = true;
+                }
+            }
+
+            if (userId == null)
+                return View(model);
+
+            var user = await userLogic.GetUser(userId.Value);
+            if (user == null)
+            {
+                model.LastNotification = "Result_UserNotFound";
+                return View(model);
+            }
+
+            model.FullUser = user;
+
+            return View(model);
+        }
 
         [OutputCache(VaryByRouteValueNames = ["lng"])]
         public IActionResult CultureNotFound(string lng)
