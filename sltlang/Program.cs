@@ -9,6 +9,7 @@ using SLThree;
 using SLThree.Extensions;
 using SLThree.Metadata;
 using sltlang.Adapters.Adapters;
+using sltlang.Common.TelegramService;
 using sltlang.Domain;
 using sltlang.Domain.Logic;
 using sltlang.Domain.Ports;
@@ -36,6 +37,9 @@ namespace sltlang
             builder.Services.AddSingleton<ISyntaxPageMaker, SyntaxPageMaker>();
             builder.Services.AddSingleton<ISyntaxPageStorage, SyntaxPageStorage>();
             builder.Services.AddTransient<SLThreeHtmlRestorator>();
+
+            builder.Services.AddTransient<ITelegramHttpAdapter, HttpService>();
+            builder.Services.AddTransient<TelegramService>();
 
             #region Rate-Limit
 

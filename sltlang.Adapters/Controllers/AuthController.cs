@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using sltlang.Adapters.Extensions;
 using sltlang.Common.AuthService.Contracts;
+using sltlang.Common.TelegramService;
 using sltlang.Domain;
 using sltlang.Domain.Logic;
 using sltlang.Domain.Ports;
@@ -14,7 +15,7 @@ namespace sltlang.Adapters.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController(IAuthLogic authLogic, Config config) : ControllerBase
+    public class AuthController(IAuthLogic authLogic, Config config, TelegramService telegramService) : ControllerBase
     {
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromForm] LoginRequest loginRequest)

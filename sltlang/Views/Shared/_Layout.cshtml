@@ -6,7 +6,7 @@
     var locale = (Locale)ViewData["culture"] ?? Locale.Locales["ru"];
     var displayUri = Context.Request.GetEncodedPathAndQuery();
     var noindex = (bool?)ViewData["NoIndex"] ?? false;
-    var profileName = Context.User.GetVariable<string>(Variable.DisplayName) ?? locale["Title_Profile"];
+    var profilename = (Context.User.Identity?.IsAuthenticated ?? false) ? $"+ {locale["Title_Profile"]} +" : locale["Title_Profile"];
 }
 <!DOCTYPE html>
 <html lang="@(locale?.Identifier??"ru")">
@@ -37,7 +37,7 @@
                     <a href="~/@(locale.Identifier)/syntax">@(locale["Title_Syntax"])</a>
                 </li>
                 <li>
-                    <a href="~/@(locale.Identifier)/profile">@profileName</a>
+                    <a href="~/@(locale.Identifier)/profile">@profilename</a>
                 </li>
             </ul>
         </nav>

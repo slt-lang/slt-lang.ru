@@ -187,14 +187,14 @@ main form .input {
     border: 1px solid var(--ext-color-1);
 }
 
-main form label, main form .button {
+main form label, main form .button, .button {
     display: block;
     margin: 8px auto;
     text-align: center;
     width: 100%;
 }
 
-main form .button {
+main form .button, .button {
     margin: 8px auto;
     border: 1px solid var(--ext-color-1);
     background-color: white;

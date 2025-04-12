@@ -1,4 +1,6 @@
-﻿using sltlang.Domain.Ports;
+﻿using sltlang.Common.TelegramService;
+using sltlang.Common.TelegramService.Models;
+using sltlang.Domain.Ports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace sltlang.Adapters.Adapters
 {
-    public class HttpService(IHttpClientFactory httpClientFactory) : IHttpService
+    public class HttpService(IHttpClientFactory httpClientFactory) : IHttpService, ITelegramHttpAdapter
     {
         public async Task<TResponse?> GetJsonContent<TResponse>(HttpResponseMessage httpResponseMessage)
         {
@@ -52,5 +54,8 @@ namespace sltlang.Adapters.Adapters
 
             return await responseHandler(responseMessage);
         }
+
+        public Task SendBodyMessage(string serviceName, string path, HttpMethod httpMethod, TelegramMessage telegramMessage)
+            => JsonRequest<TelegramMessage, object>(serviceName, path, [], httpMethod, telegramMessage, TimeSpan.FromSeconds(30));
     }
 }

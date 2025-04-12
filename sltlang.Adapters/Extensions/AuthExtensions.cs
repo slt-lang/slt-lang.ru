@@ -13,17 +13,20 @@ namespace sltlang.Adapters.Extensions
 {
     public static class AuthExtensions
     {
-        public static T? GetVariable<T>(this ClaimsPrincipal user, Variable variable, bool even_if_unauthorized = false)
+        private static bool HasVariable<T>(this ClaimsPrincipal user, Variable variable, out T? value)
         {
-            if (user?.Identity?.IsAuthenticated ?? false)
+            var claim = user!.Claims.FirstOrDefault(x => x.Type == "Variable+" + variable.ToString());
+            if (claim != null)
             {
-                var value = user!.Claims.FirstOrDefault(x => x.Type == "Variable+" + variable.ToString());
-                if (value != null)
-                {
-                    return (T)value.Value.DeserializeByEnum(variable)!;
-                }
+                value = (T)claim.Value.DeserializeByEnum(variable)!;
+                return true;
             }
+            value = default;
+            return false;
+        }
 
+        private static T? GetDefaultVariable<T>(Variable variable, bool even_if_unauthorized)
+        {
             if (!even_if_unauthorized)
                 return default!;
 
@@ -34,6 +37,17 @@ namespace sltlang.Adapters.Extensions
             }
 
             return default!;
+        }
+
+        public static T? GetVariable<T>(this ClaimsPrincipal user, Variable variable, bool even_if_unauthorized = false)
+        {
+            if (user?.Identity?.IsAuthenticated ?? false)
+            {
+                if (HasVariable<T>(user, variable, out var claim))
+                    return claim;
+            }
+
+            return GetDefaultVariable<T>(variable, even_if_unauthorized);
         }
 
         public static bool HasPermission(this ClaimsPrincipal user, Permission permission)

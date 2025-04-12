@@ -3,6 +3,26 @@
 @{
     var locale = (Locale)ViewData["culture"]!;
     ViewData["Title"] = locale["Title_Profile"];
+    var authed = Context.User?.Identity?.IsAuthenticated ?? false;
 }
 
 <h1>@locale["Title_Profile"] @(Context.User.GetVariable<string>(Variable.DisplayName))</h1>
+@if (authed)
+{
+    <form action="~/api/Auth/logout" method="post">
+        <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/profile" hidden />
+        <div>
+            <button class="button" type="submit">@locale["LoginPage_Logout"]</button>
+        </div>
+    </form>
+}
+else
+{
+    <p>Чтобы увидеть свой профиль, войдите или зарегистрируйтесь на сайте</p>
+    <div>
+        <a class="button" href="~/@locale.Identifier/login">@locale["Profile_GoToLogin"]</a>
+    </div>
+    <div>
+        <a class="button" href="~/@locale.Identifier/registation">@locale["Profile_GoToRegistration"]</a>
+    </div>
+}
