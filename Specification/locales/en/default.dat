@@ -37,6 +37,19 @@ LoginPage_AuthServiceError=The authorization service is unavailable
 
 Profile_GoToLogin=Log in to an existing profile
 Profile_GoToRegistration=Register
+Profile_InviteLinks=Invitation Links
+Profile_Permissions=Permissions
+Profile_NoPermissions=There are no permissions
+Profile_NoInviteLinks=There are no invitation links
+Profile_CreateInviteLink=Create an invitation link
+Profile_ChangePassword=Change the password
+Profile_NewPassword=New password
+Profile_Confirm=Confirm
+Profile_LinkTtl=Valid until {0}
+Profile_Link=Link
+Profile_LastEditedArticles=Last activity on the site
+Profile_NoLastEditedArticles=The user was not active
+Profile_NewLinkTtl=Validity period (in minutes)
 
 RegPage_InviteLinkLabel=You can register here only by invitation.
 RegPage_InviteLink=The invite code

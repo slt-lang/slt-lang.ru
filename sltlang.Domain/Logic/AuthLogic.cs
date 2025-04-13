@@ -30,7 +30,8 @@ namespace sltlang.Domain.Logic
 
         public async Task<RegistrationResponse?> Registration(RegistrationRequest request)
         {
-            throw new NotImplementedException();
+            var (success, response) = await httpService.JsonRequest<RegistrationRequest, RegistrationResponse>(AuthService, "register", [], HttpMethod.Post, request);
+            return success ? response : null;
         }
     }
 }

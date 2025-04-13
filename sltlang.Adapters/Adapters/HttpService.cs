@@ -7,7 +7,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace sltlang.Adapters.Adapters
 {
@@ -31,7 +33,7 @@ namespace sltlang.Adapters.Adapters
 
             client.Timeout = timeout ?? TimeSpan.FromMilliseconds(1000);
 
-            var request = new HttpRequestMessage(method, path + (query.Length > 0 ? "?" + string.Join("&", query.Select(q => $"{q.Key}={q.Value}")) : ""));
+            var request = new HttpRequestMessage(method, path + (query.Length > 0 ? "?" + string.Join("&", query.Select(q => $"{HttpUtility.UrlEncode(q.Key)}={HttpUtility.UrlEncode(q.Value.ToString())}")) : ""));
             if (body != null)
                 request.Content = JsonContent.Create(body);
 
@@ -46,7 +48,7 @@ namespace sltlang.Adapters.Adapters
 
             client.Timeout = timeout ?? TimeSpan.FromMilliseconds(1000);
 
-            var request = new HttpRequestMessage(method, path + (query.Length > 0 ? "?" + string.Join("&", query.Select(q => $"{q.Key}={q.Value}")) : ""));
+            var request = new HttpRequestMessage(method, path + (query.Length > 0 ? "?" + string.Join("&", query.Select(q => $"{HttpUtility.UrlEncode(q.Key)}={HttpUtility.UrlEncode(q.Value.ToString())}")) : ""));
             if (body != null)
                 request.Content = JsonContent.Create(body);
 

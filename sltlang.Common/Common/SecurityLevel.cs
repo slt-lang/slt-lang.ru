@@ -6,7 +6,6 @@
         Low,
         Medium,
         High,
-        VeryHigh,
         Critical,
     }
 }

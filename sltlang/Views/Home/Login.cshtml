@@ -23,10 +23,10 @@ else
 {
     <form action="~/api/Auth/login" method="post">
         <div>
-            <input class="input" placeholder="@locale["LoginPage_Username"]" name="username" id="username" value="" required maxlength="32" minlength="3" pattern="^[a-zA-Z0-9_]+$" title="@locale["LoginPage_UsernameFilter"]" />
+            <input class="input" placeholder="@locale["LoginPage_Username"]" name="login" id="login" value="" required maxlength="32" minlength="3" pattern="^[a-zA-Z0-9_]+$" title="@locale["LoginPage_UsernameFilter"]" />
         </div>
         <div>
-            <input class="input" placeholder="@locale["LoginPage_Password"]" name="password" id="password" value="" required maxlength="64" minlength="1" />
+            <input type="password" class="input" placeholder="@locale["LoginPage_Password"]" name="password" id="password" value="" required maxlength="64" minlength="1" />
         </div>
         <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/login" hidden required/>
         <div>

@@ -29,6 +29,8 @@ namespace sltlang.Common.Common.Extensions
             {
                 private static ConcurrentDictionary<T, TAttribute?> dict = new ConcurrentDictionary<T, TAttribute?>(typeof(T).GetFields(BindingFlags.Static | BindingFlags.Public).Select(x => new KeyValuePair<T, TAttribute?>((T)x.GetRawConstantValue()!, x.GetCustomAttribute<TAttribute>())));
 
+                public static IEnumerable<KeyValuePair<T, TAttribute?>> Map => dict;
+
                 public static TValue? With<TValue>(T type, Func<TAttribute?, TValue?> func)
                 {
                     return func(dict[type]);
@@ -41,6 +43,12 @@ namespace sltlang.Common.Common.Extensions
             }
         }
 
+        public static Dictionary<SecurityLevel, HashSet<Variable>> GetSecurityLevelVariables()
+        {
+            return EnumHelper<Variable>.AttributeHelper<SecurityLevelAttribute>.Map.Where(x => x.Value != null)
+                .GroupBy(x => x.Value!.Level).ToDictionary(x => x.Key!, x => x.Where(x => x.Value != null).Select(x => x.Key).ToHashSet());
+        }
+
         public static Type GetEnumComponentType<TEnum>(this TEnum commonType) where TEnum: Enum
         {
             return EnumHelper<TEnum>.ComponentType.GetVariableType(commonType);
@@ -50,5 +58,8 @@ namespace sltlang.Common.Common.Extensions
         {
             return EnumHelper<TEnum>.AttributeHelper<TAttribute>.HasAttribute(variable);
         }
+
+        public static UniversalResult ToUniversalResult<TEnum>(this TEnum value) where TEnum : Enum
+            => new AnyEnumResult<TEnum>(value);
     }
 }

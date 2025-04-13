@@ -10,6 +10,12 @@
     var isRoot = permissions.Contains(Permission.RootPermission);
 }
 <h1>@locale["Title_Profile"] @(Context.User.GetVariable<string>(Variable.DisplayName))</h1>
+@if (!string.IsNullOrEmpty(Model.LastNotification))
+{
+    <div class="textbox" style="@Model.LastNotification.GetStyle()">
+        <p>@locale[Model.LastNotification]</p>
+    </div>
+}
 @if (authed)
 {
     <h2>@locale["Profile_LastEditedArticles"]</h2>
@@ -40,7 +46,7 @@
                 <li>
                     <span>@inviteLink.Link</span><br/>
                     <span>@(string.Format(locale["Profile_LinkTtl"], inviteLink.Ttl.ToString("F")))</span><br/>
-                    <a href="~/registration/invite=@inviteLink.Link">@locale["Profile_Link"]</a>
+                    <a href="~/@locale.Identifier/registration/?invite=@inviteLink.Link">@locale["Profile_Link"]</a>
                 </li>
             }
         </ul>
@@ -48,6 +54,15 @@
         {
             <details>
                 <summary>@locale["Profile_CreateInviteLink"]</summary>
+                <form action="~/api/Invite/create" method="post">
+                    <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/profile" hidden />
+                    <input class="input" name="inviteLink" id="inviteLink" value="@Guid.NewGuid().ToString()"/>
+                    <div class="rangevalue">
+                        <span>@locale["Profile_NewLinkTtl"]: </span><span id="linkTtlValue">60</span>
+                        <input name="InviteLinkTtl" type="range" min="1" max="@(Context.User.GetVariable<int>(Variable.MaxLinkTTL))" oninput="linkTtlValue.textContent=this.value" value="60" />
+                    </div>
+                    <button class="button" type="submit">@locale["Profile_Confirm"]</button>
+                </form>
             </details>
         }
     </details>

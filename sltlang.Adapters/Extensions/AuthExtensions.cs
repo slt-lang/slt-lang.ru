@@ -1,4 +1,5 @@
-﻿using sltlang.Common.AuthService.Enums;
+﻿using Microsoft.AspNetCore.Http;
+using sltlang.Common.AuthService.Enums;
 using sltlang.Common.Common.Extensions;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,11 @@ namespace sltlang.Adapters.Extensions
                 return user!.Claims.Where(x => x.Type == "Permission").Select(x => Enum.Parse<Permission>(x.Value));
             }
             return [];
+        }
+
+        public static int GetUserId(this ClaimsPrincipal user)
+        {
+            return int.Parse(user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value!);
         }
     }
 }

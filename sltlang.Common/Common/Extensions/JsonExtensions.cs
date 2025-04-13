@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using System.Web;
 
 namespace sltlang.Common.Common.Extensions
 {
@@ -16,5 +18,10 @@ namespace sltlang.Common.Common.Extensions
         }
 
         public static T? Cast<T>(this object value) => value != null ? (T)value : default;
+
+        public static string AddQueryParameter(this string uri, string key, object value)
+        {
+            return $"{uri}{(uri.Contains("?") ? "&" : "?")}{HttpUtility.UrlEncode(key)}={HttpUtility.UrlEncode(value.ToString())}";
+        }
     }
 }

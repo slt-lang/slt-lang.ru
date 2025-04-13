@@ -49,6 +49,7 @@ Profile_LinkTtl=Действителен до {0}
 Profile_Link=Ссылка
 Profile_LastEditedArticles=Последняя активность на сайте
 Profile_NoLastEditedArticles=Пользователь не проявлял активность
+Profile_NewLinkTtl=Срок действия (в минутах)
 
 RegPage_InviteLinkLabel=Зарегистрироваться на сайте можно только по приглашению.
 RegPage_InviteLink=Инвайт-код

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using sltlang.Adapters.Extensions;
 using sltlang.Domain.Ports;
 using sltlang.Models;
 using System.Security.Claims;
@@ -37,7 +38,7 @@ namespace sltlang.Controllers
             {
                 if (HttpContext.User?.Identity?.IsAuthenticated ?? false)
                 {
-                    userId = int.Parse(HttpContext.User?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value!);
+                    userId = HttpContext.User.GetUserId();
                     model.Own = true;
                 }
             }

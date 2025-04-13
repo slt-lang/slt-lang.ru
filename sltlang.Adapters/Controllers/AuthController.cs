@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using sltlang.Adapters.Extensions;
 using sltlang.Common.AuthService.Contracts;
+using sltlang.Common.AuthService.Dto;
+using sltlang.Common.Common.Extensions;
 using sltlang.Common.TelegramService;
 using sltlang.Domain;
 using sltlang.Domain.Logic;
 using sltlang.Domain.Ports;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 
@@ -63,7 +66,7 @@ namespace sltlang.Adapters.Controllers
             }
             catch (Exception ex)
             {
-                return Redirect(request.FailedRedirectUrl + "?result=authserviceerror");
+                return Redirect(request.FailedRedirectUrl.AddQueryParameter("result", "authserviceerror"));
             }
 
             if (resp?.AccessToken != null)
@@ -78,7 +81,7 @@ namespace sltlang.Adapters.Controllers
 
                 telegramService.FireForgetLog(new Common.TelegramService.Models.TelegramMessage()
                 {
-                    Message = $"Зарегистрирован новый пользователь {resp.User.Id} по приглашению пользователя {resp.User.InvitedBy.Id} по шаблону {resp.TemplateUser.Username}",
+                    Message = $"Зарегистрирован новый пользователь {resp.User.Id} по приглашению пользователя {resp.User.InvitedBy.Id}",
                     Tags = ["registration"]
                 });
 
@@ -86,7 +89,7 @@ namespace sltlang.Adapters.Controllers
                 return Redirect(request.SuccessRedirectUrl);
             }
 
-            return Redirect(request.FailedRedirectUrl + "?result=wrong");
+            return Redirect(request.FailedRedirectUrl.AddQueryParameter("result", "wrong"));
         }
 
         [HttpGet("permissions")]

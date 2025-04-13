@@ -5,7 +5,7 @@ namespace sltlang.Common.AuthService.Contracts
     public class RegistrationRequest
     {
         public string Invite { get; set; } = default!;
-        public string Username { get; set; } = default!;
+        public string Login { get; set; } = default!;
         public string Password { get; set; } = default!;
         public string PasswordConfirm { get; set; } = default!;
         public string DisplayName { get; set; } = default!;

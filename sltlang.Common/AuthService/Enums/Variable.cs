@@ -22,6 +22,6 @@ namespace sltlang.Common.AuthService.Enums
         [ComponentType(typeof(int))]
         [SecurityLevel(SecurityLevel.High)]
         [DefaultValue(1)]
-        MaximunInviteLinks,
+        MaximumInviteLinks,
     }
 }
