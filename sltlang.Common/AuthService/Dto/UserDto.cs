@@ -12,7 +12,7 @@ namespace sltlang.Common.AuthService.Dto
         /// <summary>
         /// Кем приглашён
         /// </summary>
-        public ShortUserDto InvitedBy { get; set; } = default!;
+        public ShortUserDto? InvitedBy { get; set; } = default!;
         public ShortInviteLinkDto[] InviteLinks { get; set; } = default!;
     }
 }
