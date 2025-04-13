@@ -1,4 +1,5 @@
 ﻿@using System.Security.Claims
+@using System.Globalization
 @using sltlang.Adapters.Extensions
 @using sltlang.Common.AuthService.Enums
 @model ProfilePage
@@ -45,7 +46,7 @@
             {
                 <li>
                     <span>@inviteLink.Link</span><br/>
-                    <span>@(string.Format(locale["Profile_LinkTtl"], inviteLink.Ttl.ToString("F")))</span><br/>
+                    <span>@(string.Format(locale["Profile_LinkTtl"], inviteLink.Ttl.ToString("g", CultureInfo.GetCultureInfo("ru-RU"))))</span><br/>
                     <a href="~/@locale.Identifier/registration/?invite=@inviteLink.Link">@locale["Profile_Link"]</a>
                 </li>
             }
