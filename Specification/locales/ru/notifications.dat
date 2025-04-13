@@ -1,0 +1,5 @@
+﻿UR-CreateInviteResult-UnknownError=An unknown error occurred when creating the invitation link
+UR-CreateInviteResult-TooManyInvites=You can't create that many invitation links.
+UR-CreateInviteResult-InviteAlreadyExists=This invitation link already exists
+UR-CreateInviteResult-PermissionsError=You don't have enough permissions to create this invitation link
+UR-CreateInviteResult-Success=The invitation link has been successfully created

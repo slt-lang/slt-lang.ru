@@ -1,0 +1,5 @@
+﻿UR-CreateInviteResult-UnknownError=При создании пригласительной ссылки произошла неизвестная ошибка
+UR-CreateInviteResult-TooManyInvites=Вы не можете создать столько пригласительных ссылок
+UR-CreateInviteResult-InviteAlreadyExists=Такая пригласительная ссылка уже существует
+UR-CreateInviteResult-PermissionsError=Недостаточно прав для создания такой пригласительной ссылки
+UR-CreateInviteResult-Success=Пригласительная ссылка успешно создана

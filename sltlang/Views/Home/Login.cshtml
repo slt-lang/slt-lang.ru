@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Http.Extensions
+@model string
+@{
+    Locale locale = (Locale)ViewData["culture"];
+    ViewData["Title"] = locale["Title_Login"];
+    var authed = Context.User.Identity.IsAuthenticated;
+}
+<h1>@ViewData["Title"]</h1>
+@if (authed)
+{
+    <p>@locale["LoginPage_Authenticated"]</p>
+    <form action="~/api/Auth/logout" method="post">
+        <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/login" hidden />
+        <div>
+            <a class="button" href="~/@locale.Identifier/profile">@locale["LoginPage_GoToProfile"]</a>
+        </div>
+        <div>
+            <button class="button" type="submit">@locale["LoginPage_Logout"]</button>
+        </div>
+    </form>
+}
+else
+{
+    <form action="~/api/Auth/login" method="post">
+        <div>
+            <input class="input" placeholder="@locale["LoginPage_Username"]" name="login" id="login" value="" required maxlength="32" minlength="3" pattern="^[a-zA-Z0-9_]+$" title="@locale["LoginPage_UsernameFilter"]" />
+        </div>
+        <div>
+            <input type="password" class="input" placeholder="@locale["LoginPage_Password"]" name="password" id="password" value="" required maxlength="64" minlength="1" />
+        </div>
+        <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/login" hidden required/>
+        <div>
+            <button class="button" type="submit">@locale["LoginPage_Auth"]</button>
+        </div>
+    </form>
+    @if (Model == "wrong")
+    {
+        <div style="color: darkred; text-align: center;">
+            @locale["LoginPage_WrongAuth"]
+        </div>
+    }
+    @if (Model == "authserviceerror")
+    {
+        <div style="color: darkred; text-align: center;">
+            @locale["LoginPage_AuthServiceError"]
+        </div>
+    }
+    <p style="display: block; text-align: center">@(string.Format(locale["LoginPage_Cookie"], locale["LoginPage_Auth"]))</p>
+}

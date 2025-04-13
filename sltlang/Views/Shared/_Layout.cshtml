@@ -1,9 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Http.Extensions;
+@using sltlang.Adapters.Extensions
+@using sltlang.Common.AuthService.Enums
 @using sltlang.Domain.Models;
 @{
     var locale = (Locale)ViewData["culture"] ?? Locale.Locales["ru"];
     var displayUri = Context.Request.GetEncodedPathAndQuery();
     var noindex = (bool?)ViewData["NoIndex"] ?? false;
+    var profilename = (Context.User.Identity?.IsAuthenticated ?? false) ? $"+ {locale["Title_Profile"]} +" : locale["Title_Profile"];
 }
 <!DOCTYPE html>
 <html lang="@(locale?.Identifier??"ru")">
@@ -32,6 +35,9 @@
                 </li>
                 <li>
                     <a href="~/@(locale.Identifier)/syntax">@(locale["Title_Syntax"])</a>
+                </li>
+                <li>
+                    <a href="~/@(locale.Identifier)/profile">@profilename</a>
                 </li>
             </ul>
         </nav>

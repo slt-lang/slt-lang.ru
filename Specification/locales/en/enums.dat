@@ -1,0 +1,19 @@
+﻿Permission+RootPermission=Root permission
+Permission+Swagger=Swagger viewing
+Permission+ArticleCreating=Article creating
+Permission+ArticleEditing=Article editing
+Permission+ArticlePinning=Article pinning
+Permission+ArticleRemoving=Article removing
+Permission+AuthUsernameChanging=Username change
+Permission+AuthPasswordChanging=Password change
+Permission+AuthInviteLinks=Creating invitation links
+Permission+AuthReusableInviteLinks=0
+Permission+AuthInheritanceInviteLinks=Inheritance of your rights via invite links
+Permission+AuthChangingNoneSecureVariables=Changing variables
+Permission+AuthChangingLowSecureVariables=Changing Protected variables (Low)
+Permission+AuthChangingMediumSecureVariables=Changing Protected variables (Medium)
+Permission+AuthChangingHighSecureVariables=Changing Protected variables (High)
+Permission+AuthChangingCriticalSecureVariables=Changing Protected variables (Critical)
+
+Variable+DisplayName=Display Name
+Variable+MaxLinkTTL=Maximum TTL of an invitation links
