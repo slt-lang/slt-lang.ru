@@ -7,10 +7,17 @@
     var locale = (Locale)ViewData["culture"]!;
     ViewData["Title"] = locale["Title_Profile"];
     var authed = Context.User?.Identity?.IsAuthenticated ?? false;
-    var permissions = Context.User?.GetPermissions() ?? [];
+    var permissions = (Model.Own ? Context.User?.GetPermissions() : Model.FullUser?.Permissions.Keys) ?? [];
     var isRoot = permissions.Contains(Permission.RootPermission);
 }
-<h1>@locale["Title_Profile"] @(Context.User.GetVariable<string>(Variable.DisplayName))</h1>
+@if (Model.Own)
+{
+    <h1>@locale["Title_Profile"] @(Context.User.GetVariable<string>(Variable.DisplayName))</h1>
+}
+else
+{
+    <h1>@locale["Title_Profile"] @(Model.FullUser?.Variables.TryGetValue(Variable.DisplayName, out var name)??false?name:"")</h1>
+}
 @if (!string.IsNullOrEmpty(Model.LastNotification))
 {
     <div class="textbox" style="@Model.LastNotification.GetStyle()">
@@ -37,12 +44,12 @@
     </div>
     <details>
         <summary>@locale["Profile_InviteLinks"]</summary>
-        @if (!Model.FullUser.InviteLinks.Any())
+        @if (!Model.FullUser?.InviteLinks.Any() ?? false)
         {
             <p>@locale["Profile_NoInviteLinks"]</p>
         }
         <ul>
-            @foreach (var inviteLink in Model.FullUser.InviteLinks)
+            @foreach (var inviteLink in Model.FullUser?.InviteLinks ?? [])
             {
                 <li>
                     <span>@inviteLink.Link</span><br/>
