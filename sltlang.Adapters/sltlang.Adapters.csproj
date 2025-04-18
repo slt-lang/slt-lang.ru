@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="samples\expr.slt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="samples\*" />
+    <EmbeddedResource Include="samples\ru\*" />
   </ItemGroup>
 
   <ItemGroup>
