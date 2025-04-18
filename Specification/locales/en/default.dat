@@ -19,9 +19,13 @@ Specification_Inheritors=Inheritors
 Specification_CodeExample=Code examples
 Syntax_70OLD=This section is currently being developed. Up-to-date information at the time of SLThree 0.7 version you <a href="https://github.com/slt-lang/slt-lang.github._io">can be found here</a>. The section should be easy to navigate in the future. List of articles related to this section:
 
+Health_ServiceStates=Server state
 Health_DeployDT=Deployed
 Health_StartDT=Started
 Health_Version=Version
+Health_OtherServices=Other services
+Health_NotAllowed=Service not allowed
+Health_ChangeLog=Change log
 
 LoginPage_Username=Username
 LoginPage_UsernameFilter=The length is from 3 to 32 characters. Only Latin letters, numbers, and underscores

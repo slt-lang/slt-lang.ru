@@ -19,9 +19,13 @@ Specification_Inheritors=Наследники
 Specification_CodeExample=Примеры кода
 Syntax_70OLD=Этот раздел в данный момент разрабатывается. Актуальную информацию на момент версии SLThree 0.7 вы <a href="https://github.com/slt-lang/slt-lang.github._io">можете найти здесь</a>. Раздел должен в будущем представлять из себя удобную навигацию. Список статей, относящихся к этому разделу:
 
+Health_ServiceStates=Состояние сервера
 Health_DeployDT=Выпущен
 Health_StartDT=Запущен
 Health_Version=Версия
+Health_OtherServices=Микросервисы
+Health_NotAllowed=Сервис недоступен
+Health_ChangeLog=История изменений
 
 LoginPage_Username=Имя пользователя
 LoginPage_UsernameFilter=Длина от 3 до 32 символов. Только латинские буквы, цифры и подчеркивания
