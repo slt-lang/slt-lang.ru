@@ -29,7 +29,7 @@ namespace sltlang.Adapters.Adapters
                 }
 
                 var prefix = input.Substring(startIndex, next - startIndex);
-                var code = markdownContext.CodeHtmlFinalizer(input.Substring(next + codeLeft.Length, nextEnd - (next + codeLeft.Length)));
+                var code = markdownContext.CodeHtmlFinalizer(input.Substring(next + codeLeft.Length, nextEnd - (next + codeLeft.Length)).Replace("&gt;", ">").Replace("&lt;", "<"));
                 startIndex = nextEnd + codeRight.Length;
                 sb.Append($"{prefix}{code}");
             }
