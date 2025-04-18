@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace sltlang.Controllers
 {
-    public class ProfileController(IAuthLogic authLogic, IUserLogic userLogic, ILocaleService locale) : Controller
+    public class ProfileController(IAuthLogic authLogic, IUserLogic userLogic, IArticleLogic articleLogic, ILogger<ProfileController> logger, ILocaleService locale) : Controller
     {
         private bool NotCulture(out string Language)
         {
@@ -54,6 +54,14 @@ namespace sltlang.Controllers
             }
 
             model.FullUser = user;
+            try
+            {
+                model.UserEditedArticles = await articleLogic.GetArticlesByUser(userId.Value);
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, "Error");
+            }
 
             return View(model);
         }

@@ -11,6 +11,12 @@ ArticleMostPopularList=List of most popular articles
 ArticleNotFound=Article "{0}" was not found
 ArticleNotFoundBut=But maybe this article exists in another language!
 ServiceUnavailable=Error: Service is temporarily unavailable
+Article_Creating=Creating article {0}
+Article_Editing=Editing article {0}
+Article_ArticleName=Article name
+Article_Save=Save
+Article_Delete=Delete
+Article_Edit=Edit article
 
 Specification_Hierarchy=Hierarchy
 Specification_Interfaces=Interfaces

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using sltlang.Common.AuthService.Dto;
 using sltlang.Common.AuthService.Enums;
 using sltlang.Common.Common.Extensions;
 using System;
@@ -49,6 +50,12 @@ namespace sltlang.Adapters.Extensions
             }
 
             return GetDefaultVariable<T>(variable, even_if_unauthorized);
+        }
+
+
+        public static T? GetVariable<T>(this UserDto user, Variable variable)
+        {
+            return user.Variables.TryGetValue(variable, out var value) ? (T)value.DeserializeByEnum(variable)! : default!;
         }
 
         public static bool HasPermission(this ClaimsPrincipal user, Permission permission)

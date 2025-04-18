@@ -1,11 +1,22 @@
 ﻿@using Markdig
+@using sltlang.Adapters.Extensions
 @using sltlang.Common.ArticleService.Models
+@using sltlang.Common.AuthService.Enums
+@inject IMarkdownPort markdownPort
 @model ArticleDto
 @{
     ViewData["Title"] = Model.Title;
     Locale locale = (Locale)ViewData["culture"];
-    var markdownHtml = Markdown.ToHtml(Model.Content);
+    var content = markdownPort.ToHtml(Model.Content, new MarkdownContext()
+    {
+        CultureKey = locale.Identifier,
+        CodeHtmlFinalizer = SpecHelper.SLThreeCodeHtmlFinalizer
+    });
 }
 
 <h1>@Model.Title</h1>
-@Html.Raw(markdownHtml)
+@Html.Raw(content)
+@if (Context.User.HasPermission(Permission.RootPermission) || Context.User.HasPermission(Permission.ArticleEditing))
+{
+    <a class="button" href="~/@locale.Identifier/articles/edit/@Model.Name">@locale["Article_Edit"]</a>
+}

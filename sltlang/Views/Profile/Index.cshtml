@@ -16,7 +16,7 @@
 }
 else
 {
-    <h1>@locale["Title_Profile"] @(Model.FullUser?.Variables.TryGetValue(Variable.DisplayName, out var name)??false?name:"")</h1>
+    <h1>@locale["Title_Profile"] @(Model.FullUser?.GetVariable<string>(Variable.DisplayName))</h1>
 }
 @if (!string.IsNullOrEmpty(Model.LastNotification))
 {
@@ -28,20 +28,21 @@ else
 {
     <h2>@locale["Profile_LastEditedArticles"]</h2>
     <div class="h2">
-        @if (Model.LastEditedArticles == null || Model.LastEditedArticles.Length == 0)
+        @if (Model.UserEditedArticles.Length == 0)
         {
             <p>@locale["Profile_NoLastEditedArticles"]</p>
         }
         else
         {
             <ul>
-                @foreach (var article in Model.LastEditedArticles)
+                @foreach (var article in Model.UserEditedArticles)
                 {
-                    <li><a href="~/articles/@article"></a>@article</li>
+                    <li><a href="~/@article.CultureKey/articles/index/@article.Name">@article.Title</a><span style="color:darkgray"> &mdash; @article.UpdateDate.ToString("f", CultureInfo.GetCultureInfo("ru-RU"))</span></li>
                 }
             </ul>
         }
     </div>
+    <br />
     <details>
         <summary>@locale["Profile_InviteLinks"]</summary>
         @if (!Model.FullUser?.InviteLinks.Any() ?? false)
