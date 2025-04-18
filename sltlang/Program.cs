@@ -35,6 +35,7 @@ namespace sltlang
             builder.Services.AddTransient<IUserLogic, UserLogic>();
             builder.Services.AddTransient<IInviteLogic, InviteLogic>();
             builder.Services.AddTransient<IHttpService, HttpService>();
+            builder.Services.AddTransient<IServiceInfoLogic, ServiceInfoLogic>();
             builder.Services.AddSingleton<ILocaleService, LocaleService>();
             builder.Services.AddSingleton<ISyntaxPageMaker, SyntaxPageMaker>();
             builder.Services.AddSingleton<ISyntaxPageStorage, SyntaxPageStorage>();

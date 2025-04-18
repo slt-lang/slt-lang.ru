@@ -1,5 +1,7 @@
 ﻿@using System.Diagnostics
 @using System.Globalization
+@using sltlang.Common.Common
+@inject IServiceInfoLogic serviceInfoLogic
 @{
     Locale locale = (Locale)ViewData["culture"];
     ViewData["Title"] = locale["Title_Health"];
@@ -10,9 +12,41 @@
     changelog = reader.ReadToEnd();
 
     var culture = CultureInfo.GetCultureInfo(locale.Identifier == "en" ? "en-us" : "ru-ru");
+
+    var serviceInfo = ServiceInfo.GetServiceInfo(typeof(Program).Assembly);
+    var servicesInfo = await serviceInfoLogic.GetServiceInfos();
 }
-<h1>slt-lang</h1>
-<span>@($"{locale["Health_DeployDT"]}: {File.GetLastWriteTime(typeof(Program).Assembly.Location).ToString("U", culture)}")</span><br/>
-<span>@($"{locale["Health_StartDT"]}: {Process.GetCurrentProcess().StartTime.ToString("U", culture)}")</span><br/>
-<span>@($"{locale["Health_Version"]}: {typeof(Program).Assembly.GetName().Version!.ToString(3)}")</span><br/>
-@Html.Raw(changelog)
+<h1>@locale["Health_ServiceStates"]</h1>
+<h2>slt-lang</h2>
+<div class="h2">
+    <span>@($"{locale["Health_DeployDT"]}: {serviceInfo.DeployTime.ToString("U", culture)}")</span><br />
+    <span>@($"{locale["Health_StartDT"]}: {serviceInfo.StartTime.ToString("U", culture)}")</span><br />
+    <span>@($"{locale["Health_Version"]}: {serviceInfo.Version}")</span><br />
+</div>
+<h2>@locale["Health_OtherServices"]</h2>
+<div class="h2">
+@foreach (var service in servicesInfo)
+{
+    <h3>@service.Key</h3>
+    <div class="h3">
+    @if (service.Value != null)
+    {
+
+        <span>@($"{locale["Health_DeployDT"]}: {service.Value.DeployTime.ToString("U", culture)}")</span>
+        <br />
+        <span>@($"{locale["Health_StartDT"]}: {service.Value.StartTime.ToString("U", culture)}")</span>
+        <br />
+        <span>@($"{locale["Health_Version"]}: {service.Value.Version}")</span>
+        <br />
+    }
+    else
+    {
+        <span>@locale["Health_NotAllowed"]</span>
+        }
+    </div>
+    }
+</div>
+<h2>@locale["Health_ChangeLog"]</h2>
+<div class="h2">
+    @Html.Raw(changelog)
+</div>
