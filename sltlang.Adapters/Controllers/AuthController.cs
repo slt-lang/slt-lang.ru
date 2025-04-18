@@ -81,7 +81,7 @@ namespace sltlang.Adapters.Controllers
 
                 telegramService.FireForgetLog(new Common.TelegramService.Models.TelegramMessage()
                 {
-                    Message = $"Зарегистрирован новый пользователь {resp.User.Id} по приглашению пользователя {resp.User.InvitedBy.Id}",
+                    Message = $"Зарегистрирован новый пользователь {resp.User.Id} {(resp.User.InvitedBy != null ? $"по приглашению пользователя {resp.User.InvitedBy?.Id}" : "")}",
                     Tags = ["registration"]
                 });
 
