@@ -3,3 +3,4 @@ UR-CreateInviteResult-TooManyInvites=Вы не можете создать ст�
 UR-CreateInviteResult-InviteAlreadyExists=Такая пригласительная ссылка уже существует
 UR-CreateInviteResult-PermissionsError=Недостаточно прав для создания такой пригласительной ссылки
 UR-CreateInviteResult-Success=Пригласительная ссылка успешно создана
+Result_UserNotFound=Пользователь не найден
