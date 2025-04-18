@@ -30,6 +30,7 @@ namespace sltlang
             builder.Services.AddSingleton<ISampleMaker, SampleMaker>();
             builder.Services.AddSingleton<ISampleStorage, SampleStorage>();
             builder.Services.AddTransient<ISampleLogic, SampleLogic>();
+            builder.Services.AddTransient<IMarkdownPort, MarkdownPort>();
             builder.Services.AddTransient<IArticleLogic, ArticleLogic>();
             builder.Services.AddTransient<IAuthLogic, AuthLogic>();
             builder.Services.AddTransient<IUserLogic, UserLogic>();
@@ -213,7 +214,7 @@ namespace sltlang
 
             app.MapControllerRoute(
                 name: "articles",
-                pattern: "{culture=ru}/articles/{article}", new { controller = "Article", action = "Index" }, new { culture = "^(?!api$).*$" });
+                pattern: "{culture=ru}/articles/{action}/{article}", new { controller = "Article", action = "Index" }, new { culture = "^(?!api$).*$" });
 
             app.MapControllerRoute(
                 name: "profile",

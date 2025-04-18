@@ -10,5 +10,6 @@ namespace sltlang.Domain.Ports
         Task RebaseArticle(int historyId);
         Task DeleteArticle(string culture_key, string name);
         Task<ArticleDto[]> GetRating(string culture_key);
+        Task<ArticleDto[]> GetArticlesByUser(int userId);
     }
 }

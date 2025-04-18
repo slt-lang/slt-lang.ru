@@ -1,0 +1,25 @@
+﻿@using Markdig
+@using sltlang.Adapters.Extensions
+@using sltlang.Common.ArticleService.Models
+@model ArticleDto
+@{
+    ViewData["Title"] = Model.Title;
+    Locale locale = (Locale)ViewData["culture"];
+}
+<h1>@(string.Format(Model.Content == null ? @locale["Article_Creating"] : @locale["Article_Editing"], Model.Name))</h1>
+<form action="~/api/Articles/upsert" method="post">
+    <input name="name" id="name" value="@Model.Name" hidden/>
+    <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/articles/index/@Model.Name" hidden />
+    <input name="cultureKey" id="cultureKey" value="@locale.Identifier" hidden />
+    <input class="input" name="title" id="title" placeholder="@locale["Article_ArticleName"]" value="@Model.Title" />
+    <textarea class="input" name="content" id="content" rows="40">@Model.Content</textarea>
+    <button class="button" type="submit">@locale["Article_Save"]</button>
+</form>
+@if (Model.Content != null && (Context.User.HasPermission(sltlang.Common.AuthService.Enums.Permission.RootPermission)) 
+  || Context.User.HasPermission(sltlang.Common.AuthService.Enums.Permission.ArticleRemoving))
+{
+    <form action="~/api/Articles/delete" method="post">
+        <input name="redirectUrl" id="redirectUrl" value="/@locale.Identifier/profile" hidden />
+        <button class="button" type="submit">@locale["Article_Delete"]</button>
+    </form>
+}

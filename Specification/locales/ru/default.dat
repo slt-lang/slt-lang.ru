@@ -11,6 +11,12 @@ ArticleMostPopularList=Список самых популярных статей
 ArticleNotFoundBut=Возможно, эта статья есть на другом языке!
 ArticleNotFound=Статья "{0}" не найдена
 ServiceUnavailable=Ошибка: сервис временно недоступен
+Article_Creating=Создание статьи {0}
+Article_Editing=Редактирование статьи {0}
+Article_ArticleName=Название статьи
+Article_Save=Сохранить
+Article_Delete=Удалить
+Article_Edit=Редактировать статью
 
 Specification_Hierarchy=Иерархия
 Specification_Interfaces=Интерфейсы

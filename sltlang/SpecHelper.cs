@@ -70,5 +70,16 @@ namespace sltlang
             });
             return "<div class=\"textbox slt-code code\"><ol>" + hlines.JoinIntoString("") + "</ol></div>";
         }
+        public static string SLThreeCodeHtmlFinalizer(string code)
+        {
+            try
+            {
+                return SLThreeCode(code, new(), null!);
+            }
+            catch (Exception e)
+            {
+                return $"Fatal parsing error: {e.GetType().Name}";
+            }
+        }
     }
 }

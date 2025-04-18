@@ -40,5 +40,11 @@ namespace sltlang.Domain.Logic
             var response = await httpService.JsonRequest<object, ArticleDto[]>(ArticleService, "GetRating", [new("culture_key", culture_key)], HttpMethod.Get, null);
             return response.success ? response.response! : null!;
         }
+
+        public async Task<ArticleDto[]> GetArticlesByUser(int userId)
+        {
+            var (success, response) = await httpService.JsonRequest<object, ArticleDto[]>(ArticleService, "GetUserEditions", [new("userId", userId)], HttpMethod.Get, null, TimeSpan.FromSeconds(3));
+            return success ? response! : [];
+        }
     }
 }
