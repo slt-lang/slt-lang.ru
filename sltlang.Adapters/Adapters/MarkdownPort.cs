@@ -21,7 +21,7 @@ namespace sltlang.Adapters.Adapters
             while (true)
             {
                 var next = input.IndexOf(codeLeft, startIndex);
-                var nextEnd = input.IndexOf(codeRight, startIndex);
+                var nextEnd = input.IndexOf(codeRight, Math.Max(next, startIndex));
                 if (next == -1 || nextEnd == -1)
                 {
                     sb.Append(input.Substring(startIndex, input.Length - startIndex));
